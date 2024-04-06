@@ -6,13 +6,16 @@ This project will be implemented with react, vite, and firebase
 Firebase project dashboard: https://console.firebase.google.com/project/spreadgoodness-72ac1
 
 <h2>Install:</h2>
-Clone this repo to your local IDE
+Clone this repo to your local IDE and 
 cd into the react-vite-app directory
 
-npm install
-npm run dev
+- npm install --save-dev
+
+- npm run dev
 
 <h2>Rules:</h2>
-Do not push/merge directly into Main!
-Push to a branch with you name and a description of the commit, create a pull request, and request a review.
+
+- Do not push/merge directly into Main!
+
+- Push to a branch with you name and a description of the commit, create a pull request, and request a review.
 
