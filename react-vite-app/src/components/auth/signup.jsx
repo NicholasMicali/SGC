@@ -5,7 +5,7 @@ import { Navigate, Link } from 'react-router-dom';
 
 
 const SignUp = () => {
-  const userLoggedIn = useAuth();
+  const { userLoggedIn } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSigningUp, setIsSigningUp] = useState(false);
@@ -16,7 +16,15 @@ const SignUp = () => {
     e.preventDefault()
     if(!isSigningUp) {
       setIsSigningUp(true);
-      await doCreateUserWithEmailAndPassword(email, password);
+      try {
+        await doCreateUserWithEmailAndPassword(email, password);
+      } catch (error) {
+      // Handle errors here, such as displaying a message to the user
+        console.error('Sign up failed:', error);
+        alert('Failed to sign up: ' + error.message);
+        return;
+      }
+      setIsSigningUp(true);
     }
   }
 

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { doSignInWithEmailAndPassword, doSignInWithGoogle, } from '../../firebase/auth';
+import { doSignInWithEmailAndPassword, doSignInWithGoogle, } from '../../firebase/auth.js';
 import { useAuth } from '../../auth/index';
-import { Navigate, Link } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 
 const Login = () => {
-  const userLoggedIn = useAuth();
+  const { userLoggedIn } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSigningIn, setIsSigningIn] = useState(false);
@@ -14,8 +14,17 @@ const Login = () => {
   const onSubmit = async (e) => {
     e.preventDefault()
     if(!isSigningIn) {
+      //setIsSigningIn(true);
+      try {
+        const user = await doSignInWithEmailAndPassword(email, password);
+      } catch (error) {
+      // Handle errors here, such as displaying a message to the user
+        console.error('Login failed:', error);
+        alert('Failed to log in: ' + error.message);
+        return;
+      }
       setIsSigningIn(true);
-      await doSignInWithEmailAndPassword(email, password);
+      //console.log("User signed in: " + user);
     }
   }
 
@@ -26,12 +35,10 @@ const Login = () => {
       doSignInWithGoogle().catch(err => {
         setIsSigningIn(false);
         setErrMessage(err);
+        console.error('Login with google failed:', err);
+        alert('Failed to login with google:', err.message);
       })
     }
-  }
-
-  const handleToggle = () => {
-    setToggle(!toggle);
   }
 
   return (
