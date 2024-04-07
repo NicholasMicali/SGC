@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { doSignInWithEmailAndPassword, doSignInWithGoogle, } from '../../firebase/auth';
 import { useAuth } from '../../auth/index';
+import { Navigate, Link } from 'react-router-dom';
 
 
 const Login = () => {
@@ -8,10 +9,11 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSigningIn, setIsSigningIn] = useState(false);
+  const [errMessage, setErrMessage] = useState('');
 
   const onSubmit = async (e) => {
     e.preventDefault()
-    if(!isSiginingIn) {
+    if(!isSigningIn) {
       setIsSigningIn(true);
       await doSignInWithEmailAndPassword(email, password);
     }
@@ -19,16 +21,22 @@ const Login = () => {
 
   const onGoogleSignIn = (e) => {
     e.preventDefault();
-    if(!isSiginingIn) {
+    if(!isSigningIn) {
       setIsSigningIn(true);
       doSignInWithGoogle().catch(err => {
         setIsSigningIn(false);
+        setErrMessage(err);
       })
     }
   }
 
+  const handleToggle = () => {
+    setToggle(!toggle);
+  }
+
   return (
     <div>
+      {userLoggedIn && (<Navigate to={"/home"} replace={true} />)}
       <form onSubmit={onSubmit}>
         <h1>Login</h1>
         <label htmlFor="email">Email</label>
@@ -54,6 +62,9 @@ const Login = () => {
           Login with Google
         </button>
       </form>
+      <div>
+        {errMessage ? errMessage : ''}
+      </div>
     </div>
   )
 }

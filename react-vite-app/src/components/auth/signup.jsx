@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { doCreateUserWithEmailAndPassword } from '../../firebase/auth';
 import { useAuth } from '../../auth/index';
+import { Navigate, Link } from 'react-router-dom';
 
 
 const SignUp = () => {
@@ -8,11 +9,12 @@ const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSigningUp, setIsSigningUp] = useState(false);
+  const [errMessage, setErrMessage] = useState('');
 
 
   const onSubmit = async (e) => {
     e.preventDefault()
-    if(!isSiginingUp) {
+    if(!isSigningUp) {
       setIsSigningUp(true);
       await doCreateUserWithEmailAndPassword(email, password);
     }
@@ -21,6 +23,7 @@ const SignUp = () => {
 
   return (
     <div>
+      {userLoggedIn && (<Navigate to={"/home"} replace={true} />)}
       <form onSubmit={onSubmit}>
         <h1>Sign Up</h1>
         <label htmlFor="email">Email</label>
@@ -43,6 +46,9 @@ const SignUp = () => {
           Sign Up
         </button>
       </form>
+      <div>
+        {errMessage ? errMessage : ''}
+      </div>
     </div>
   )
 }
