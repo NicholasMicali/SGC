@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { doCreateUserWithEmailAndPassword } from '../../firebase/auth';
-import { useAuth } from '../../firebase/auth';
+import { useAuth } from '../../auth/index';
 
 
 const SignUp = () => {
   const userLoggedIn = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isSigningUp, setIsSigningUp] = useState('');
+  const [isSigningUp, setIsSigningUp] = useState(false);
 
 
   const onSubmit = async (e) => {
@@ -39,7 +39,7 @@ const SignUp = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit" disabled={isSigningIn}>
+        <button type="submit" disabled={isSigningUp}>
           Sign Up
         </button>
       </form>
