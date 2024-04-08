@@ -31,13 +31,12 @@ const Login = () => {
   const onGoogleSignIn = (e) => {
     e.preventDefault();
     if(!isSigningIn) {
-      setIsSigningIn(true);
-      doSignInWithGoogle().catch(err => {
-        setIsSigningIn(false);
+      const user = doSignInWithGoogle().catch(err => {
         setErrMessage(err);
         console.error('Login with google failed:', err);
         alert('Failed to login with google:', err.message);
       })
+      setIsSigningIn(true);
     }
   }
 
