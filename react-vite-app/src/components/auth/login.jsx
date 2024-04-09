@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { doSignInWithEmailAndPassword, doSignInWithGoogle, } from '../../firebase/auth.js';
 import { useAuth } from '../../auth/index';
 import { Navigate } from 'react-router-dom';
-
+import LoginSignupButton from './loginSignupButton.jsx';
+import GoogleButton from './googleButton.jsx';
+import CustomInput from './customInput.jsx';
+import GoogleIcon from "../../assets/google_icon.svg";
 
 const Login = () => {
   const { userLoggedIn } = useAuth();
@@ -41,31 +44,29 @@ const Login = () => {
   }
 
   return (
-    <div>
+    <div className=' h-screen flex flex-col justify-evenly items-center'>
       {userLoggedIn && (<Navigate to={"/home"} replace={true} />)}
-      <form onSubmit={onSubmit}>
+      <div className=' '>
+        <p>LOGO</p>
         <h1>Login</h1>
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit" disabled={isSigningIn}>
-          Login
-        </button>
-        <button type="button" onClick={onGoogleSignIn} disabled={isSigningIn}>
-          Login with Google
+      </div>
+      <div className='flex justify-between items-center w-full'>
+        <LoginSignupButton color='rgba(254, 179, 209, 1)' colorOnSelect='rgba(254, 135, 183, 1)' text='Login' onClick={() => console.log('login')} />
+        <LoginSignupButton color='rgba(209, 237, 249, 1)' colorOnSelect='rgba(141, 211, 239, 1)' text='Signup' onClick={() => console.log('signup')} />
+      </div>
+
+      <GoogleButton text='Login with Google' onClick={onGoogleSignIn} icon={GoogleIcon} />
+      <div className='w-full flex items-center'>
+        <hr className="w-full " />
+        <div className="text-gray-500 ml-5 mr-5">OR</div>
+        <hr className="w-full" />
+      </div>
+      <form onSubmit={onSubmit} className='w-full flex flex-col gap-5'>
+        <CustomInput type='email' placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} id='email' labelName='Email' />
+        <CustomInput type='password' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} id='password' labelName='Password' />
+        <small> By creating an account, you agree to the Terms of Service and Privacy Policy</small>
+        <button type="submit" disabled={isSigningIn} className='  bg-gradient-to-tr rounded-xl p-2 text-white from-gradient-start via-gradient-mid to-gradient-end'>
+          Log In
         </button>
       </form>
       <div>
