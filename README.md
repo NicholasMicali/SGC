@@ -9,7 +9,7 @@ Firebase project dashboard: https://console.firebase.google.com/project/spreadgo
 Clone this repo to your local IDE and 
 cd into the react-vite-app directory
 
-- npm install --save-dev
+- npm install
 
 - npm run dev
 
