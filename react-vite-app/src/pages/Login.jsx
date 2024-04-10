@@ -16,14 +16,14 @@ const LoginPage = () => {
 
   const onGoogleSignIn = (e) => {
     e.preventDefault();
-    if(!isSigningIn) {
-      const user = doSignInWithGoogle().catch(err => {
-        setErrMessage(err);
-        console.error('Login with google failed:', err);
-        alert('Failed to login with google:', err.message);
+    //if(!isSigningIn) {
+    const user = doSignInWithGoogle().catch(err => {
+      setErrMessage(err);
+      console.error('Login with google failed:', err);
+      alert('Failed to login with google:', err.message);
       })
-      setIsSigningIn(true);
-    }
+    setIsSigningIn(true);
+    //}
   }
 
   const handleToggle = () => {
@@ -54,17 +54,23 @@ const LoginPage = () => {
         />
       </div>
 
-      <GoogleButton
-        text="Login with Google"
-        onClick={onGoogleSignIn}
-        icon={GoogleIcon}
-      />
-      <div className="w-full flex items-center">
-        <hr className="w-full " />
-        <div className="text-gray-500 ml-5 mr-5">OR</div>
-        <hr className="w-full" />
-      </div>
-      {current === "Log In" ? <SignUp /> : <SignUp />}
+      {current === "Log In" ? 
+        <>
+          <GoogleButton
+            text="Login with Google"
+            onClick={onGoogleSignIn}
+            icon={GoogleIcon}
+          />
+          <div className="w-full flex items-center">
+            <hr className="w-full " />
+            <div className="text-gray-500 ml-5 mr-5">OR</div>
+            <hr className="w-full" />
+          </div>
+          <Login /> 
+        </>
+      : 
+        <SignUp />
+      }
       <div>{errMessage ? errMessage : ""}</div>
     </div>
   );
