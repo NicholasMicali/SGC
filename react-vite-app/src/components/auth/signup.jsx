@@ -1,63 +1,58 @@
-import React, { useState } from 'react';
-import { doCreateUserWithEmailAndPassword } from '../../firebase/auth';
-import { useAuth } from '../../auth/index';
-import { Navigate, Link } from 'react-router-dom';
-
+import React, { useState } from "react";
+import { doCreateUserWithEmailAndPassword } from "../../firebase/auth";
+import CustomInput from "./customInput.jsx";
 
 const SignUp = () => {
-  const { userLoggedIn } = useAuth();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isSigningUp, setIsSigningUp] = useState(false);
-  const [errMessage, setErrMessage] = useState('');
-
 
   const onSubmit = async (e) => {
-    e.preventDefault()
-    if(!isSigningUp) {
+    e.preventDefault();
+    if (!isSigningUp) {
       setIsSigningUp(true);
       try {
         await doCreateUserWithEmailAndPassword(email, password);
       } catch (error) {
-      // Handle errors here, such as displaying a message to the user
-        console.error('Sign up failed:', error);
-        alert('Failed to sign up: ' + error.message);
+        // Handle errors here, such as displaying a message to the user
+        console.error("Sign up failed:", error);
+        alert("Failed to sign up: " + error.message);
         return;
       }
       setIsSigningUp(true);
     }
-  }
-
+  };
 
   return (
-    <div>
-      {userLoggedIn && (<Navigate to={"/home"} replace={true} />)}
-      <form onSubmit={onSubmit}>
-        <h1>Sign Up</h1>
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit" disabled={isSigningUp}>
-          Sign Up
-        </button>
-      </form>
-      <div>
-        {errMessage ? errMessage : ''}
-      </div>
-    </div>
-  )
-}
+    <form onSubmit={onSubmit} className="w-full flex flex-col gap-5">
+      <CustomInput
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        id="email"
+        labelName="Email"
+      />
+      <CustomInput
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        id="password"
+        labelName="Password"
+      />
+      <small>
+        By creating an account, you agree to the Terms of Service and Privacy
+        Policy
+      </small>
+      <button
+        type="submit"
+        disabled={isSigningUp}
+        className="  bg-gradient-to-tr rounded-xl p-2 text-white from-gradient-start via-gradient-mid to-gradient-end"
+      >
+        Sign Up
+      </button>
+    </form>
+  );
+};
 export default SignUp;

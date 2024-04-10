@@ -11,13 +11,15 @@ export default {
         'gradient-start': '#7C94CC',
         'gradient-mid': '#eb5299',
         'gradient-end': '#ffc6dd',
-        'selected-pink': "rgba(254, 135, 183, 1)",
-        'selected-blue': "rgba(141, 211, 239, 1)",
-        'idle-pink': "rgba(254, 179, 209, 1)",
-        'idle-blue': "rgba(209, 237, 249, 1)",
+        'selected-pink': "#fe87b7",
+        'selected-blue': "#8dd3ef",
+        'selected-pink-border': "#fd4f96",
+        'selected-blue-border': "#48b8e6",
+        'idle-pink': "#feb3d1",
+        'idle-blue': "#d1edf9",
       }
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-inner-border"),],
 }
 
