@@ -24,6 +24,10 @@ const Login = () => {
     }
   };
 
+  if (isSigningIn) {
+    return <Navigate to={"/home"} replace={true} />
+  }
+
   return (
     <form onSubmit={onSubmit} className="w-full flex flex-col gap-5">
       <CustomInput

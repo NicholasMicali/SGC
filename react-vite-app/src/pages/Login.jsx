@@ -13,6 +13,7 @@ const LoginPage = () => {
   const { userLoggedIn } = useAuth();
   const [current, setCurrent] = useState("Log In");
   const [errMessage, setErrMessage] = useState("");
+  const [isSigningIn, setIsSigningIn] = useState(false);
 
   const onGoogleSignIn = (e) => {
     e.preventDefault();
@@ -30,9 +31,14 @@ const LoginPage = () => {
     setCurrent("Log In" === current ? "Sign Up" : "Log In");
   };
 
+
+//      {userLoggedIn && <Navigate to={"/home"} replace={true} />}
+  if (isSigningIn) {
+    return <Navigate to={"/home"} replace={true} />
+  }
+
   return (
     <div className=" h-screen flex flex-col justify-evenly items-center">
-      {userLoggedIn && <Navigate to={"/home"} replace={true} />}
       <div>
         <p>LOGO</p>
         <h1 className=" text-3xl font-bold">{current}</h1>
