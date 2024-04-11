@@ -7,6 +7,7 @@ import LoginSignupButton from "../components/auth/loginSignupButton.jsx";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../auth/index";
 import { doSignInWithGoogle } from "../firebase/auth.js";
+import Logo from "../assets/logo.svg"
 
 
 const LoginPage = () => {
@@ -40,8 +41,8 @@ const LoginPage = () => {
   return (
     <div className=" h-screen flex flex-col justify-evenly items-center">
       <div>
-        <p>LOGO</p>
-        <h1 className=" text-3xl font-bold">{current}</h1>
+        <img src={Logo} alt="Spread Goodness logo" />
+        <h1 className=" text-5xl font-bold">{current}</h1>
       </div>
       <div className="flex justify-between items-center w-full">
         <LoginSignupButton
@@ -59,7 +60,6 @@ const LoginPage = () => {
           current={current}
         />
       </div>
-
       {current === "Log In" ? 
         <>
           <GoogleButton
