@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { doSignInWithEmailAndPassword } from "../../firebase/auth.js";
 import CustomInput from "./customInput.jsx";
+import {motion} from "framer-motion";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -46,13 +47,14 @@ const Login = () => {
         By creating an account, you agree to the Terms of Service and Privacy
         Policy
       </small>
-      <button
+      <motion.button
         type="submit"
         disabled={isSigningIn}
         className="  bg-gradient-to-tr rounded-xl p-2 text-white from-gradient-start via-gradient-mid to-gradient-end"
+        whileTap={{ scale: 0.9 }}
       >
         Log In
-      </button>
+      </motion.button>
     </form>
   );
 };

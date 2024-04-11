@@ -7,6 +7,7 @@ import LoginSignupButton from "../components/auth/loginSignupButton.jsx";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../auth/index";
 import { doSignInWithGoogle } from "../firebase/auth.js";
+import Logo from "../assets/logo.svg"
 
 
 const LoginPage = () => {
@@ -34,8 +35,8 @@ const LoginPage = () => {
     <div className=" h-screen flex flex-col justify-evenly items-center">
       {userLoggedIn && <Navigate to={"/home"} replace={true} />}
       <div>
-        <p>LOGO</p>
-        <h1 className=" text-3xl font-bold">{current}</h1>
+        <img src={Logo} alt="Spread Goodness logo" />
+        <h1 className=" text-5xl font-bold">{current}</h1>
       </div>
       <div className="flex justify-between items-center w-full">
         <LoginSignupButton
@@ -55,16 +56,16 @@ const LoginPage = () => {
       </div>
 
       <GoogleButton
-        text="Login with Google"
+        text="Sign Up With Google"
         onClick={onGoogleSignIn}
         icon={GoogleIcon}
       />
       <div className="w-full flex items-center">
-        <hr className="w-full " />
+        <hr className="w-full border-black" />
         <div className="text-gray-500 ml-5 mr-5">OR</div>
-        <hr className="w-full" />
+        <hr className="w-full border-black" />
       </div>
-      {current === "Log In" ? <SignUp /> : <SignUp />}
+      {current === "Log In" ? <Login /> : <SignUp />}
       <div>{errMessage ? errMessage : ""}</div>
     </div>
   );
