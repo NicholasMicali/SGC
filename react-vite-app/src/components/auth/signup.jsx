@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { doCreateUserWithEmailAndPassword } from "../../firebase/auth";
 import CustomInput from "./customInput.jsx";
+import { Navigate } from "react-router-dom";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -22,6 +23,10 @@ const SignUp = () => {
       setIsSigningUp(true);
     }
   };
+
+  if (isSigningUp) {
+    return <Navigate to={"/create-profile"} replace={true} />
+  }
 
   return (
     <form onSubmit={onSubmit} className="w-full flex flex-col gap-5">

@@ -14,26 +14,32 @@ const LoginPage = () => {
   const { userLoggedIn } = useAuth();
   const [current, setCurrent] = useState("Log In");
   const [errMessage, setErrMessage] = useState("");
+  const [isSigningIn, setIsSigningIn] = useState(false);
 
   const onGoogleSignIn = (e) => {
     e.preventDefault();
-    if(!isSigningIn) {
-      const user = doSignInWithGoogle().catch(err => {
-        setErrMessage(err);
-        console.error('Login with google failed:', err);
-        alert('Failed to login with google:', err.message);
+    //if(!isSigningIn) {
+    const user = doSignInWithGoogle().catch(err => {
+      setErrMessage(err);
+      console.error('Login with google failed:', err);
+      alert('Failed to login with google:', err.message);
       })
-      setIsSigningIn(true);
-    }
+    setIsSigningIn(true);
+    //}
   }
 
   const handleToggle = () => {
     setCurrent("Log In" === current ? "Sign Up" : "Log In");
   };
 
+
+//      {userLoggedIn && <Navigate to={"/home"} replace={true} />}
+  if (isSigningIn) {
+    return <Navigate to={"/home"} replace={true} />
+  }
+
   return (
     <div className=" h-screen flex flex-col justify-evenly items-center">
-      {userLoggedIn && <Navigate to={"/home"} replace={true} />}
       <div>
         <img src={Logo} alt="Spread Goodness logo" />
         <h1 className=" text-5xl font-bold">{current}</h1>
@@ -54,18 +60,23 @@ const LoginPage = () => {
           current={current}
         />
       </div>
-
-      <GoogleButton
-        text="Sign Up With Google"
-        onClick={onGoogleSignIn}
-        icon={GoogleIcon}
-      />
-      <div className="w-full flex items-center">
-        <hr className="w-full border-black" />
-        <div className="text-gray-500 ml-5 mr-5">OR</div>
-        <hr className="w-full border-black" />
-      </div>
-      {current === "Log In" ? <Login /> : <SignUp />}
+      {current === "Log In" ? 
+        <>
+          <GoogleButton
+            text="Login with Google"
+            onClick={onGoogleSignIn}
+            icon={GoogleIcon}
+          />
+          <div className="w-full flex items-center">
+            <hr className="w-full " />
+            <div className="text-gray-500 ml-5 mr-5">OR</div>
+            <hr className="w-full" />
+          </div>
+          <Login /> 
+        </>
+      : 
+        <SignUp />
+      }
       <div>{errMessage ? errMessage : ""}</div>
     </div>
   );
