@@ -8,6 +8,8 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "../auth/index";
 import { doSignInWithGoogle } from "../firebase/auth.js";
 import Logo from "../assets/logo.svg"
+import {ArrowLeft} from "lucide-react";
+import AuthSplash from "../assets/AuthSplash.jpg";
 
 
 const LoginPage = () => {
@@ -32,6 +34,9 @@ const LoginPage = () => {
     setCurrent("Log In" === current ? "Sign Up" : "Log In");
   };
 
+  const handleGoBack = () => {
+    console.log("Go back");
+  }
 
 //      {userLoggedIn && <Navigate to={"/home"} replace={true} />}
   if (isSigningIn) {
@@ -39,7 +44,14 @@ const LoginPage = () => {
   }
 
   return (
-    <div className=" h-screen flex flex-col justify-evenly items-center">
+    <div className="min-w-full flex">
+      <div className="sm:block hidden min-w-[50%] h-screen">
+        <img src={AuthSplash} alt="Spread Goodness splash" className="object-cover h-screen w-full" />
+      </div>
+    <div className=" h-screen flex flex-col justify-between items-center w-full">
+      <button onClick={handleGoBack} className="w-full text-left flex items-center">
+        <ArrowLeft /> Go Back
+      </button>
       <div>
         <img src={Logo} alt="Spread Goodness logo" />
         <h1 className=" text-5xl font-bold">{current}</h1>
@@ -78,6 +90,7 @@ const LoginPage = () => {
         <SignUp />
       }
       <div>{errMessage ? errMessage : ""}</div>
+    </div>
     </div>
   );
 };
