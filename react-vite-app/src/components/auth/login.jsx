@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { doSignInWithEmailAndPassword } from "../../firebase/auth.js";
 import CustomInput from "./customInput.jsx";
-import {motion} from "framer-motion";
+import { Navigate } from "react-router-dom";
+import AuthButton from "./authButton.jsx";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -13,7 +14,9 @@ const Login = () => {
     if (!isSigningIn) {
       //setIsSigningIn(true);
       try {
+        console.log("Attempting to sign in");
         const user = await doSignInWithEmailAndPassword(email, password);
+        console.log("User signed in: " + user);
       } catch (error) {
         // Handle errors here, such as displaying a message to the user
         console.error("Login failed:", error);
@@ -30,7 +33,7 @@ const Login = () => {
   }
 
   return (
-    <form onSubmit={onSubmit} className="w-full flex flex-col gap-5">
+    <form onSubmit={onSubmit} className="w-full flex flex-col gap-5 items-center">
       <CustomInput
         type="email"
         placeholder="Email"
@@ -47,18 +50,7 @@ const Login = () => {
         id="password"
         labelName="Password"
       />
-      <small>
-        By creating an account, you agree to the Terms of Service and Privacy
-        Policy
-      </small>
-      <motion.button
-        type="submit"
-        disabled={isSigningIn}
-        className="  bg-gradient-to-tr rounded-xl p-2 text-white from-gradient-start via-gradient-mid to-gradient-end"
-        whileTap={{ scale: 0.9 }}
-      >
-        Log In
-      </motion.button>
+      <AuthButton text="Log In" disabled={isSigningIn}/>
     </form>
   );
 };
