@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useAuth } from '../auth/index';
 import { doSignOut } from '../firebase/auth.js';
 import { Navigate } from 'react-router-dom';
+import LeftSidebar from '../components/home/leftSideBar';
+import RightSidebar from '../components/home/rightSideBar';
 
 
 const HomePage = () => {
@@ -9,7 +11,7 @@ const HomePage = () => {
   const { currentUser } = useAuth();
   const [isSigningOut, setIsSigningOut] = useState(false);
 
-  const onSubmit = async (e) => {
+  const signOut = async (e) => {
     e.preventDefault()
     try {
       const user = await doSignOut();
@@ -30,11 +32,14 @@ const HomePage = () => {
   }
 
   return (
-    <>
-      <h1>This is the Home Page!</h1>
-      <div>Hello {currentUser.displayName ? currentUser.displayName : currentUser.email}, you are now logged in.</div>
-      <button onClick={onSubmit}>Sign Out</button>
-    </>
+    <div className="flex h-screen">
+      <LeftSidebar user={currentUser} signOut={signOut}/>
+      <div className="flex-grow flex flex-col items-center overflow-auto p-4">
+        <h1>This is the Home Page!</h1>
+        {/* More scrollable content here */}
+      </div>
+      <RightSidebar />
+    </div>
 
   );
 };
