@@ -4,12 +4,14 @@ import { doSignOut } from '../firebase/auth.js';
 import { Navigate } from 'react-router-dom';
 import LeftSidebar from '../components/home/leftSideBar';
 import RightSidebar from '../components/home/rightSideBar';
+import AllCards from '../components/cards/allCards.jsx';
 
 
 const HomePage = () => {
 
   const { currentUser } = useAuth();
   const [isSigningOut, setIsSigningOut] = useState(false);
+  const [subPage, setSubPage] = useState('feed');
 
   const signOut = async (e) => {
     e.preventDefault()
@@ -27,6 +29,8 @@ const HomePage = () => {
   }
 
 
+
+
   if (isSigningOut) {
     return (<Navigate to={"/"} replace={true} />)
   }
@@ -36,7 +40,11 @@ const HomePage = () => {
       <LeftSidebar user={currentUser} signOut={signOut}/>
       <div className="flex-grow flex flex-col items-center overflow-auto p-4">
         <h1>This is the Home Page!</h1>
-        {/* More scrollable content here */}
+        {subPage == 'feed' && <></>}
+        {subPage == 'all' && <AllCards/>}
+        {subPage == 'new' && <></>}
+        {subPage == 'received' && <></>}
+        {subPage == 'challenge' && <></>}
       </div>
       <RightSidebar />
     </div>
