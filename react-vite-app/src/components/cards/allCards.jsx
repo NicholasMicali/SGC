@@ -2,8 +2,11 @@ import React from 'react';
 
 const AllCards = () => {
 
+
   return (
-    <div>All Cards</div>
+    <div>
+      All Cards!
+    </div>
   );
 };
 
