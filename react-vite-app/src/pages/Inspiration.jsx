@@ -6,7 +6,7 @@ import LeftSidebar from '../components/home/leftSideBar';
 import RightSidebar from '../components/home/rightSideBar';
 
 
-const AccountPage = () => {
+const InspirationPage = () => {
   const { currentUser } = useAuth();
   const [isSigningOut, setIsSigningOut] = useState(false);
 
@@ -34,12 +34,12 @@ const AccountPage = () => {
 
   return (
     <div className="flex h-screen">
-      <LeftSidebar user={currentUser} signOut={signOut} page="account"/>
+      <LeftSidebar user={currentUser} signOut={signOut} page="inspiration"/>
       <div className="flex-grow flex flex-col items-center overflow-auto p-4">
-        Account Settings Page
+        Inspiration Page
       </div>
     </div>
   );
 };
 
-export default AccountPage;
+export default InspirationPage;

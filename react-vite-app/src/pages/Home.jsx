@@ -39,7 +39,7 @@ const HomePage = () => {
 // to do: create subpages compoentes and slot them into the conditional render.
   return (
     <div className="flex h-screen">
-      <LeftSidebar user={currentUser} signOut={signOut}/>
+      <LeftSidebar user={currentUser} signOut={signOut} page="home"/>
       <div className="flex-grow flex flex-col items-center overflow-auto p-4">
         <CardInfo name="Hero-2" location="San Luis Obispo" miles="260" people="7"/>
         {subPage == 'feed' && <></>}
