@@ -54,9 +54,9 @@ const HomePage = () => {
     <div className="flex h-screen">
       <LeftSidebar user={currentUser} signOut={signOut} page="home"/>
       <div className="flex-grow flex flex-col items-center overflow-auto px-20 py-10">
-      <SearchBar onSearch={handleSearch} width = "full"/>
         {subPage == 'feed' && 
           <>
+            <SearchBar onSearch={handleSearch} width = "full"/>
             <div className="flex flex-row justify-between gap-4 my-4 w-full">
               <CardsButton
                 text = "All cards"

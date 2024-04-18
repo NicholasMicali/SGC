@@ -16,10 +16,10 @@ const SearchBar = ({ onSearch }) => {
     <form onSubmit={handleSubmit} className="flex rounded-full w-full mx-auto my-4 space-x-4 bg-transparent">
   <input
     type="text"
-    placeholder=" ⌕ Search for code"
+    placeholder="Search for code"
     value={searchTerm}
     onChange={handleInputChange}
-    className="flex-grow p-2 rounded-full focus:outline-none border border-blue-300 bg-blue-50 placeholder-blue-300"
+    className="flex-grow px-6 py-2 rounded-full focus:outline-none border border-blue-300 bg-blue-50 placeholder-blue-300"
   />
   <button
     type="submit"
