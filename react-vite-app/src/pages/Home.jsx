@@ -10,6 +10,7 @@ import NewCard from '../components/cardsPages/newCard.jsx';
 import Challenge from '../components/cardsPages/challenge.jsx';
 import Recieve from '../components/cardsPages/recieve.jsx';
 import CardInfo from '../components/home/cardInfo(new).jsx';
+import CardsButton from '../components/cardsPages/cardsButton.jsx';
 
 
 const HomePage = () => {
@@ -52,10 +53,38 @@ const HomePage = () => {
         {subPage == 'feed' && 
           <>
             <div className="flex flex-row justify-center gap-4 my-4">
-              <button onClick={() => setSubPage('all')}>all cards</button>
-              <button onClick={() => setSubPage('new')}>new</button>
-              <button onClick={() => setSubPage('recieve')}>recieve</button>
-              <button onClick={() => setSubPage('challenge')}>challenge</button>
+              <CardsButton
+                text = "All cards"
+                borderColor="#BEDF3D"
+                textColor= "#8DAB1C"
+                backgroundColor="#EAF4C0"
+                //icon={None}//add icon in later
+                onClick={() => setSubPage('all')}>
+                </CardsButton>
+              <CardsButton
+                text = "New Card"
+                borderColor="#48B8E6"
+                textColor= "#1D9FD5"
+                backgroundColor="#D1EDF9"
+                //icon={None}//add icon in later
+                onClick={() => setSubPage('all')}>
+              </CardsButton>
+              <CardsButton
+                text = "Receive"
+                borderColor="#F2DD69"
+                textColor= "#EDD134"
+                backgroundColor="#FCF7DA"
+                //icon={None}//add icon in later
+                onClick={() => setSubPage('all')}>
+              </CardsButton>
+              <CardsButton
+                text = "Challenge"
+                borderColor="#FD3B8A"
+                textColor= "#FC086B"
+                backgroundColor="#FFD3E5"
+                //icon={None}//add icon in later
+                onClick={() => setSubPage('all')}>
+              </CardsButton>
             </div>
             <CardFeed/>
           </>
