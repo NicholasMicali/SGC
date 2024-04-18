@@ -70,7 +70,7 @@ const HomePage = () => {
                 onClick={() => setSubPage('all')}>
               </CardsButton>
               <CardsButton
-                text = "Recieve"
+                text = "Receive"
                 borderColor="#F2DD69"
                 textColor= "#EDD134"
                 backgroundColor="#FCF7DA"
