@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { motion } from "framer-motion";
 import { twMerge } from "tailwind-merge";
 
-const LoginSignupButton = ({ color, borderColor, text, onClick, current }) => {
+const ToggleButton = ({ color, borderColor, text, onClick, current }) => {
   return (
     <motion.button
       className={twMerge(
@@ -26,4 +26,4 @@ const LoginSignupButton = ({ color, borderColor, text, onClick, current }) => {
   );
 };
 
-export default LoginSignupButton;
+export default ToggleButton;
