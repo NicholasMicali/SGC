@@ -61,7 +61,7 @@ const HomePage = () => {
           </>
           }
         {subPage == 'all' && <AllCards back={returnToFeed}/>}
-        {subPage == 'new' && <NewCard back={returnToFeed}/>}
+        {subPage == 'new' && <NewCard back={returnToFeed} user={currentUser}/>}
         {subPage == 'recieve' && <Recieve back={returnToFeed}/>}
         {subPage == 'challenge' && <Challenge back={returnToFeed}/>}
       </div>
