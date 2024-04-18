@@ -54,16 +54,37 @@ const HomePage = () => {
           <>
             <div className="flex flex-row justify-center gap-4 my-4">
               <CardsButton
-                text = "all cards"
-                borderColor="#43A047"
-                textColor= "#388E3C"
-                backgroundColor="#A5D6A7"
+                text = "All cards"
+                borderColor="#BEDF3D"
+                textColor= "#8DAB1C"
+                backgroundColor="#EAF4C0"
                 //icon={None}//add icon in later
-                onClick={() => setSubPage('all')}>all cards
+                onClick={() => setSubPage('all')}>
                 </CardsButton>
-              <button onClick={() => setSubPage('new')}>new</button>
-              <button onClick={() => setSubPage('recieve')}>recieve</button>
-              <button onClick={() => setSubPage('challenge')}>challenge</button>
+              <CardsButton
+                text = "New Card"
+                borderColor="#48B8E6"
+                textColor= "#1D9FD5"
+                backgroundColor="#D1EDF9"
+                //icon={None}//add icon in later
+                onClick={() => setSubPage('all')}>
+              </CardsButton>
+              <CardsButton
+                text = "Recieve"
+                borderColor="#F2DD69"
+                textColor= "#EDD134"
+                backgroundColor="#FCF7DA"
+                //icon={None}//add icon in later
+                onClick={() => setSubPage('all')}>
+              </CardsButton>
+              <CardsButton
+                text = "Challenge"
+                borderColor="#FD3B8A"
+                textColor= "#FC086B"
+                backgroundColor="#FFD3E5"
+                //icon={None}//add icon in later
+                onClick={() => setSubPage('all')}>
+              </CardsButton>
             </div>
             <CardFeed/>
           </>
