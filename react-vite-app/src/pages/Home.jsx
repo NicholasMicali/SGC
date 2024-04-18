@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../auth/index';
 import { doSignOut } from '../firebase/auth.js';
 import { Navigate } from 'react-router-dom';
+import SearchBar from '../components/auth/searchbar.jsx';
 import LeftSidebar from '../components/home/leftSideBar';
 import RightSidebar from '../components/home/rightSideBar';
 import AllCards from '../components/cardsPages/allCards.jsx';
@@ -35,6 +36,10 @@ const HomePage = () => {
 
   }
 
+  const handleSearch = searchTerm => {
+    //console.log(`Search term: ${searchTerm}`);
+    // Implement your search functionality here
+  };
   const returnToFeed = () => {
     setSubPage('feed');
   }
@@ -49,6 +54,7 @@ const HomePage = () => {
     <div className="flex h-screen">
       <LeftSidebar user={currentUser} signOut={signOut} page="home"/>
       <div className="flex-grow flex flex-col items-center overflow-auto px-20 py-10">
+      <SearchBar onSearch={handleSearch} width = "full"/>
         {subPage == 'feed' && 
           <>
             <div className="flex flex-row justify-between gap-4 my-4 w-full">
