@@ -9,7 +9,6 @@ import CardFeed from '../components/cardsPages/cardFeed.jsx';
 import NewCard from '../components/cardsPages/newCard.jsx';
 import Challenge from '../components/cardsPages/challenge.jsx';
 import Recieve from '../components/cardsPages/recieve.jsx';
-import CardInfo from '../components/home/cardInfo(new).jsx';
 import CardsButton from '../components/cardsPages/cardsButton.jsx';
 
 
@@ -52,7 +51,7 @@ const HomePage = () => {
       <div className="flex-grow flex flex-col items-center overflow-auto px-20 py-10">
         {subPage == 'feed' && 
           <>
-            <div className="flex flex-row justify-center gap-4 my-4">
+            <div className="flex flex-row justify-between gap-4 my-4 w-full">
               <CardsButton
                 text = "All cards"
                 borderColor="#BEDF3D"
@@ -67,7 +66,7 @@ const HomePage = () => {
                 textColor= "#1D9FD5"
                 backgroundColor="#D1EDF9"
                 //icon={None}//add icon in later
-                onClick={() => setSubPage('all')}>
+                onClick={() => setSubPage('new')}>
               </CardsButton>
               <CardsButton
                 text = "Receive"
@@ -75,7 +74,7 @@ const HomePage = () => {
                 textColor= "#EDD134"
                 backgroundColor="#FCF7DA"
                 //icon={None}//add icon in later
-                onClick={() => setSubPage('all')}>
+                onClick={() => setSubPage('recieve')}>
               </CardsButton>
               <CardsButton
                 text = "Challenge"
@@ -83,7 +82,7 @@ const HomePage = () => {
                 textColor= "#FC086B"
                 backgroundColor="#FFD3E5"
                 //icon={None}//add icon in later
-                onClick={() => setSubPage('all')}>
+                onClick={() => setSubPage('challenge')}>
               </CardsButton>
             </div>
             <CardFeed/>
