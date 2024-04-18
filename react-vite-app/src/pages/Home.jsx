@@ -10,6 +10,7 @@ import NewCard from '../components/cardsPages/newCard.jsx';
 import Challenge from '../components/cardsPages/challenge.jsx';
 import Recieve from '../components/cardsPages/recieve.jsx';
 import CardInfo from '../components/home/cardInfo(new).jsx';
+import CardsButton from '../components/cardsPages/cardsButton.jsx';
 
 
 const HomePage = () => {
@@ -52,7 +53,14 @@ const HomePage = () => {
         {subPage == 'feed' && 
           <>
             <div className="flex flex-row justify-center gap-4 my-4">
-              <button onClick={() => setSubPage('all')}>all cards</button>
+              <CardsButton
+                text = "all cards"
+                borderColor="#43A047"
+                textColor= "#388E3C"
+                backgroundColor="#A5D6A7"
+                //icon={None}//add icon in later
+                onClick={() => setSubPage('all')}>all cards
+                </CardsButton>
               <button onClick={() => setSubPage('new')}>new</button>
               <button onClick={() => setSubPage('recieve')}>recieve</button>
               <button onClick={() => setSubPage('challenge')}>challenge</button>
