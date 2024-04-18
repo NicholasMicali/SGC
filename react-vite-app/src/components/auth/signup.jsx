@@ -1,63 +1,59 @@
-import React, { useState } from 'react';
-import { doCreateUserWithEmailAndPassword } from '../../firebase/auth';
-import { useAuth } from '../../auth/index';
-import { Navigate, Link } from 'react-router-dom';
-
+import React, { useState } from "react";
+import { doCreateUserWithEmailAndPassword } from "../../firebase/auth";
+import CustomInput from "./customInput.jsx";
+import { Navigate } from "react-router-dom";
+import {motion} from "framer-motion";
+import AuthButton from "./authButton.jsx";
 
 const SignUp = () => {
-  const { userLoggedIn } = useAuth();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isSigningUp, setIsSigningUp] = useState(false);
-  const [errMessage, setErrMessage] = useState('');
-
 
   const onSubmit = async (e) => {
-    e.preventDefault()
-    if(!isSigningUp) {
+    e.preventDefault();
+    if (!isSigningUp) {
       setIsSigningUp(true);
       try {
         await doCreateUserWithEmailAndPassword(email, password);
       } catch (error) {
-      // Handle errors here, such as displaying a message to the user
-        console.error('Sign up failed:', error);
-        alert('Failed to sign up: ' + error.message);
+        // Handle errors here, such as displaying a message to the user
+        console.error("Sign up failed:", error);
+        alert("Failed to sign up: " + error.message);
         return;
       }
       setIsSigningUp(true);
     }
+  };
+
+  if (isSigningUp) {
+    return <Navigate to={"/create-profile"} replace={true} />
   }
 
-
   return (
-    <div>
-      {userLoggedIn && (<Navigate to={"/home"} replace={true} />)}
-      <form onSubmit={onSubmit}>
-        <h1>Sign Up</h1>
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit" disabled={isSigningUp}>
-          Sign Up
-        </button>
-      </form>
-      <div>
-        {errMessage ? errMessage : ''}
-      </div>
-    </div>
-  )
-}
+    <form onSubmit={onSubmit} className="w-full flex flex-col items-center gap-5">
+      <CustomInput
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        id="email"
+        labelName="Email"
+      />
+      <CustomInput
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        id="password"
+        labelName="Password"
+      />
+      <small className=" md:text-lg text-center text-[#64748b] md:w-[110%] md:mt-3">
+        By creating an account, you agree to the Terms of Service and Privacy
+        Policy
+      </small>
+      <AuthButton text="Sign Up" disabled={isSigningUp}/>
+    </form>
+  );
+};
 export default SignUp;
