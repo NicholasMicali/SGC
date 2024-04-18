@@ -4,15 +4,21 @@ import { doSignOut } from '../firebase/auth.js';
 import { Navigate } from 'react-router-dom';
 import LeftSidebar from '../components/home/leftSideBar';
 import RightSidebar from '../components/home/rightSideBar';
-import AllCards from '../components/cards/allCards.jsx';
+import AllCards from '../components/cardsPages/allCards.jsx';
+import CardFeed from '../components/cardsPages/cardFeed.jsx';
+import NewCard from '../components/cardsPages/newCard.jsx';
+import Challenge from '../components/cardsPages/challenge.jsx';
+import Recieve from '../components/cardsPages/recieve.jsx';
 import CardInfo from '../components/home/cardInfo(new).jsx';
 
 
 const HomePage = () => {
 
+
   const { currentUser } = useAuth();
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [subPage, setSubPage] = useState('feed');
+  //const [currentCard, setCurrentCard] = useState('Default Card');
 
   const signOut = async (e) => {
     e.preventDefault()
@@ -29,24 +35,35 @@ const HomePage = () => {
 
   }
 
-
+  const returnToFeed = () => {
+    setSubPage('feed');
+  }
 
   if (isSigningOut) {
     return (<Navigate to={"/"} replace={true} />)
   }
 
 
-// to do: create subpages compoentes and slot them into the conditional render.
+
   return (
     <div className="flex h-screen">
       <LeftSidebar user={currentUser} signOut={signOut} page="home"/>
-      <div className="flex-grow flex flex-col items-center overflow-auto p-4">
-        <CardInfo name="Hero-2" location="San Luis Obispo" miles="260" people="7"/>
-        {subPage == 'feed' && <></>}
-        {subPage == 'all' && <AllCards/>}
-        {subPage == 'new' && <></>}
-        {subPage == 'received' && <></>}
-        {subPage == 'challenge' && <></>}
+      <div className="flex-grow flex flex-col items-center overflow-auto px-20 py-10">
+        {subPage == 'feed' && 
+          <>
+            <div className="flex flex-row justify-center gap-4 my-4">
+              <button onClick={() => setSubPage('all')}>all cards</button>
+              <button onClick={() => setSubPage('new')}>new</button>
+              <button onClick={() => setSubPage('recieve')}>recieve</button>
+              <button onClick={() => setSubPage('challenge')}>challenge</button>
+            </div>
+            <CardFeed/>
+          </>
+          }
+        {subPage == 'all' && <AllCards back={returnToFeed}/>}
+        {subPage == 'new' && <NewCard back={returnToFeed}/>}
+        {subPage == 'recieve' && <Recieve back={returnToFeed}/>}
+        {subPage == 'challenge' && <Challenge back={returnToFeed}/>}
       </div>
       <RightSidebar />
     </div>
