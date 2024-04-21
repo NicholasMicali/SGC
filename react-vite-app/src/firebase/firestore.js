@@ -1,6 +1,6 @@
 import { db } from "../firebase/firebase";
 import { doc, setDoc } from "firebase/firestore"; 
-import { collection, addDoc, updateDoc, arrayUnion } from "firebase/firestore";
+import { collection, addDoc, updateDoc, arrayUnion, getDoc } from "firebase/firestore";
 
 
 export const doCreateUserProfile = async (uid, email, name, age, location) => {
@@ -47,7 +47,7 @@ export const doCreatePost = async (cid, title, desc, location, images) => {
   }, { merge: true });
 };
 
-// Also not tested: fetches user porfile details into a doc
+/*
 export const doFetchUserProfile = async (uid) => {
   return db.collection("user_profiles").doc(uid).get()
 }
@@ -55,13 +55,22 @@ export const doFetchUserProfile = async (uid) => {
 export const doFetchCard = async (cid) => {
   return db.collection("cards").doc(cid).get()
 }
-
-/*
-export const doFetchCards = async () => {
-
-};
-
-export const doFetchFeed = async () => {
-
-};
 */
+
+export const doFetchUserProfile = async (uid) => {
+  const userDocRef = doc(db, "user_profiles", uid);
+  return getDoc(userDocRef);
+  //const docSnap = await getDoc(userDocRef);
+  /*
+  if (docSnap.exists()) {
+    return docSnap.data(); // Returns the document's data if available
+  } else {
+    throw new Error("No profile found for this user.");
+  }
+  */
+}
+
+export const doFetchCard = async (cid) => {
+  const cardDocRef = doc(db, "cards", cid);
+  return getDoc(cardDocRef);
+}
