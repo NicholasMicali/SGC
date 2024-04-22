@@ -14,7 +14,7 @@ export const doCreateUserProfile = async (uid, email, userType, firstName, lastN
   }, { merge: true });  // Use setDoc to merge data
 };
 
-// Not tested yet: creates a new card which is tied to the user by the uid
+
 export const doCreateCard = async (uid, title, code, text, cEmail) => {
   const cardsCollectionRef = collection(db, "cards");
 
@@ -48,15 +48,6 @@ export const doCreatePost = async (cid, title, desc, location, images) => {
   }, { merge: true });
 };
 
-/*
-export const doFetchUserProfile = async (uid) => {
-  return db.collection("user_profiles").doc(uid).get()
-}
-
-export const doFetchCard = async (cid) => {
-  return db.collection("cards").doc(cid).get()
-}
-*/
 
 export const doFetchUserProfile = async (uid) => {
   const userDocRef = doc(db, "user_profiles", uid);
