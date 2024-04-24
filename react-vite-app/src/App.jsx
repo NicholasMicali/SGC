@@ -5,7 +5,10 @@ import { AuthProvider } from './auth/index';
 import HomePage from './pages/Home';
 import LoginPage from './pages/Login';
 import CreateProfilePage from './pages/CreateProfile';
-import NotFound from './pages/NotFound';
+import NotFoundPage from './pages/NotFound';
+import AccountPage from './pages/Account';
+import InspirationPage from './pages/Inspiration';
+import JournalPage from './pages/Journal';
 
 function App() {
   return (
@@ -16,7 +19,10 @@ function App() {
             <Route path="/" element={<LoginPage/>}/>
             <Route path="/home" element={<HomePage/>}/>
             <Route path="/create-profile" element={<CreateProfilePage/>}/>
-            <Route component={NotFound} />
+            <Route path="/account" element={<AccountPage/>}/>
+            <Route path="/inspiration" element={<InspirationPage/>}/>
+            <Route path="/journal" element={<JournalPage/>}/>
+            <Route path="" element={<NotFoundPage/>}/>
           </Routes>
         </AuthProvider>
       </div>

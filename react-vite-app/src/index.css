@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-#root{
+/* #root{
   padding: 0.7rem;
-}
+} */
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

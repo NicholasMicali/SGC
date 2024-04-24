@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { doCreateUserWithEmailAndPassword } from "../../firebase/auth";
 import CustomInput from "./customInput.jsx";
 import { Navigate } from "react-router-dom";
+import {motion} from "framer-motion";
+import AuthButton from "./authButton.jsx";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -29,7 +31,7 @@ const SignUp = () => {
   }
 
   return (
-    <form onSubmit={onSubmit} className="w-full flex flex-col gap-5">
+    <form onSubmit={onSubmit} className="w-full flex flex-col items-center gap-5">
       <CustomInput
         type="email"
         placeholder="Email"
@@ -46,17 +48,11 @@ const SignUp = () => {
         id="password"
         labelName="Password"
       />
-      <small>
+      <small className=" md:text-lg text-center text-[#64748b] md:w-[110%] md:mt-3">
         By creating an account, you agree to the Terms of Service and Privacy
         Policy
       </small>
-      <button
-        type="submit"
-        disabled={isSigningUp}
-        className="  bg-gradient-to-tr rounded-xl p-2 text-white from-gradient-start via-gradient-mid to-gradient-end"
-      >
-        Sign Up
-      </button>
+      <AuthButton text="Sign Up" disabled={isSigningUp}/>
     </form>
   );
 };

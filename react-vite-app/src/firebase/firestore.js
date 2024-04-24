@@ -1,12 +1,81 @@
 import { db } from "../firebase/firebase";
 import { doc, setDoc } from "firebase/firestore"; 
+import { collection, addDoc, updateDoc, arrayUnion, getDoc } from "firebase/firestore";
 
-export const doCreateUserProfile = async (uid, email, name, age, location) => {
+
+export const doCreateUserProfile = async (uid, email, userType, firstName, lastName, location) => {
   const userDoc = doc(db, "user_profiles", uid);  // Create a reference to the user profile document
   return setDoc(userDoc, {
-    name,
+    userType,
+    firstName,
+    lastName,
     email,
-    age,
     location
   }, { merge: true });  // Use setDoc to merge data
 };
+
+
+export const doCreateCard = async (uid, title, code, text, cEmail) => {
+  const cardsCollectionRef = collection(db, "cards");
+
+  // Add a new document with a generated id to the 'cards' collection
+  return addDoc(cardsCollectionRef, {
+    uid,
+    title,
+    code,
+    text,
+    cEmail,
+  });
+};
+
+
+export const doCardToUserProfile = async (uid, cardId) => {
+  const userDocRef = doc(db, "user_profiles", uid);
+  return updateDoc(userDocRef, {
+    cards: arrayUnion(cardId) // Adds the new cardId to the 'cards' array without duplicates
+  }, { merge: true });
+};
+
+
+
+export const doCreatePost = async (cid, uid, uName, title, desc, location, images) => {
+  const postsCollectionRef = collection(db, "posts");
+
+  return addDoc(postsCollectionRef, {
+    cid,
+    uid,
+    uName,
+    title,
+    desc,
+    location,
+    images,
+  });
+};
+
+export const doPostToCard = async (cid, postId) => {
+  const cardDocRef = doc(db, "cards", cid);
+  return updateDoc(cardDocRef, {
+    posts: arrayUnion(postId) // Adds the new cardId to the 'cards' array without duplicates
+  }, { merge: true });
+};
+
+
+export const doFetchUserProfile = async (uid) => {
+  const userDocRef = doc(db, "user_profiles", uid);
+  return getDoc(userDocRef);
+  //const docSnap = await getDoc(userDocRef);
+  /*
+  if (docSnap.exists()) {
+    return docSnap.data(); // Returns the document's data if available
+  } else {
+    throw new Error("No profile found for this user.");
+  }
+  */
+}
+
+export const doFetchCard = async (cid) => {
+  const cardDocRef = doc(db, "cards", cid);
+  return getDoc(cardDocRef);
+}
+
+
