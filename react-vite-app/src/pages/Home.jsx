@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../auth/index';
 import { doSignOut } from '../firebase/auth.js';
 import { Navigate } from 'react-router-dom';
-import SearchBar from '../components/auth/searchbar.jsx';
+import SearchBar from '../components/home/searchbar.jsx';
 import LeftSidebar from '../components/home/leftSideBar';
 import RightSidebar from '../components/home/rightSideBar';
 import AllCards from '../components/cardsPages/allCards.jsx';
