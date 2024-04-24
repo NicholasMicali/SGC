@@ -28,6 +28,7 @@ export const doCreateCard = async (uid, title, code, text, cEmail) => {
   });
 };
 
+
 export const doCardToUserProfile = async (uid, cardId) => {
   const userDocRef = doc(db, "user_profiles", uid);
   return updateDoc(userDocRef, {
@@ -36,15 +37,25 @@ export const doCardToUserProfile = async (uid, cardId) => {
 };
 
 
-// Also not tested yet: creates a new post which is tied to a card by the cid
-export const doCreatePost = async (cid, title, desc, location, images) => {
-  const postDoc = doc(db, "cards"); 
-  return setDoc(postDoc, {
+
+export const doCreatePost = async (cid, uid, uName, title, desc, location, images) => {
+  const postsCollectionRef = collection(db, "posts");
+
+  return addDoc(postsCollectionRef, {
     cid,
+    uid,
+    uName,
     title,
     desc,
     location,
     images,
+  });
+};
+
+export const doPostToCard = async (cid, postId) => {
+  const cardDocRef = doc(db, "cards", cid);
+  return updateDoc(cardDocRef, {
+    posts: arrayUnion(postId) // Adds the new cardId to the 'cards' array without duplicates
   }, { merge: true });
 };
 
@@ -66,3 +77,5 @@ export const doFetchCard = async (cid) => {
   const cardDocRef = doc(db, "cards", cid);
   return getDoc(cardDocRef);
 }
+
+
