@@ -4,13 +4,20 @@ import { doFetchUserProfile } from "../../firebase/firestore";
 import CardsButton from '../cardsPages/cardsButton.jsx';
 import NewCard from '../cardsPages/newCard.jsx';
 import Recieve from '../cardsPages/recieve.jsx';
+import personIcon from '../../assets/person_icon.svg';
+
 
 const AllCards = ({back, user}) => {
 
   const [userProfile, setUserProfile] = useState(null);
   const [cards, setCards] = useState([]);
   const [subPage, setSubPage] = useState('all');
-
+  cards.push({
+    "title": "title",
+    "location": "location",
+    "furthest": "furthest",
+    "people": "people"
+  })
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
@@ -48,8 +55,8 @@ const AllCards = ({back, user}) => {
     <div className="flex flex-col w-full gap-4">
       <button className="self-start ml-4 mt-2" onClick={back}>Back</button>
       <div className="container w=full">
-      <div className="ml-4 mb-2 text-lg font-bold">All Cards:</div>
-      <div className="flex w-full space-x-2">
+      <div className="mb-10 text-2xl font-bold">All Cards</div>
+      <div className="flex w-full space-x-4 mb-5">
         <CardsButton
                   className = "flex-grow"
                   text = "New Card"
@@ -70,27 +77,22 @@ const AllCards = ({back, user}) => {
         </CardsButton>
       </div>   
     </div>
-      <div className="flex flex-col items-left">
-        {cards.map((card, index) => (
-          <div key={index} className="card bg-white shadow-lg p-4 rounded-lg">
-          <div className="flex items-center gap-2">
-            <p>┃</p>
+      <div className="flex flex-col items-start">
+      <div className="mb-2 text-lg font-bold">Your Challenge Cards</div>
+      {cards.map((card, index) => (
+          <div key={index} className={`card bg-allCards-green rounded-xl w-full max-w-2xl max-w-lg ${index !== cards.length - 1 ? 'mb-4' : ''}`}>
+          <div className="flex w-full justify-between text-xl py-2 m-4">
             <p>{card.title}</p>
-          </div>
-          <div className="flex items-center gap-2">
-            <p>┃</p>
-            <p>{card.location}📍</p>
-          </div>
-          <div className="flex items-center gap-2">
-            <p>┃</p>
+            <p className="text-gray-500">┃</p>
+            <p>{card.location} 📍</p>
+            <p className="text-gray-500">┃</p>
             <p>{card.furthest} miles</p>
-          </div>
-          <div className="flex items-center gap-2">
-            <p>┃</p>
+            <p className="text-gray-500">┃</p>
             <p>{card.people}</p>
+            <img src={personIcon} alt="Person Icon" className="h-6 w-6 mr-10" />
           </div>
         </div>
-        ))}
+      ))}
       </div>
         {subPage == 'new' && <NewCard back={returnToAllCards} user={user}/>}
         {subPage == 'recieve' && <Recieve back={returnToAllCards} user={user}/>}
