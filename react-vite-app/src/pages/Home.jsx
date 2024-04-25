@@ -106,14 +106,10 @@ const HomePage = () => {
                 onClick={() => setSubPage('challenge')}>
               </CardsButton>
             </div>
-            <CardFeed card={currentCard}/>
-            
-            <GetStarted 
-              sizeHeader='48px'
-              sizeText='32px'
-              setSubPage={setSubPage}>
-              
-            </GetStarted>
+            <CardFeed 
+              card={currentCard}
+              setsubPage={setSubPage}
+              />
           </>
           }
         {subPage == 'all' && <AllCards back={returnToFeed} user={currentUser} select={selectCard}/>}
