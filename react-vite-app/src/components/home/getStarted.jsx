@@ -17,6 +17,8 @@ const GetStarted = ({sizeHeader, sizeText, setSubPage}) => {
                     <div className="flex items-center space-x-4">
                         <p className="font-bold text-lg">Create your own card with</p>
                         <CardsButton
+                            width = '162px'
+                            height='46.575px'
                             text = "New Card"
                             borderColor="#48B8E6"
                             textColor= "#1D9FD5"
@@ -28,6 +30,8 @@ const GetStarted = ({sizeHeader, sizeText, setSubPage}) => {
                     <div className="flex items-center space-x-4">
                         <p className="font-bold text-lg">Then, challenge other with</p>
                         <CardsButton
+                            width = '162px'
+                            height='46.575px'
                             text = "Challenge"
                             borderColor="#FD3B8A"
                             textColor= "#FC086B"
@@ -40,6 +44,8 @@ const GetStarted = ({sizeHeader, sizeText, setSubPage}) => {
                 <div className="flex items-center space-x-4">
                     <p className="text-lg font-bold">Write the code you received with</p>
                     <CardsButton
+                        width = '162px'
+                        height='46.575px'
                         text = "Receive"
                         borderColor="#F2DD69"
                         textColor= "#EDD134"
