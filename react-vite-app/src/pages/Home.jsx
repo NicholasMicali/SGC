@@ -109,8 +109,8 @@ const HomePage = () => {
             <CardFeed card={currentCard}/>
             
             <GetStarted 
-              sizeHeader='24px'
-              sizeText='18px'
+              sizeHeader='48px'
+              sizeText='32px'
               setSubPage={setSubPage}>
               
             </GetStarted>

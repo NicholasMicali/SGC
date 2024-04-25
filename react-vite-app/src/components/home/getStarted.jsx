@@ -5,7 +5,7 @@ const GetStarted = ({sizeHeader, sizeText, setSubPage}) => {
     return(
         <div>
             <h1 style={{ fontSize: sizeHeader }} className="font-bold flex flex-col justify-center items-center">
-                <span>Welcome to</span>
+                <span>Welcome to Spread Goodness</span>
                 <span className="-mt-2">Challenge!</span>
                 <p style={{ fontSize: sizeText }} className="font-normal flex flex-col justify-center items-center">
                     To get started
