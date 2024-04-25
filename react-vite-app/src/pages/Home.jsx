@@ -66,6 +66,8 @@ const HomePage = () => {
             <SearchBar onSearch={handleSearch} width = "full"/>
             <div className="flex flex-row justify-between gap-4 my-4 w-full">
               <CardsButton
+                width = '180px'
+                height='51.75px'
                 text = "All cards"
                 borderColor="#BEDF3D"
                 textColor= "#8DAB1C"
@@ -74,6 +76,8 @@ const HomePage = () => {
                 onClick={() => setSubPage('all')}>
                 </CardsButton>
               <CardsButton
+                width = '180px'
+                height='51.75px'
                 text = "New Card"
                 borderColor="#48B8E6"
                 textColor= "#1D9FD5"
@@ -82,6 +86,8 @@ const HomePage = () => {
                 onClick={() => setSubPage('new')}>
               </CardsButton>
               <CardsButton
+                width = '180px'
+                height='51.75px'
                 text = "Receive"
                 borderColor="#F2DD69"
                 textColor= "#EDD134"
@@ -90,6 +96,8 @@ const HomePage = () => {
                 onClick={() => setSubPage('recieve')}>
               </CardsButton>
               <CardsButton
+                width = '180px'
+                height='51.75px'
                 text = "Challenge"
                 borderColor="#FD3B8A"
                 textColor= "#FC086B"
