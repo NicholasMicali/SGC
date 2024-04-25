@@ -3,7 +3,7 @@ import { doFetchCard } from "../../firebase/firestore";
 import { doFetchUserProfile } from "../../firebase/firestore";
 
 
-const AllCards = ({back, user}) => {
+const AllCards = ({back, user, select}) => {
 
   const [userProfile, setUserProfile] = useState(null);
   const [cards, setCards] = useState([]);
@@ -46,6 +46,7 @@ const AllCards = ({back, user}) => {
           <div key={index} className="card">
             <h2 className="font-bold text-xl mt-4">{card.title}</h2>
             <p>{card.text}</p>
+            <button onClick={() => select(card)}>Select Card!</button>
           </div>
         ))}
       </div>
