@@ -11,7 +11,10 @@ import NewCard from '../components/cardsPages/newCard.jsx';
 import Challenge from '../components/cardsPages/challenge.jsx';
 import Recieve from '../components/cardsPages/recieve.jsx';
 import CardsButton from '../components/cardsPages/cardsButton.jsx';
-
+import AllCardIcon from "../assets/AllCardIcon.svg"
+import NewCardIcon from "../assets/NewCardIcon.svg"
+import ReceiveIcon from "../assets/ReceiveIcon.svg"
+import ChallengeIcon from "../assets/ChallengeIcon.svg"
 
 const HomePage = () => {
 
@@ -59,11 +62,11 @@ const HomePage = () => {
             <SearchBar onSearch={handleSearch} width = "full"/>
             <div className="flex flex-row justify-between gap-4 my-4 w-full">
               <CardsButton
-                text = "All cards"
+                text = "All Cards"
                 borderColor="#BEDF3D"
                 textColor= "#8DAB1C"
                 backgroundColor="#EAF4C0"
-                //icon={None}//add icon in later
+                icon={AllCardIcon}
                 onClick={() => setSubPage('all')}>
                 </CardsButton>
               <CardsButton
@@ -71,7 +74,7 @@ const HomePage = () => {
                 borderColor="#48B8E6"
                 textColor= "#1D9FD5"
                 backgroundColor="#D1EDF9"
-                //icon={None}//add icon in later
+                icon={NewCardIcon}
                 onClick={() => setSubPage('new')}>
               </CardsButton>
               <CardsButton
@@ -79,7 +82,7 @@ const HomePage = () => {
                 borderColor="#F2DD69"
                 textColor= "#EDD134"
                 backgroundColor="#FCF7DA"
-                //icon={None}//add icon in later
+                icon={ReceiveIcon}
                 onClick={() => setSubPage('recieve')}>
               </CardsButton>
               <CardsButton
@@ -87,7 +90,7 @@ const HomePage = () => {
                 borderColor="#FD3B8A"
                 textColor= "#FC086B"
                 backgroundColor="#FFD3E5"
-                //icon={None}//add icon in later
+                icon={ChallengeIcon}
                 onClick={() => setSubPage('challenge')}>
               </CardsButton>
             </div>
