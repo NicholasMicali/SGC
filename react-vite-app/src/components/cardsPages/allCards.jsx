@@ -7,7 +7,7 @@ import Recieve from '../cardsPages/recieve.jsx';
 import personIcon from '../../assets/person_icon.svg';
 
 
-const AllCards = ({back, user}) => {
+const AllCards = ({back, user, select}) => {
 
   const [userProfile, setUserProfile] = useState(null);
   const [cards, setCards] = useState([]);
@@ -80,7 +80,7 @@ const AllCards = ({back, user}) => {
       <div className="flex flex-col items-start">
       <div className="mb-2 text-lg font-bold">Your Challenge Cards</div>
       {cards.map((card, index) => (
-          <div key={index} className={`card bg-allCards-green rounded-xl w-full max-w-2xl max-w-lg ${index !== cards.length - 1 ? 'mb-4' : ''}`}>
+          <div key={index} className={`card bg-allCards-green rounded-xl w-full max-w-2xl overflow-hidden ${index !== cards.length - 1 ? 'mb-4' : ''}`}>
           <div className="flex w-full justify-between text-xl py-2 m-4">
             <p>{card.title}</p>
             <p className="text-gray-500">┃</p>
@@ -89,7 +89,8 @@ const AllCards = ({back, user}) => {
             <p>{card.furthest} miles</p>
             <p className="text-gray-500">┃</p>
             <p>{card.people}</p>
-            <img src={personIcon} alt="Person Icon" className="h-6 w-6 mr-10" />
+            <img src={personIcon} alt="Person Icon" className="h-6 w-6 mr-2" />
+            <button className="w-auto" onClick={() => select(card)}>Select Card!</button>
           </div>
         </div>
       ))}

@@ -19,7 +19,7 @@ const HomePage = () => {
   const { currentUser } = useAuth();
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [subPage, setSubPage] = useState('feed');
-  //const [currentCard, setCurrentCard] = useState('Default Card');
+  const [currentCard, setCurrentCard] = useState(null);
 
   const signOut = async (e) => {
     e.preventDefault()
@@ -43,6 +43,12 @@ const HomePage = () => {
   const returnToFeed = () => {
     setSubPage('feed');
   }
+
+  const selectCard = (card) => {
+    setCurrentCard(card);
+    setSubPage('feed');
+  }
+
 
   if (isSigningOut) {
     return (<Navigate to={"/"} replace={true} />)
@@ -91,10 +97,10 @@ const HomePage = () => {
                 onClick={() => setSubPage('challenge')}>
               </CardsButton>
             </div>
-            <CardFeed/>
+            <CardFeed card={currentCard}/>
           </>
           }
-        {subPage == 'all' && <AllCards back={returnToFeed} user={currentUser}/>}
+        {subPage == 'all' && <AllCards back={returnToFeed} user={currentUser} select={selectCard}/>}
         {subPage == 'new' && <NewCard back={returnToFeed} user={currentUser}/>}
         {subPage == 'recieve' && <Recieve back={returnToFeed} user={currentUser}/>}
         {subPage == 'challenge' && <Challenge back={returnToFeed}/>}
