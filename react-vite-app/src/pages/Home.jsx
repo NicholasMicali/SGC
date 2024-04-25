@@ -108,7 +108,7 @@ const HomePage = () => {
             </div>
             <CardFeed 
               card={currentCard}
-              setsubPage={setSubPage}
+              setSubPage={setSubPage}
               />
           </>
           }
