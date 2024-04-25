@@ -11,6 +11,7 @@ import NewCard from '../components/cardsPages/newCard.jsx';
 import Challenge from '../components/cardsPages/challenge.jsx';
 import Recieve from '../components/cardsPages/recieve.jsx';
 import CardsButton from '../components/cardsPages/cardsButton.jsx';
+import GetStarted from '../components/home/getStarted.jsx';
 
 
 const HomePage = () => {
@@ -98,6 +99,13 @@ const HomePage = () => {
               </CardsButton>
             </div>
             <CardFeed card={currentCard}/>
+            
+            <GetStarted 
+              sizeHeader='24px'
+              sizeText='18px'
+              setSubPage={setSubPage}>
+              
+            </GetStarted>
           </>
           }
         {subPage == 'all' && <AllCards back={returnToFeed} user={currentUser} select={selectCard}/>}
