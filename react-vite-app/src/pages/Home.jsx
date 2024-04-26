@@ -11,10 +11,12 @@ import NewCard from '../components/cardsPages/newCard.jsx';
 import Challenge from '../components/cardsPages/challenge.jsx';
 import Recieve from '../components/cardsPages/recieve.jsx';
 import CardsButton from '../components/cardsPages/cardsButton.jsx';
+import GetStarted from '../components/home/getStarted.jsx';
 import AllCardIcon from "../assets/AllCardIcon.svg"
 import NewCardIcon from "../assets/NewCardIcon.svg"
 import ReceiveIcon from "../assets/ReceiveIcon.svg"
 import ChallengeIcon from "../assets/ChallengeIcon.svg"
+
 
 const HomePage = () => {
 
@@ -68,7 +70,9 @@ const HomePage = () => {
             <SearchBar onSearch={handleSearch} width = "full"/>
             <div className="flex flex-row justify-between gap-4 my-4 w-full">
               <CardsButton
-                text = "All Cards"
+                width = '180px'
+                height='51.75px'
+                text = "All cards"
                 borderColor="#BEDF3D"
                 textColor= "#8DAB1C"
                 backgroundColor="#EAF4C0"
@@ -76,6 +80,8 @@ const HomePage = () => {
                 onClick={() => setSubPage('all')}>
                 </CardsButton>
               <CardsButton
+                width = '180px'
+                height='51.75px'
                 text = "New Card"
                 borderColor="#48B8E6"
                 textColor= "#1D9FD5"
@@ -84,6 +90,8 @@ const HomePage = () => {
                 onClick={() => setSubPage('new')}>
               </CardsButton>
               <CardsButton
+                width = '180px'
+                height='51.75px'
                 text = "Receive"
                 borderColor="#F2DD69"
                 textColor= "#EDD134"
@@ -92,6 +100,8 @@ const HomePage = () => {
                 onClick={() => setSubPage('recieve')}>
               </CardsButton>
               <CardsButton
+                width = '180px'
+                height='51.75px'
                 text = "Challenge"
                 borderColor="#FD3B8A"
                 textColor= "#FC086B"
@@ -100,7 +110,10 @@ const HomePage = () => {
                 onClick={() => setSubPage('challenge')}>
               </CardsButton>
             </div>
-            <CardFeed card={currentCard}/>
+            <CardFeed 
+              card={currentCard}
+              setSubPage={setSubPage}
+              />
           </>
           }
         {subPage == 'all' && <AllCards back={returnToFeed} user={currentUser} select={selectCard}/>}

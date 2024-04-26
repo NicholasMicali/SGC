@@ -1,13 +1,23 @@
 import React from 'react';
 import CardInfo from '../home/cardInfo.jsx';
+import GetStarted from '../home/getStarted.jsx'
 
-const CardFeed = ({card}) => {
+const CardFeed = ({card, setSubPage}) => {
 
   if (card === null) {
     return(
       <div>
-        No Card?
+         <div className='flex justify-center'>
+          No Card?
+        </div>
+        <GetStarted 
+              sizeHeader='32px'
+              sizeText='24px'
+              setSubPage={setSubPage}>
+              
+        </GetStarted>
       </div>
+      
     );
   }
 
