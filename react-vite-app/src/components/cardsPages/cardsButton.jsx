@@ -1,12 +1,14 @@
 import React from "react";
 
 
-const CardsButton = ({ text, borderColor, textColor, backgroundColor, onClick, icon }) => {
+const CardsButton = ({ height, width, text, borderColor, textColor, backgroundColor, onClick, icon }) => {
   return (
     <button
       className="w-[180px] h-[51.75px] rounded-lg border-[2px] flex justify-center items-center px-4"
       onClick={onClick}
       style={{
+        height: height,
+        width: width,
         borderColor: borderColor,
         backgroundColor: backgroundColor
       }}
