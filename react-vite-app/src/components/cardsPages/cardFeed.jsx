@@ -1,26 +1,27 @@
 import React from 'react';
 import CardInfo from '../home/cardInfo.jsx';
 import GetStarted from '../home/getStarted.jsx'
+import TextCard from '../home/textCard.jsx';
 
 const CardFeed = ({card, setSubPage}) => {
 
   if (card === null) {
     return(
       <div>
-         <div className='flex justify-center'>
-          No Card?
-        </div>
         <GetStarted 
               sizeHeader='32px'
               sizeText='24px'
               setSubPage={setSubPage}>
-              
         </GetStarted>
       </div>
       
     );
   }
-
+/* To DO: Fetch all the posts from the card, map them to TextCards:
+          {posts.map((post, index) => (
+            <TextCard loc={post.location} date={"April 24th"} title={post.title} description={post.desc} studName={post.uName}/>
+          ))}
+*/
 
   return (
     <div className="flex flex-col justify-center items-center w-full">
