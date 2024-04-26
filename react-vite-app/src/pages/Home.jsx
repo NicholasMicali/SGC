@@ -23,7 +23,7 @@ const HomePage = () => {
 
   const { currentUser } = useAuth();
   const [isSigningOut, setIsSigningOut] = useState(false);
-  const [subPage, setSubPage] = useState('feed');
+  const [subPage, setSubPage] = useState('Feed');
   const [currentCard, setCurrentCard] = useState(null);
 
   const signOut = async (e) => {

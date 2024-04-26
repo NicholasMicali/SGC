@@ -4,7 +4,7 @@ import NavMenu from './navMenu';
 
 const LeftSidebar = ({user, signOut, page}) => {
   return (
-    <div className="w-64 bg-gray-200 h-full overflow-auto p-4 flex flex-col items-center">
+    <div className="w-64 bg-[#fff6fa] h-full overflow-auto p-4 flex flex-col items-center">
       <img src={Logo} alt="Spread Goodness logo" className="p-4 mb-4"/>
       <div className="flex flex-row mb-8">
         <img src={user.photoURL} alt="Profile Pic" className="w-12 h-12 rounded-full mr-2"></img>
