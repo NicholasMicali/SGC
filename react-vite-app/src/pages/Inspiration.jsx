@@ -34,7 +34,7 @@ const InspirationPage = () => {
 
   return (
     <div className="flex h-screen">
-      <LeftSidebar user={currentUser} signOut={signOut} page="inspiration"/>
+      <LeftSidebar user={currentUser} signOut={signOut} page="Inspiration"/>
       <div className="flex-grow flex flex-col items-center overflow-auto p-4">
         Inspiration Page
       </div>

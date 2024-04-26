@@ -34,7 +34,7 @@ const JournalPage = () => {
 
   return (
     <div className="flex h-screen">
-      <LeftSidebar user={currentUser} signOut={signOut} page="journal"/>
+      <LeftSidebar user={currentUser} signOut={signOut} page="Journal"/>
       <div className="flex-grow flex flex-col items-center overflow-auto p-4">
         Journal Page
       </div>

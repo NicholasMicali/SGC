@@ -20,7 +20,7 @@ const NavMenu = ({page}) => {
           <NavItem icon={FeedIcon} text="Feed" page={page} onClick={() => onClick('/home')}/>
           <NavItem icon={InspirationIcon} text="Inspiration" page={page} onClick={() => onClick('/inspiration')}/>
           <NavItem icon={JournalIcon} text="Journal" page={page} onClick={() => onClick('/journal')}/>
-          <NavItem icon={AccountSettingsIcon} text="Account Settings" page={page} onClick={() => onClick('/account-settings')}/>
+          <NavItem icon={AccountSettingsIcon} text="Account Settings" page={page} onClick={() => onClick('/account')}/>
           <div>
             FAQ
           </div>

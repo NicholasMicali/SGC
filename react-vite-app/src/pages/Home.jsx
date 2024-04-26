@@ -23,7 +23,7 @@ const HomePage = () => {
 
   const { currentUser } = useAuth();
   const [isSigningOut, setIsSigningOut] = useState(false);
-  const [subPage, setSubPage] = useState('Feed');
+  const [subPage, setSubPage] = useState('feed');
   const [currentCard, setCurrentCard] = useState(null);
 
   const signOut = async (e) => {
@@ -63,7 +63,7 @@ const HomePage = () => {
 
   return (
     <div className="flex h-screen">
-      <LeftSidebar user={currentUser} signOut={signOut} page="home"/>
+      <LeftSidebar user={currentUser} signOut={signOut} page="Feed"/>
       <div className="flex-grow flex flex-col items-center overflow-auto px-20 py-10">
         {subPage == 'feed' && 
           <>
@@ -115,7 +115,7 @@ const HomePage = () => {
               setSubPage={setSubPage}
               />
           </>
-          }
+        }
         {subPage == 'all' && <AllCards back={returnToFeed} user={currentUser} select={selectCard}/>}
         {subPage == 'new' && <NewCard back={returnToFeed} user={currentUser}/>}
         {subPage == 'recieve' && <Recieve back={returnToFeed} user={currentUser}/>}
