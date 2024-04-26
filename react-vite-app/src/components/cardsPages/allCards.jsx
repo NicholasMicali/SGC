@@ -50,7 +50,19 @@ const AllCards = ({back, user, select}) => {
     }
   };
 
-//to do: fetch the full user profile from firestore, for each card in user.cards fetch the card from firestore and display it.
+//to do: Make it look nicer
+
+/* maybe use this later
+<div className="flex w-full justify-between text-xl py-2 m-4">
+            <p>{card.title}</p>
+            <p className="text-gray-500">┃</p>
+            <p>{card.location} 📍</p>
+            <p className="text-gray-500">┃</p>
+            <p>{card.furthest} miles</p>
+            <p className="text-gray-500">┃</p>
+            <p>{card.people}</p>
+            <img src={personIcon} alt="Person Icon" className="h-6 w-6 mr-2" />
+*/
   return (
     <div className="flex flex-col w-full gap-4">
       <button className="self-start ml-4 mt-2" onClick={back}>Back</button>
