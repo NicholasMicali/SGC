@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { doFetchCard } from "../../firebase/firestore";
 import { doFetchUserProfile } from "../../firebase/firestore";
+import CardInfo from '../home/cardInfo';
 
 
 const AllCards = ({back, user, select}) => {
@@ -49,19 +50,25 @@ const AllCards = ({back, user, select}) => {
             <p>{card.people}</p>
             <img src={personIcon} alt="Person Icon" className="h-6 w-6 mr-2" />
 */
-  return (
-    <div className="flex flex-col justify-center items-center gap-4">
-      <button onClick={back}>Back</button>
-      <div>All Cards:</div>
-      <div className="flex flex-col items-left">
-        {cards.map((card, index) => (
-          <div key={index} className="card">
+
+/*
+<div key={index} className="card">
             <h2 className="font-bold text-xl mt-4">{card.title}</h2>
             <p>{card.text}</p>
             <button onClick={() => select(card)}>Select Card!</button>
           </div>
-        ))}
+*/
+  return (
+    <div className="flex flex-col justify-center items-center gap-4 w-full">
+      <button onClick={back}>Back</button>
+      <div className="self-start">
+          All Cards:
       </div>
+      {cards.map((card, index) => (
+        <div className="w-full cursor-pointer" onClick={() => select(card)}>
+          <CardInfo name={card.title} location="1" miles="250" people={card.posts ? card.posts.length : "0"}/>
+        </div>
+      ))}
     </div>
   );
 };

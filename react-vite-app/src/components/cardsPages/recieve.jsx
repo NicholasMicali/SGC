@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import CustomInput from '../auth/customInput';
 import { doCreatePost, doPostToCard, doFetchCard, doFetchUserProfile } from "../../firebase/firestore";
 
-// cid, uid, uName, title, desc, location, images
+// TO DO: If the user navigates from a new card on feed page to here, 
+// have this component take in the value of the card ID as a prop, the call onCodeEntered so they go right to the form.
 
-const Recieve = ({back, user}) => {
+const Recieve = ({back, user, initCode, first}) => {
   const [isCreatingPost, setIsCreatingPost] = useState(false);
   const [isCodeFound, setIsCodeFound] = useState(false);
   const [code, setCode] = useState('');
@@ -22,6 +23,10 @@ const Recieve = ({back, user}) => {
         const profile = await doFetchUserProfile(user.uid);
         setUserProfile(profile.data());
         console.log(profile.data());
+        if (first) {
+          setCode(initCode);
+          setIsCodeFound(true);
+        }
       } catch (error) {
         console.error("Failed to fetch user profile:", error);
       }

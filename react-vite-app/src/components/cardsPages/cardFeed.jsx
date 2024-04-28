@@ -4,14 +4,16 @@ import GetStarted from '../home/getStarted.jsx'
 import TextCard from '../home/textCard.jsx';
 import { doFetchPost } from '../../firebase/firestore.js';
 
-const CardFeed = ({card, setSubPage}) => {
+const CardFeed = ({card, setSubPage, firstPost}) => {
   const [cardExists, setCardExists] = useState(false);
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     if (card != null) {
       setCardExists(true);
-      fetchPosts(card.posts);
+      if (card.posts != null) {
+        fetchPosts(card.posts);
+      }
     }
 
   }, [card]);
@@ -41,14 +43,17 @@ const CardFeed = ({card, setSubPage}) => {
     );
   }
 
-  
+
   return (
     <div className="flex flex-col justify-center items-center w-full">
+      <div className="self-start">
+          Card Info:
+      </div>
       <CardInfo name={card.title} location="San Luis Obispo" miles="260" people="7"/>
       {card.posts == null ? 
         <>
           <div>No posts yet?</div>
-          <button>Add the first post!</button>
+          <button onClick={firstPost}>Add the first post!</button>
         </>
       : 
         <>

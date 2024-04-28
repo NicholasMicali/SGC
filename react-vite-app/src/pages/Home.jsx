@@ -25,6 +25,7 @@ const HomePage = () => {
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [subPage, setSubPage] = useState('feed');
   const [currentCard, setCurrentCard] = useState(null);
+  const [isFirstPost, setIsFirstPost] = useState(false);
 
   const signOut = async (e) => {
     e.preventDefault()
@@ -54,6 +55,10 @@ const HomePage = () => {
     setSubPage('feed');
   }
 
+  const firstPost = () => {
+    setIsFirstPost(true)
+    setSubPage('recieve');
+  }
 
   if (isSigningOut) {
     return (<Navigate to={"/"} replace={true} />)
@@ -113,12 +118,13 @@ const HomePage = () => {
             <CardFeed 
               card={currentCard}
               setSubPage={setSubPage}
+              firstPost={firstPost}
               />
           </>
         }
         {subPage == 'all' && <AllCards back={returnToFeed} user={currentUser} select={selectCard}/>}
         {subPage == 'new' && <NewCard back={returnToFeed} user={currentUser}/>}
-        {subPage == 'recieve' && <Recieve back={returnToFeed} user={currentUser}/>}
+        {subPage == 'recieve' && <Recieve back={returnToFeed} user={currentUser} initCode={currentCard.id} first={isFirstPost}/>}
         {subPage == 'challenge' && <Challenge back={returnToFeed}/>}
       </div>
       <RightSidebar />
