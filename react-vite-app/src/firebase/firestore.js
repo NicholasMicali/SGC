@@ -78,4 +78,8 @@ export const doFetchCard = async (cid) => {
   return getDoc(cardDocRef);
 }
 
+export const doFetchPost = async (pid) => {
+  const postDocRef = doc(db, "posts", pid);
+  return getDoc(postDocRef);
+}
 
