@@ -20,11 +20,11 @@ import ChallengeIcon from "../assets/ChallengeIcon.svg"
 
 const HomePage = () => {
 
-
   const { currentUser } = useAuth();
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [subPage, setSubPage] = useState('feed');
   const [currentCard, setCurrentCard] = useState(null);
+  const [currentCid, setCurrentCid] = useState(null);
   const [isFirstPost, setIsFirstPost] = useState(false);
 
   const signOut = async (e) => {
@@ -50,8 +50,9 @@ const HomePage = () => {
     setSubPage('feed');
   }
 
-  const selectCard = (card) => {
+  const selectCard = (card, cid) => {
     setCurrentCard(card);
+    setCurrentCid(cid);
     setSubPage('feed');
   }
 
@@ -124,8 +125,8 @@ const HomePage = () => {
         }
         {subPage == 'all' && <AllCards back={returnToFeed} user={currentUser} select={selectCard}/>}
         {subPage == 'new' && <NewCard back={returnToFeed} user={currentUser}/>}
-        {subPage == 'recieve' && <Recieve back={returnToFeed} user={currentUser} initCode={currentCard.id} first={isFirstPost}/>}
-        {subPage == 'challenge' && <Challenge back={returnToFeed}/>}
+        {subPage == 'recieve' && <Recieve back={returnToFeed} user={currentUser} initCode={currentCid} first={isFirstPost}/>}
+        {subPage == 'challenge' && <Challenge back={returnToFeed} user={currentUser} code={currentCid}/>}
       </div>
       <RightSidebar />
     </div>

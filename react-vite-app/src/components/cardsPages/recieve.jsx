@@ -22,9 +22,8 @@ const Recieve = ({back, user, initCode, first}) => {
       try {
         const profile = await doFetchUserProfile(user.uid);
         setUserProfile(profile.data());
-        console.log(profile.data());
-        if (first) {
-          setCode(initCode);
+        if (first && initCode != null) {
+          setCid(initCode);
           setIsCodeFound(true);
         }
       } catch (error) {
@@ -40,6 +39,7 @@ const Recieve = ({back, user, initCode, first}) => {
     if (!isCreatingPost){
       setIsCreatingPost(true);
       try {
+        console.log(cid);
         const post = await doCreatePost(cid, user.uid, name, title, desc, userProfile.location, images);
         await doPostToCard(cid, post.id);
       } catch (error) {
@@ -55,6 +55,7 @@ const Recieve = ({back, user, initCode, first}) => {
     if (!isCodeFound){
       setIsCodeFound(true);
       try {
+        console.log(code);
         const card = await doFetchCard(code);
         setCid(card.id);
       } catch (error) {

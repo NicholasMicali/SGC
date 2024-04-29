@@ -8,6 +8,7 @@ const AllCards = ({back, user, select}) => {
 
   const [userProfile, setUserProfile] = useState(null);
   const [cards, setCards] = useState([]);
+  const [cids, setCids] = useState([]);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -28,6 +29,7 @@ const AllCards = ({back, user, select}) => {
 
   const fetchCards = async (cardIds) => {
     try {
+      setCids(cardIds);
       const cardPromises = cardIds.map(cardId => doFetchCard(cardId));
       const cardObjects = await Promise.all(cardPromises);
       setCards(cardObjects.map(cardObj => cardObj.data()));
@@ -65,7 +67,7 @@ const AllCards = ({back, user, select}) => {
           All Cards:
       </div>
       {cards.map((card, index) => (
-        <div className="w-full cursor-pointer" onClick={() => select(card)}>
+        <div className="w-full cursor-pointer" onClick={() => select(card, cids[index])}>
           <CardInfo name={card.title} location="1" miles="250" people={card.posts ? card.posts.length : "0"}/>
         </div>
       ))}
