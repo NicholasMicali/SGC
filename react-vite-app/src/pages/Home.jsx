@@ -128,7 +128,7 @@ const HomePage = () => {
         {subPage == 'recieve' && <Recieve back={returnToFeed} user={currentUser} initCode={currentCid} first={isFirstPost}/>}
         {subPage == 'challenge' && <Challenge back={returnToFeed} user={currentUser} code={currentCid}/>}
       </div>
-      <RightSidebar />
+      <RightSidebar card={currentCard}/>
     </div>
 
   );
