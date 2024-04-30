@@ -21,6 +21,7 @@ import ChallengeIcon from "../assets/ChallengeIcon.svg"
 const HomePage = () => {
 
   const { currentUser } = useAuth();
+  // console.log(JSON.stringify(currentUser));
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [subPage, setSubPage] = useState('feed');
   const [currentCard, setCurrentCard] = useState(null);
