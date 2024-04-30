@@ -34,7 +34,7 @@ const AccountPage = () => {
 
   return (
     <div className="flex h-screen">
-      <LeftSidebar user={currentUser} signOut={signOut} page="account"/>
+      <LeftSidebar user={currentUser} signOut={signOut} page="Account Settings"/>
       <div className="flex-grow flex flex-col items-center overflow-auto p-4">
         Account Settings Page
       </div>

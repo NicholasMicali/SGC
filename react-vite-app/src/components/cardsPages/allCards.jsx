@@ -1,23 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { doFetchCard } from "../../firebase/firestore";
 import { doFetchUserProfile } from "../../firebase/firestore";
-import CardsButton from '../cardsPages/cardsButton.jsx';
-import NewCard from '../cardsPages/newCard.jsx';
-import Recieve from '../cardsPages/recieve.jsx';
-import personIcon from '../../assets/person_icon.svg';
+import CardInfo from '../home/cardInfo';
 
 
 const AllCards = ({back, user, select}) => {
 
   const [userProfile, setUserProfile] = useState(null);
   const [cards, setCards] = useState([]);
-  const [subPage, setSubPage] = useState('all');
-  cards.push({
-    "title": "title",
-    "location": "location",
-    "furthest": "furthest",
-    "people": "people"
-  })
+  const [cids, setCids] = useState([]);
+
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
@@ -35,12 +27,9 @@ const AllCards = ({back, user, select}) => {
     fetchUserProfile();
   }, [user.uid]);
 
-  const returnToAllCards = () => {
-    setSubPage('all');
-  }
-
   const fetchCards = async (cardIds) => {
     try {
+      setCids(cardIds);
       const cardPromises = cardIds.map(cardId => doFetchCard(cardId));
       const cardObjects = await Promise.all(cardPromises);
       setCards(cardObjects.map(cardObj => cardObj.data()));
@@ -63,52 +52,25 @@ const AllCards = ({back, user, select}) => {
             <p>{card.people}</p>
             <img src={personIcon} alt="Person Icon" className="h-6 w-6 mr-2" />
 */
-  return (
-    <div className="flex flex-col w-full gap-4">
-      <button className="self-start ml-4 mt-2" onClick={back}>Back</button>
-      <div className="container w=full">
-      <div className="mb-10 text-2xl font-bold">All Cards</div>
-      <div className="flex w-full space-x-4 mb-5">
-        <CardsButton
-                  className = "flex-grow"
-                  text = "New Card"
-                  borderColor="#48B8E6"
-                  textColor= "#1D9FD5"
-                  backgroundColor="#D1EDF9"
-                  //icon={None}//add icon in later
-                  onClick={() => setSubPage('new')}>
-        </CardsButton>
-        <CardsButton
-                className = "flex-grow"
-                text = "Receive"
-                borderColor="#F2DD69"
-                textColor= "#EDD134"
-                backgroundColor="#FCF7DA"
-                //icon={None}//add icon in later
-                onClick={() => setSubPage('recieve')}>
-        </CardsButton>
-      </div>   
-    </div>
-      <div className="flex flex-col items-start">
-      <div className="mb-2 text-lg font-bold">Your Challenge Cards</div>
-      {cards.map((card, index) => (
-          <div key={index} className={`card bg-allCards-green rounded-xl w-full max-w-2xl overflow-hidden ${index !== cards.length - 1 ? 'mb-4' : ''}`}>
-          <div className="flex w-full justify-between text-xl py-2 m-4">
-            <p>{card.title}</p>
-            <p className="text-gray-500">┃</p>
-            <p>{card.location} 📍</p>
-            <p className="text-gray-500">┃</p>
-            <p>{card.furthest} miles</p>
-            <p className="text-gray-500">┃</p>
-            <p>{card.people}</p>
-            <img src={personIcon} alt="Person Icon" className="h-6 w-6 mr-2" />
-            <button className="w-auto" onClick={() => select(card)}>Select Card!</button>
+
+/*
+<div key={index} className="card">
+            <h2 className="font-bold text-xl mt-4">{card.title}</h2>
+            <p>{card.text}</p>
+            <button onClick={() => select(card)}>Select Card!</button>
           </div>
+*/
+  return (
+    <div className="flex flex-col justify-center items-center gap-4 w-full">
+      <button onClick={back}>Back</button>
+      <div className="self-start">
+          All Cards:
+      </div>
+      {cards.map((card, index) => (
+        <div className="w-full cursor-pointer" onClick={() => select(card, cids[index])}>
+          <CardInfo name={card.title} location="1" miles="250" people={card.posts ? card.posts.length : "0"}/>
         </div>
       ))}
-      </div>
-        {subPage == 'new' && <NewCard back={returnToAllCards} user={user}/>}
-        {subPage == 'recieve' && <Recieve back={returnToAllCards} user={user}/>}
     </div>
   );
 };

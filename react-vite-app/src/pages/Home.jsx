@@ -20,11 +20,12 @@ import ChallengeIcon from "../assets/ChallengeIcon.svg"
 
 const HomePage = () => {
 
-
   const { currentUser } = useAuth();
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [subPage, setSubPage] = useState('feed');
   const [currentCard, setCurrentCard] = useState(null);
+  const [currentCid, setCurrentCid] = useState(null);
+  const [isFirstPost, setIsFirstPost] = useState(false);
 
   const signOut = async (e) => {
     e.preventDefault()
@@ -49,11 +50,16 @@ const HomePage = () => {
     setSubPage('feed');
   }
 
-  const selectCard = (card) => {
+  const selectCard = (card, cid) => {
     setCurrentCard(card);
+    setCurrentCid(cid);
     setSubPage('feed');
   }
 
+  const firstPost = () => {
+    setIsFirstPost(true)
+    setSubPage('recieve');
+  }
 
   if (isSigningOut) {
     return (<Navigate to={"/"} replace={true} />)
@@ -63,7 +69,7 @@ const HomePage = () => {
 
   return (
     <div className="flex h-screen">
-      <LeftSidebar user={currentUser} signOut={signOut} page="home"/>
+      <LeftSidebar user={currentUser} signOut={signOut} page="Feed"/>
       <div className="flex-grow flex flex-col items-center overflow-auto px-20 py-10">
         {subPage == 'feed' && 
           <>
@@ -113,13 +119,14 @@ const HomePage = () => {
             <CardFeed 
               card={currentCard}
               setSubPage={setSubPage}
+              firstPost={firstPost}
               />
           </>
-          }
+        }
         {subPage == 'all' && <AllCards back={returnToFeed} user={currentUser} select={selectCard}/>}
         {subPage == 'new' && <NewCard back={returnToFeed} user={currentUser}/>}
-        {subPage == 'recieve' && <Recieve back={returnToFeed} user={currentUser}/>}
-        {subPage == 'challenge' && <Challenge back={returnToFeed}/>}
+        {subPage == 'recieve' && <Recieve back={returnToFeed} user={currentUser} initCode={currentCid} first={isFirstPost}/>}
+        {subPage == 'challenge' && <Challenge back={returnToFeed} user={currentUser} code={currentCid}/>}
       </div>
       <RightSidebar />
     </div>
