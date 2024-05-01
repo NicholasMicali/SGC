@@ -23,7 +23,7 @@ const HomePage = () => {
   const { currentUser } = useAuth();
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [subPage, setSubPage] = useState('feed');
-  const [currentCard, setCurrentCard] = useState(null);
+  const [currentCardA, setCurrentCard] = useState(null);
   const [currentCid, setCurrentCid] = useState(null);
   const [isFirstPost, setIsFirstPost] = useState(false);
 
@@ -65,6 +65,12 @@ const HomePage = () => {
     return (<Navigate to={"/"} replace={true} />)
   }
 
+  const currentCard = {
+    name: "Duckpond",
+    location: "Pond Park",
+    miles: "5",
+    people: "15 ducks"
+};
 
 
   return (
