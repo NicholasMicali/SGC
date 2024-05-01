@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../auth/index';
 import { doSignOut } from '../firebase/auth.js';
 import { Navigate } from 'react-router-dom';
-import SearchBar from '../components/auth/searchbar.jsx';
+import SearchBar from '../components/home/searchbar.jsx';
 import LeftSidebar from '../components/home/leftSideBar';
 import RightSidebar from '../components/home/rightSideBar';
 import AllCards from '../components/cardsPages/allCards.jsx';
@@ -66,8 +66,6 @@ const HomePage = () => {
     return (<Navigate to={"/"} replace={true} />)
   }
 
-
-
   return (
     <div className="flex h-screen">
       <LeftSidebar user={currentUser} signOut={signOut} page="Feed"/>
@@ -129,7 +127,7 @@ const HomePage = () => {
         {subPage == 'recieve' && <Recieve back={returnToFeed} user={currentUser} initCode={currentCid} first={isFirstPost}/>}
         {subPage == 'challenge' && <Challenge back={returnToFeed} user={currentUser} code={currentCid}/>}
       </div>
-      <RightSidebar />
+      <RightSidebar card={currentCard}/>
     </div>
 
   );
