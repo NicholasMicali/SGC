@@ -2,7 +2,7 @@ import React from "react";
 
 const TextCard = ({ loc, date, title, description, studName }) => {
   return (
-    <div className="mt-4 flex flex-col justify-between w-[570px] h-[299px] rounded-lg border-[2px] bg-pink relative">
+    <div className="mt-4 flex flex-col justify-between w-[570px] h-[299px] rounded-lg border-2 bg-pink relative">
       {/* Location at the top left */}
       <div className="absolute top-0 left-0 p-4 font-medium">
         {loc}

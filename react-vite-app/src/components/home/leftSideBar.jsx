@@ -36,15 +36,18 @@ const ProfilePic = ({ username }) => {
   };
   const firstChar = username.charAt(0).toUpperCase();
   const color = colors[firstChar];
-  console.log("firstChar", firstChar);
-  return (
-    <div
+  //console.log("firstChar", firstChar);
+  /*
       className={twMerge(
         "relative w-10 h-10 rounded-full mr-5",
         clsx(`bg-[${color}]`)
       )}
+  */
+  return (
+    <div
+      className="relative w-12 h-12 rounded-full mr-3" style={{backgroundColor: color}}
     >
-      <p className=" text-2xl font-semibold text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-sm">
+      <p className=" text-xl text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         {firstChar}
       </p>
     </div>
