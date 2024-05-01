@@ -3,6 +3,8 @@ import CardInfo from '../home/cardInfo.jsx';
 import GetStarted from '../home/getStarted.jsx'
 import TextCard from '../home/textCard.jsx';
 import { doFetchPost } from '../../firebase/firestore.js';
+import NoPosts from '../home/noPosts.jsx';
+import NewCardIcon from "../../assets/NewCardIcon.svg"
 
 const CardFeed = ({card, setSubPage, firstPost}) => {
   const [cardExists, setCardExists] = useState(false);
@@ -52,8 +54,19 @@ const CardFeed = ({card, setSubPage, firstPost}) => {
       <CardInfo name={card.title} location="San Luis Obispo" miles="260" people="7"/>
       {card.posts == null ? 
         <>
-          <div>No posts yet?</div>
-          <button onClick={firstPost}>Add the first post!</button>
+          <NoPosts 
+          height = '299px'
+          width = '570px'
+          textTop = 'No Posts Yet?'
+          textBottom = "Add the First Post!"
+          borderColor = 'linear-gradient(to right, #ADD8E6, #B19CD9, #FFB6C1)'
+          textColorTop = "#C21E56"
+          textColorBottom = "#8B008B"
+          backgroundColor = "White"
+          icon = {NewCardIcon}
+          onClick={firstPost}
+          >
+          </NoPosts>
         </>
       : 
         <>
