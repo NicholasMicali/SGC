@@ -12,10 +12,12 @@ import Challenge from '../components/cardsPages/challenge.jsx';
 import Recieve from '../components/cardsPages/recieve.jsx';
 import CardsButton from '../components/cardsPages/cardsButton.jsx';
 import GetStarted from '../components/home/getStarted.jsx';
-import AllCardIcon from "../assets/AllCardIcon.svg"
-import NewCardIcon from "../assets/NewCardIcon.svg"
-import ReceiveIcon from "../assets/ReceiveIcon.svg"
-import ChallengeIcon from "../assets/ChallengeIcon.svg"
+import Post from '../components/cardsPages/post.jsx';
+import AllCardIcon from "../assets/AllCardIcon.svg";
+import NewCardIcon from "../assets/NewCardIcon.svg";
+import ReceiveIcon from "../assets/ReceiveIcon.svg";
+import ChallengeIcon from "../assets/ChallengeIcon.svg";
+import { doFetchCard } from "../firebase/firestore";
 
 
 const HomePage = () => {
@@ -27,6 +29,7 @@ const HomePage = () => {
   const [currentCard, setCurrentCard] = useState(null);
   const [currentCid, setCurrentCid] = useState(null);
   const [isFirstPost, setIsFirstPost] = useState(false);
+  const [currentPost, setCurrentPost] = useState(null);
 
   const signOut = async (e) => {
     e.preventDefault()
@@ -43,12 +46,29 @@ const HomePage = () => {
 
   }
 
-  const handleSearch = searchTerm => {
-    //console.log(`Search term: ${searchTerm}`);
-    // Implement your search functionality here
+  const handleSearch = (searchTerm) => {
+    fetchCard(searchTerm);
   };
+
+  const fetchCard = async (cid) => {
+    try {
+      const card = await doFetchCard(cid);
+      //const cardObject = await Promise(cardPromise);
+      if (card == null){
+        console.log("Card Does not exist");
+        return;
+      }
+      setCurrentCard(card.data());
+      console.log(card.data());
+    }
+    catch (error) {
+        console.error("Error searching for card:", error);
+      }
+  };
+
   const returnToFeed = () => {
     setSubPage('feed');
+    setIsFirstPost(false);
   }
 
   const selectCard = (card, cid) => {
@@ -60,6 +80,11 @@ const HomePage = () => {
   const firstPost = () => {
     setIsFirstPost(true)
     setSubPage('recieve');
+  }
+
+  const setPost = (post) => {
+    setCurrentPost(post);
+    setSubPage('post');
   }
 
   if (isSigningOut) {
@@ -119,6 +144,7 @@ const HomePage = () => {
               card={currentCard}
               setSubPage={setSubPage}
               firstPost={firstPost}
+              setPost={setPost}
               />
           </>
         }
@@ -126,6 +152,7 @@ const HomePage = () => {
         {subPage == 'new' && <NewCard back={returnToFeed} user={currentUser}/>}
         {subPage == 'recieve' && <Recieve back={returnToFeed} user={currentUser} initCode={currentCid} first={isFirstPost}/>}
         {subPage == 'challenge' && <Challenge back={returnToFeed} user={currentUser} code={currentCid}/>}
+        {subPage == 'post' && <Post back={returnToFeed} post={currentPost}/>}
       </div>
       <RightSidebar card={currentCard}/>
     </div>
