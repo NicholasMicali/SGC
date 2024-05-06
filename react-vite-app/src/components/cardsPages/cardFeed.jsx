@@ -6,7 +6,7 @@ import { doFetchPost } from '../../firebase/firestore.js';
 import NoPosts from '../home/noPosts.jsx';
 import NewCardIcon from "../../assets/NewCardIcon.svg"
 
-const CardFeed = ({card, setSubPage, firstPost, setPost}) => {
+const CardFeed = ({card, setSubPage, firstPost}) => {
   const [cardExists, setCardExists] = useState(false);
   const [posts, setPosts] = useState([]);
 
@@ -72,10 +72,7 @@ const CardFeed = ({card, setSubPage, firstPost, setPost}) => {
         <>
           <div>total posts: {card.posts.length}</div>
           {posts.map((post, index) => (
-            <>
-              <TextCard loc={post.location} date={"April 24th"} title={post.title} description={post.desc} studName={post.uName}/>
-              <button onClick={() => setPost(post)}>See More</button>
-            </>
+            <TextCard loc={post.location} date={"April 24th"} title={post.title} description={post.desc} studName={post.uName}/>
           ))}
         </>
       }
