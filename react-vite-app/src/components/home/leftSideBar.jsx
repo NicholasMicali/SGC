@@ -2,10 +2,8 @@ import React, { useEffect, useState } from "react";
 import Logo from "../../assets/logo.svg";
 import NavMenu from "./navMenu";
 import { doFetchUserProfile } from "../../firebase/firestore";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../firebase/firebase";
-import clsx from "clsx";
-import { twMerge } from "tailwind-merge";
+
+
 const ProfilePic = ({ username }) => {
   const colors = {
     A: "#FF8C00",
@@ -37,13 +35,7 @@ const ProfilePic = ({ username }) => {
   };
   const firstChar = username.charAt(0).toUpperCase();
   const color = colors[firstChar];
-  //console.log("firstChar", firstChar);
-  /*
-      className={twMerge(
-        "relative w-10 h-10 rounded-full mr-5",
-        clsx(`bg-[${color}]`)
-      )}
-  */
+
   return (
     <div
       className="relative w-12 h-12 rounded-full mr-3" style={{backgroundColor: color}}
@@ -54,6 +46,8 @@ const ProfilePic = ({ username }) => {
     </div>
   );
 };
+
+
 
 const LeftSidebar = ({ user, signOut, page }) => {
   const [userData, setUserData] = useState(null);
@@ -83,14 +77,14 @@ const LeftSidebar = ({ user, signOut, page }) => {
         <div className="flex flex-row mb-8 justify-center items-center">
           {user.photoURL ? (
             <img
-              src={user.photoURL}
-              alt="Profile Pic"
+              src={user.photoURL + ""}
+              alt=""
               className="w-12 h-12 rounded-full mr-2"
             />
           ) : (
             <ProfilePic username={userData.firstName} />
           )}
-          <div>{userData.name || user.email}</div>
+          <div>{userData.firstName + " " + userData.lastName}</div>
         </div>
         <NavMenu page={page} />
         <div className="flex flex-col justify-end h-full">

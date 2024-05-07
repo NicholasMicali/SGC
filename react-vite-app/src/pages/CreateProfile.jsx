@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import { useAuth } from "../auth/index";
 import { Navigate } from "react-router-dom";
 import { doCreateUserProfile } from "../firebase/firestore";
 import CustomInput from "../components/auth/customInput.jsx";
 import CardsButton from "../components/cardsPages/cardsButton.jsx";
+import { doFetchUserProfile } from "../firebase/firestore";
 
 const CreateProfilePage = () => {
   const { currentUser } = useAuth();
@@ -15,6 +16,20 @@ const CreateProfilePage = () => {
   const [profilePic, setProfilePic] = useState(null); // not stored
   const [location, setLocation] = useState("");
   const [isProfileCreated, setIsProfileCreated] = useState(false);
+
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const profile = await doFetchUserProfile(currentUser.uid);
+        setIsProfileCreated(true);
+      } catch (error) {
+        console.error("First Time User: " + error);
+      }
+    };
+
+    fetchUserProfile();
+  }, [currentUser]);
 
   const locationOptions = [
     { value: "New York", label: "New York" },

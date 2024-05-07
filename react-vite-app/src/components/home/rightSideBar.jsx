@@ -16,7 +16,7 @@ const RightSidebar = ({card}) => {
     <div className="w-64 bg-gray-200 h-full overflow-auto p-4 flex flex-col items-center justify-center">
       <CardInfo
                     name={card.title}
-                    location='San Luis Obispo'
+                    location='1'
                     miles='250'
                     people={card.posts == null ? 0 : card.posts.length}
                     isSidebar={true} />

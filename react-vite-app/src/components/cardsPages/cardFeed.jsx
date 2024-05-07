@@ -51,7 +51,7 @@ const CardFeed = ({card, setSubPage, firstPost}) => {
       <div className="self-start">
           Card Info:
       </div>
-      <CardInfo name={card.title} location="San Luis Obispo" miles="260" people="7"/>
+      <CardInfo name={card.title} location="1" miles="250" people={card.posts == null ? 0 : card.posts.length}/>
       {card.posts == null ? 
         <>
           <NoPosts 

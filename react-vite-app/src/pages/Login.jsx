@@ -39,7 +39,7 @@ const LoginPage = () => {
 
   //      {userLoggedIn && <Navigate to={"/home"} replace={true} />}
   if (isSigningIn) {
-    return <Navigate to={"/home"} replace={true} />;
+    return <Navigate to={"/create-profile"} replace={true} />;
   }
 
   return (

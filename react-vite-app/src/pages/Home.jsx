@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../auth/index';
 import { doSignOut } from '../firebase/auth.js';
 import { Navigate } from 'react-router-dom';
@@ -27,6 +27,31 @@ const HomePage = () => {
   const [currentCard, setCurrentCard] = useState(null);
   const [currentCid, setCurrentCid] = useState(null);
   const [isFirstPost, setIsFirstPost] = useState(false);
+  const [userProfile, setUserProfile] = useState(null);
+/*
+  const fetchUserProfile = async () => {
+    try {
+      const profile = await doFetchUserProfile(user.uid);
+      setUserProfile(profile.data());
+    } catch (error) {
+      console.error("Failed to fetch user profile:", error);
+    }
+    return profile;
+  };
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const profile = await doFetchUserProfile(user.uid);
+        setUserProfile(profile.data());
+      } catch (error) {
+        console.error("Failed to fetch user profile:", error);
+      }
+    };
+
+    fetchUserProfile();
+  }, [currentUser]);
+*/
 
   const signOut = async (e) => {
     e.preventDefault()
@@ -47,6 +72,7 @@ const HomePage = () => {
     //console.log(`Search term: ${searchTerm}`);
     // Implement your search functionality here
   };
+
   const returnToFeed = () => {
     setSubPage('feed');
   }
@@ -65,6 +91,7 @@ const HomePage = () => {
   if (isSigningOut) {
     return (<Navigate to={"/"} replace={true} />)
   }
+
 
   return (
     <div className="flex h-screen">
