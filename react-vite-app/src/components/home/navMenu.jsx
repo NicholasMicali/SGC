@@ -4,6 +4,9 @@ import FeedIcon from "../../assets/FeedIcon.svg";
 import InspirationIcon from "../../assets/InspirationIcon.svg"; 
 import JournalIcon from "../../assets/JournalIcon.svg"; 
 import AccountSettingsIcon from "../../assets/AccountSettingsIcon.svg"
+import TwitterIcon from "../../assets/TwitterIcon.svg"
+import YoutubeIcon from "../../assets/YoutubeIcon.svg"
+import InstagramIcon from "../../assets/InstagramIcon.svg"
 import NavItem from "./navItem";
 
 const NavMenu = ({page}) => {
@@ -27,7 +30,32 @@ const NavMenu = ({page}) => {
           <div className="bg-gradient-to-r from-gradient-start via-gradient-mid to-gradient-end inline-block text-transparent bg-clip-text cursor-pointer">
             Give us Feedback
           </div>
-
+          <div className="text-sm bg-gradient-to-l from-gradient-start via-gradient-mid to-gradient-end inline-block text-transparent bg-clip-text">
+            Follow us on:
+          </div>
+          <div className="flex flex-row w-full space-x-4">
+          <a href="" target="_blank" rel="noopener noreferrer">
+            <img
+              src={TwitterIcon}
+              alt="Twitter Icon"
+              className="cursor-pointer hover:fill-pink-500"
+            />
+          </a>
+          <a href="" target="_blank" rel="noopener noreferrer">
+            <img
+              src={YoutubeIcon}
+              alt="Youtube Icon"
+              className="cursor-pointer"
+            />
+          </a>
+          <a href="" target="_blank" rel="noopener noreferrer">
+            <img
+              src={InstagramIcon}
+              alt="Instagram Icon"
+              className="cursor-pointer"
+            />
+          </a>
+      </div>
         </div>
       </>
     );
