@@ -55,7 +55,7 @@ const GetStarted = ({sizeHeader, sizeText, setSubPage}) => {
                     </CardsButton>
                 </div>
                 <p style={{ fontSize: sizeText }} className="text-lg font-bold">or</p>
-                <p style={{ fontSize: sizeText }} className="text-lg font-bold">You can search other codes with the <font COLOR="#48B8E6">Icon Button</font></p>
+                <p style={{ fontSize: sizeText }} className="text-lg font-bold">You can search other codes with the <font color="#48B8E6">Icon Button</font></p>
                 
 
                 
