@@ -30,7 +30,7 @@ const NavMenu = ({page}) => {
           <div className="bg-gradient-to-r from-gradient-start via-gradient-mid to-gradient-end inline-block text-transparent bg-clip-text cursor-pointer">
             Give us Feedback
           </div>
-          <div className="text-sm bg-gradient-to-l from-gradient-start via-gradient-mid to-gradient-end inline-block text-transparent bg-clip-text">
+          <div className="bg-gradient-to-l from-gradient-start via-gradient-mid to-gradient-end inline-block text-transparent bg-clip-text">
             Follow us on:
           </div>
           <div className="flex flex-row w-full space-x-4">
