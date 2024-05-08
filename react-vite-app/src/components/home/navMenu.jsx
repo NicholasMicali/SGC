@@ -7,6 +7,7 @@ import AccountSettingsIcon from "../../assets/AccountSettingsIcon.svg"
 import TwitterIcon from "../../assets/TwitterIcon.svg"
 import YoutubeIcon from "../../assets/YoutubeIcon.svg"
 import InstagramIcon from "../../assets/InstagramIcon.svg"
+import FacebookIcon from "../../assets/FacebookIcon.svg"
 import NavItem from "./navItem";
 
 const NavMenu = ({page}) => {
@@ -33,7 +34,7 @@ const NavMenu = ({page}) => {
           <div className="bg-gradient-to-l from-gradient-start via-gradient-mid to-gradient-end inline-block text-transparent bg-clip-text">
             Follow us on:
           </div>
-          <div className="flex flex-row w-full space-x-4">
+          <div className="flex flex-row w-full space-x-4 items-center">
           <a href="" target="_blank" rel="noopener noreferrer">
             <img
               src={TwitterIcon}
@@ -52,6 +53,13 @@ const NavMenu = ({page}) => {
             <img
               src={InstagramIcon}
               alt="Instagram Icon"
+              className="cursor-pointer"
+            />
+          </a>
+          <a href="" target="_blank" rel="noopener noreferrer">
+            <img
+              src={FacebookIcon}
+              alt="Facebook Icon"
               className="cursor-pointer"
             />
           </a>
