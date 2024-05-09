@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import CustomInput from '../auth/customInput';
 import { doCreateCard, doCardToUserProfile } from "../../firebase/firestore";
+import ThankYou from  "./thankYou.jsx"
 
 
 const NewCard = ({back, user}) => {
@@ -28,7 +29,13 @@ const NewCard = ({back, user}) => {
   };
 
   if (isCreatingCard) {
-    return <><button onClick={back}>Back</button><div>Card Created: {title}</div></>
+    return <>
+     <div>Card Created: {title}
+    </div>
+      <ThankYou
+        onButtonClick={back}>
+      </ThankYou>
+   </>
   }
 
   return (
