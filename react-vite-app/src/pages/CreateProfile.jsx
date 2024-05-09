@@ -22,7 +22,10 @@ const CreateProfilePage = () => {
     const fetchUserProfile = async () => {
       try {
         const profile = await doFetchUserProfile(currentUser.uid);
-        setIsProfileCreated(true);
+        if (profile.data() !== undefined) {
+          console.log(profile.data())
+          setIsProfileCreated(true);
+        }
       } catch (error) {
         console.error("First Time User: " + error);
       }
