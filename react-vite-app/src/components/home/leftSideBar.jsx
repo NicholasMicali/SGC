@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Logo from "../../assets/logo.svg";
 import NavMenu from "./navMenu";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../firebase/firebase";
-import clsx from "clsx";
-import { twMerge } from "tailwind-merge";
+import { doFetchUserProfile } from "../../firebase/firestore";
 const ProfilePic = ({ username }) => {
   const colors = {
     A: "#FF8C00",
@@ -36,16 +33,10 @@ const ProfilePic = ({ username }) => {
   };
   const firstChar = username.charAt(0).toUpperCase();
   const color = colors[firstChar];
-  //console.log("firstChar", firstChar);
-  /*
-      className={twMerge(
-        "relative w-10 h-10 rounded-full mr-5",
-        clsx(`bg-[${color}]`)
-      )}
-  */
   return (
     <div
-      className="relative w-12 h-12 rounded-full mr-3" style={{backgroundColor: color}}
+      className="relative w-12 h-12 rounded-full mr-3"
+      style={{ backgroundColor: color }}
     >
       <p className=" text-xl text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         {firstChar}
@@ -58,27 +49,33 @@ const LeftSidebar = ({ user, signOut, page }) => {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    const userRef = doc(db, "user_profiles", user.uid);
-    const userSnap = async () => {
-      setUserData((await getDoc(userRef)).data());
+    const fetchUserProfile = async () => {
+      try {
+        const profile = await doFetchUserProfile(user.uid);
+        setUserData(profile.data());
+      } catch (error) {
+        console.error("Failed to fetch user profile:", error);
+      }
     };
-    userSnap();
+
+    fetchUserProfile();
   }, [user]);
+
   return (
     userData && (
       <div className="w-64 bg-[#fff6fa] h-full overflow-auto p-4 flex flex-col items-center">
         <img src={Logo} alt="Spread Goodness logo" className="p-4 mb-4" />
         <div className="flex flex-row mb-8 justify-center items-center">
-          {userData !== null && user.photoURL ? (
+          {user.photoURL ? (
             <img
-              src={user.photoURL}
-              alt="Profile Pic"
+              src={user.photoURL + ""}
+              alt=""
               className="w-12 h-12 rounded-full mr-2"
             />
           ) : (
             <ProfilePic username={userData.name} />
           )}
-          <div>{userData.name || user.email}</div>
+          <div>{userData.name}</div>
         </div>
         <NavMenu page={page} />
         <div className="flex flex-col justify-end h-full">
