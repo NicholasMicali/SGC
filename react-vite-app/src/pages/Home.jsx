@@ -28,6 +28,19 @@ const HomePage = () => {
   const [currentCid, setCurrentCid] = useState(null);
   const [isFirstPost, setIsFirstPost] = useState(false);
   const [userProfile, setUserProfile] = useState(null);
+  const [isNarrowScreen, setIsNarrowScreen] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsNarrowScreen(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
 /*
   const fetchUserProfile = async () => {
     try {
@@ -95,7 +108,9 @@ const HomePage = () => {
 
   return (
     <div className="flex h-screen">
-      <LeftSidebar user={currentUser} signOut={signOut} page="Feed"/>
+       {!isNarrowScreen && (
+        <LeftSidebar user={currentUser} signOut={signOut} page="Feed" />
+      )}
       <div className="flex-grow flex flex-col items-center overflow-auto px-20 py-10">
         {subPage == 'feed' && 
           <>
@@ -154,7 +169,11 @@ const HomePage = () => {
         {subPage == 'recieve' && <Recieve back={returnToFeed} user={currentUser} initCode={currentCid} first={isFirstPost}/>}
         {subPage == 'challenge' && <Challenge back={returnToFeed} user={currentUser} code={currentCid}/>}
       </div>
-      <RightSidebar card={currentCard}/>
+      {!isNarrowScreen ? (
+        <RightSidebar card={currentCard} />
+      ) : (
+        <LeftSidebar user={currentUser} signOut={signOut} page="Feed" />
+      )}
     </div>
 
   );

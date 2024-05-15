@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Logo from "../../assets/logo.svg";
+import MenuIcon from "../../assets/MenuIcon.svg";
+import MenuBackground from "../../assets/MenuBackground.svg";
 import NavMenu from "./navMenu";
+import SmallMenuSidebar from "./smallMenuSidebar";
 import { doFetchUserProfile } from "../../firebase/firestore";
 
 
@@ -51,6 +54,16 @@ const ProfilePic = ({ username }) => {
 
 const LeftSidebar = ({ user, signOut, page }) => {
   const [userData, setUserData] = useState(null);
+  const [isMenuVisible, setIsMenuVisible] = useState(true);
+  const [isSmallMenu, setSmallMenu] = useState(false);
+
+  const handleResize = () => {
+    if (window.innerWidth <= 768) {
+      setIsMenuVisible(false);
+    } else {
+      setIsMenuVisible(true);
+    }
+  };
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -65,36 +78,71 @@ const LeftSidebar = ({ user, signOut, page }) => {
     fetchUserProfile();
   }, [user]);
 
+  useEffect(() => {
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
 
   if (userData == null){
     return <>Not Signed In...</>
   }
 
+  const sidebarBackgroundColor = isMenuVisible ? '#fff6fa' : '#ffffff';
+
   return (
     userData && (
-      <div className="w-64 bg-[#fff6fa] h-full overflow-auto p-4 flex flex-col items-center">
-        <img src={Logo} alt="Spread Goodness logo" className="p-4 mb-4" />
-        <div className="flex flex-row mb-8 justify-center items-center">
-          {user.photoURL ? (
+       <div className={`w-64 h-full overflow-auto p-4 flex flex-col items-center`} style={{ backgroundColor: sidebarBackgroundColor }}>
+       
+        {isMenuVisible ? (
+          <>
+           <img src={Logo} alt="Spread Goodness logo" className="p-4 mb-4" />
+            <div className="flex flex-row mb-8 justify-center items-center">
+              {user.photoURL ? (
+                <img
+                  src={user.photoURL + ""}
+                  alt=""
+                  className="w-12 h-12 rounded-full mr-2"
+                />
+              ) : (
+                <ProfilePic username={userData.firstName} />
+              )}
+              <div>{userData.firstName + " " + userData.lastName}</div>
+            </div>
+            <NavMenu page={page} />
+            <div className="flex flex-col justify-end h-full">
+              <button className="mxy-4 font-bold" onClick={signOut}>
+                Sign Out
+              </button>
+            </div>
+          </>
+        ) : (
+          <div className="relative w-full h-full flex items-start justify-center">
             <img
-              src={user.photoURL + ""}
-              alt=""
-              className="w-12 h-12 rounded-full mr-2"
+              src={MenuBackground}
+              alt="Menu Background"
+              className="absolute w-203 h-151 z-0"
             />
-          ) : (
-            <ProfilePic username={userData.firstName} />
-          )}
-          <div>{userData.firstName + " " + userData.lastName}</div>
-        </div>
-        <NavMenu page={page} />
-        <div className="flex flex-col justify-end h-full">
-          <button className="mxy-4 font-bold" onClick={signOut}>
-            Sign Out
-          </button>
-        </div>
+            <button
+              className="relative mxy-4 font-bold z-1 mt-2 ml-3"
+              onClick={() => setSmallMenu(!isSmallMenu)}
+            >
+              <img src={MenuIcon} alt="Menu Icon" className="w-31 h-17" />
+            </button>
+          </div>
+        )}
+        {isSmallMenu && (
+          <SmallMenuSidebar user={user} signOut={signOut} page={page} />
+        )}
       </div>
     )
   );
 };
+
 
 export default LeftSidebar;
