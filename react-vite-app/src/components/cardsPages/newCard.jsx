@@ -16,9 +16,14 @@ const NewCard = ({back, user}) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!isCreatingCard){
+      if (!/^\d{2}[A-Za-z]{3}\d{3}$/.test(code)) {
+        console.log("Invalid code format.");
+        alert("Invalid Code Format");
+        return;
+      }
       setIsCreatingCard(true);
       try {
-        const card = await doCreateCard(user.uid, title, code, text, email);
+        const card = await doCreateCard(user.uid, title, code, text, user.email);
         await doCardToUserProfile(user.uid, card.id);
       } catch (error) {
         console.error("Create card failed:", error);
@@ -38,27 +43,8 @@ const NewCard = ({back, user}) => {
    </>
   }
 
-  return (
-    <div className="flex flex-col justify-center items-center gap-4 w-full">
-      <button onClick={back}>Back</button>
-      <div className="self-start font-bold text-xl">New Card</div>
-      <form onSubmit={onSubmit} className="w-full flex flex-col gap-5 items-center">
-        <CustomInput
-          type="title"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          id="title"
-          labelName="Title"
-        />
-        <CustomInput
-          type="code"
-          placeholder="Code"
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-          id="code"
-          labelName="Code"
-        />
+
+/*
         <CustomInput
           type="email"
           placeholder="Email"
@@ -75,9 +61,59 @@ const NewCard = ({back, user}) => {
           id="text"
           labelName="Text"
         />
-        <button type="submit">
+        <CustomInput
+          type="code"
+          placeholder="45cat135"
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
+          id="code"
+          labelName="Code (must follow this format: 12abc345)"
+        />
+*/
+
+  return (
+    <div className="flex flex-col justify-center items-center gap-4 w-full">
+      <button className="rounded-2xl border-[1px] py-2 px-3 border-black self-end" onClick={back}> Back</button>
+      <div className="self-start font-bold text-3xl">New Card</div>
+      <form onSubmit={onSubmit} className="w-full flex flex-col gap-5 items-center">
+        <CustomInput
+          type="title"
+          placeholder="Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          id="title"
+          labelName="Title"
+        />
+        <div className="flex flex-col gap-1 w-full mt-3">
+            <label htmlFor={'code'} className="self-start">Code</label>
+            <input
+              className="rounded-3xl border-[1px] p-2 md:p-3 border-gray-400"
+              placeholder="Enter code (e.g., 12abc345)"
+              pattern="^\d{2}[A-Za-z]{3}\d{3}$"
+              title="Code must be in the format: 12abc345 (2 digits, 3 letters, 3 digits)"
+              type='text'
+              id='code'
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+              required
+            />
+        </div>
+         <div className="flex flex-col gap-1 w-full mt-3">
+            <label htmlFor={'text'} className="self-start">Perosonal Message</label>
+            <textarea
+              className="h-64 resize-none rounded-3xl border-[1px] p-2 md:p-3 border-gray-400"
+              placeholder={"write about what acts of kindness you want people to do!"}
+              type='text'
+              id='text'
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              required
+            />
+        </div>
+        <button type="submit" className="w-full flex items-center justify-center bg-gradient-to-tr from-gradient-start via-gradient-mid to-gradient-end rounded-3xl p-3 mt-4 bg-opacity-60 text-white font-sans text-xl">
           Create Card!
         </button>
+        
       </form>
     </div>
   );
