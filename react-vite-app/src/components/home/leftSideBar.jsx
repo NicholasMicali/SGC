@@ -93,6 +93,12 @@ const LeftSidebar = ({ user, signOut, page, back }) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (subPagesChangeIcon.includes(page)) {
+      setSmallMenu(false);
+    }
+  })
+
 
   if (userData == null){
     return <>Not Signed In...</>
