@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Logo from "../../assets/logo.svg";
 import MenuIcon from "../../assets/MenuIcon.svg";
+import MenuXIcon from "../../assets/MenuXIcon.svg";
 import MenuBackground from "../../assets/MenuBackground.svg";
 import NavMenu from "./navMenu";
 import SmallMenuSidebar from "./smallMenuSidebar";
@@ -56,6 +57,8 @@ const LeftSidebar = ({ user, signOut, page }) => {
   const [userData, setUserData] = useState(null);
   const [isMenuVisible, setIsMenuVisible] = useState(true);
   const [isSmallMenu, setSmallMenu] = useState(false);
+
+  const subPagesChangeIcon = ['all', 'new', 'recieve', 'challenge'];
 
   const handleResize = () => {
     if (window.innerWidth <= 768) {
@@ -128,12 +131,21 @@ const LeftSidebar = ({ user, signOut, page }) => {
               alt="Menu Background"
               className="absolute w-203 h-151 z-0"
             />
-            <button
-              className="relative mxy-4 font-bold z-1 mt-2 ml-3"
-              onClick={() => setSmallMenu(!isSmallMenu)}
-            >
-              <img src={MenuIcon} alt="Menu Icon" className="w-31 h-17" />
-            </button>
+            {!subPagesChangeIcon.includes(page) ? (
+              <button
+                className="relative mxy-4 font-bold z-1 mt-2 ml-3"
+                onClick={() => setSmallMenu(!isSmallMenu)}
+              >
+                <img src={MenuIcon} alt="Menu Icon" className="w-31 h-17" />
+              </button>
+            ) : (
+              <button
+                className="relative mxy-4 font-bold z-1 mt-2 ml-3"
+                onClick={() => setSmallMenu(!isSmallMenu)}
+              >
+                <img src={MenuXIcon} alt="Menu XIcon" className="w-31 h-17" />
+              </button>
+            )}
           </div>
         )}
         {isSmallMenu && (
