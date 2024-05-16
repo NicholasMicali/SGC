@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CustomInput from '../auth/customInput';
-import { doCreatePost, doPostToCard, doFetchCard, doFetchUserProfile } from "../../firebase/firestore";
+import { doCreatePost, doPostToCard, doFetchCard, doFetchUserProfile, doFetchCardByCode } from "../../firebase/firestore";
 
 // TO DO: If the user navigates from a new card on feed page to here, 
 // have this component take in the value of the card ID as a prop, the call onCodeEntered so they go right to the form.
@@ -56,6 +56,22 @@ const Recieve = ({back, user, initCode, first}) => {
       setIsCodeFound(true);
       try {
         console.log(code);
+        const card = await doFetchCardByCode(code);
+        setCid(card.id);
+      } catch (error) {
+        console.error("Card not Found", error);
+        alert("Failed to find card: " + error.message);
+        return;
+      }   
+    }
+  }
+/*
+  const onCodeEntered = async (e) => {
+    e.preventDefault();
+    if (!isCodeFound){
+      setIsCodeFound(true);
+      try {
+        console.log(code);
         const card = await doFetchCard(code);
         setCid(card.id);
       } catch (error) {
@@ -65,16 +81,23 @@ const Recieve = ({back, user, initCode, first}) => {
       }   
     }
   }
-
+*/
   if (isCreatingPost) {
-    return <><button onClick={back}>Back</button><div>Act of Kindness Posted: {title}</div></>
+    return (
+      <>
+        <div>Act of Kindness Posted: {title}</div>
+        <ThankYou
+          onButtonClick={back}>
+        </ThankYou>
+      </>
+    );
   }
 
   if (isCodeFound) {
     return (
       <div className="flex flex-col justify-center items-center gap-4 w-full">
-        <button onClick={back}>Back</button>
-        <div className="self-start font-bold text-xl">Post to card</div>
+        <button className="rounded-2xl border-[1px] py-2 px-3 border-black self-end" onClick={back}> Back</button>
+        <div className="self-start font-bold text-3xl">Post to card</div>
         <form onSubmit={onSubmit} className="w-full flex flex-col gap-5 items-center">
           <CustomInput
             type="name"
@@ -92,15 +115,19 @@ const Recieve = ({back, user, initCode, first}) => {
             id="title"
             labelName="Title"
           />
-          <CustomInput
-            type="text"
-            placeholder="description"
-            value={desc}
-            onChange={(e) => setDesc(e.target.value)}
-            id="desc"
-            labelName="Description"
-          />
-          <button type="submit">
+          <div className="flex flex-col gap-1 w-full mt-3">
+            <label htmlFor={'desc'} className="self-start">Description</label>
+            <textarea
+              className="h-64 resize-none rounded-3xl border-[1px] p-2 md:p-3 border-gray-400"
+              placeholder={"write about your act of kindness!"}
+              type='text'
+              id='desc'
+              value={desc}
+              onChange={(e) => setDesc(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit" className="w-full flex items-center justify-center bg-gradient-to-tr from-gradient-start via-gradient-mid to-gradient-end rounded-3xl p-3 mt-4 bg-opacity-60 text-white font-sans text-xl">
             Post!
           </button>
         </form>
@@ -110,19 +137,25 @@ const Recieve = ({back, user, initCode, first}) => {
 
   return(
     <div className="flex flex-col justify-center items-center gap-4 w-full">
-      <button onClick={back}>Back</button>
-      <div className="self-start font-bold text-xl">Enter the code on the back of your card</div>
+      <button className="rounded-2xl border-[1px] py-2 px-3 border-black self-end" onClick={back}> Back</button>
+      <div className="self-start font-bold text-3xl">Recieved a card?</div>
       <form onSubmit={onCodeEntered} className="w-full flex flex-col gap-5 items-center">
-        <CustomInput
-          type="code"
-          placeholder="code"
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-          id="code"
-          labelName="Code"
-        />
-        <button type="submit">
-          Find Card!
+        <div className="flex flex-col gap-1 w-full mt-6">
+            <label htmlFor={'code'} className="self-start">Code</label>
+            <input
+              className="rounded-3xl border-[1px] p-2 md:p-3 border-gray-400"
+              placeholder="Enter code from the card (e.g., 12abc345)"
+              pattern="^\d{2}[A-Za-z]{3}\d{3}$"
+              title="Code should be in the format: 12abc345 (2 digits, 3 letters, 3 digits)"
+              type='text'
+              id='code'
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+              required
+            />
+        </div>
+        <button type="submit" className="w-full flex items-center justify-center bg-gradient-to-tr from-gradient-start via-gradient-mid to-gradient-end rounded-3xl p-3 mt-6 bg-opacity-60 text-white font-sans text-xl">
+          Next
         </button>
       </form>
     </div>

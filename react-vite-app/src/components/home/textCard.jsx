@@ -18,7 +18,7 @@ const TextCard = ({ loc, date, title, description, studName }) => {
         <p className="text-base pt-12 p-4 text-med">{description}</p>
       </div>
 
-      <div className="absolute bottom-0 left-0 p-4 font-semibold font-small text-sm">
+      <div className="absolute bottom-0 left-0 p-4 font-small text-sm">
         {studName}
       </div>
     </div>
