@@ -53,12 +53,14 @@ const ProfilePic = ({ username }) => {
 
 
 
-const LeftSidebar = ({ user, signOut, page }) => {
+const LeftSidebar = ({ user, signOut, page, back }) => {
   const [userData, setUserData] = useState(null);
   const [isMenuVisible, setIsMenuVisible] = useState(true);
   const [isSmallMenu, setSmallMenu] = useState(false);
 
   const subPagesChangeIcon = ['all', 'new', 'recieve', 'challenge'];
+
+
 
   const handleResize = () => {
     if (window.innerWidth <= 768) {
@@ -141,7 +143,7 @@ const LeftSidebar = ({ user, signOut, page }) => {
             ) : (
               <button
                 className="relative mxy-4 font-bold z-1 mt-2 ml-3"
-                onClick={() => setSmallMenu(!isSmallMenu)}
+                onClick={back}
               >
                 <img src={MenuXIcon} alt="Menu XIcon" className="w-31 h-17" />
               </button>

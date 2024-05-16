@@ -118,7 +118,7 @@ const HomePage = () => {
   return (
     <div className="flex h-screen">
        {!isNarrowScreen && (
-        <LeftSidebar user={currentUser} signOut={signOut} page="Feed" />
+        <LeftSidebar user={currentUser} signOut={signOut} page="Feed" back={returnToFeed} />
       )}
       <div className="flex-grow flex flex-col items-center overflow-auto px-20 py-10">
         {subPage == 'feed' && 
@@ -181,7 +181,7 @@ const HomePage = () => {
       {!isNarrowScreen ? (
         <RightSidebar card={currentCard} />
       ) : (
-        <LeftSidebar user={currentUser} signOut={signOut} page="Feed" />
+        <LeftSidebar user={currentUser} signOut={signOut} page={subPage} back={returnToFeed} />
       )}
     </div>
 
