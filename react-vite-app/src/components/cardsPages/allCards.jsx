@@ -62,7 +62,7 @@ const AllCards = ({back, user, select}) => {
 */
   return (
     <div className="flex flex-col justify-center items-center gap-4 w-full">
-      <button onClick={back}>Back</button>
+      <button className="rounded-2xl border-[1px] py-2 px-3 border-black self-end" onClick={back}>Back</button>
       <div className="self-start">
           All Cards:
       </div>

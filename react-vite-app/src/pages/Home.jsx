@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../auth/index';
 import { doSignOut } from '../firebase/auth.js';
 import { Navigate } from 'react-router-dom';
+import { doFetchCardByCode } from '../firebase/firestore.js';
 import SearchBar from '../components/home/searchbar.jsx';
 import LeftSidebar from '../components/home/leftSideBar';
 import RightSidebar from '../components/home/rightSideBar';
@@ -68,9 +69,17 @@ const HomePage = () => {
 
   }
 
-  const handleSearch = searchTerm => {
-    //console.log(`Search term: ${searchTerm}`);
-    // Implement your search functionality here
+  const handleSearch = async (searchTerm) => {
+    try {
+      const card = await doFetchCardByCode(searchTerm);
+      if (card != null){
+        selectCard(card.data(), card.id);
+      }
+    } catch (error) {
+      console.error("Card not Found", error);
+      alert("Failed to find card: " + error.message);
+      return;
+    }   
   };
 
   const returnToFeed = () => {
@@ -152,7 +161,7 @@ const HomePage = () => {
         {subPage == 'all' && <AllCards back={returnToFeed} user={currentUser} select={selectCard}/>}
         {subPage == 'new' && <NewCard back={returnToFeed} user={currentUser}/>}
         {subPage == 'recieve' && <Recieve back={returnToFeed} user={currentUser} initCode={currentCid} first={isFirstPost}/>}
-        {subPage == 'challenge' && <Challenge back={returnToFeed} user={currentUser} code={currentCid}/>}
+        {subPage == 'challenge' && <Challenge back={returnToFeed} user={currentUser} code={currentCard ? currentCard.code : null} cid={currentCid}/>}
       </div>
       <RightSidebar card={currentCard}/>
     </div>

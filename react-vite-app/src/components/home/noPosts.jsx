@@ -38,7 +38,7 @@ const NoPosts = ({ height, width, textTop, textBottom, borderColor, textColorTop
                     backgroundColor: backgroundColor
                 }}
             >
-                {icon && <img src={icon} alt={`${textTop} icon`} className="icon-class" style={{ width: "30%", height: "30%" }} />}
+                {icon && <img src={icon} alt={`${textTop} icon`} className="icon-class" style={{ width: "15%", height: "15%" }} />}
             </button>
             <span className = "self-center"
                 style={{ 

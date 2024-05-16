@@ -1,6 +1,6 @@
 import { db } from "../firebase/firebase";
 import { doc, setDoc } from "firebase/firestore"; 
-import { collection, addDoc, updateDoc, arrayUnion, getDoc } from "firebase/firestore";
+import { collection, addDoc, updateDoc, arrayUnion, getDoc, query, where, getDocs } from "firebase/firestore";
 
 
 export const doCreateUserProfile = async (uid, email, userType, firstName, lastName, location) => {
@@ -77,6 +77,35 @@ export const doFetchCard = async (cid) => {
   const cardDocRef = doc(db, "cards", cid);
   return getDoc(cardDocRef);
 }
+
+
+
+export const doFetchCardByCode = async (code) => {
+  const cardsCollectionRef = collection(db, "cards");
+
+  // Create a query that finds cards where the 'code' field matches the provided code
+  const q = query(cardsCollectionRef, where("code", "==", code));
+
+  try {
+    const querySnapshot = await getDocs(q);
+    const cards = [];
+
+    // Check if no documents were found
+    if (querySnapshot.empty) {
+      return null;
+    }
+
+    const firstDoc = querySnapshot.docs[0];
+    return firstDoc;
+
+  } catch (error) {
+    console.error("Error fetching cards by code:", error);
+    return null;
+  }
+};
+
+
+
 
 export const doFetchPost = async (pid) => {
   const postDocRef = doc(db, "posts", pid);
