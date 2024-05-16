@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../auth/index';
 import { doSignOut } from '../firebase/auth.js';
 import { Navigate } from 'react-router-dom';
@@ -9,6 +9,18 @@ import RightSidebar from '../components/home/rightSideBar';
 const AccountPage = () => {
   const { currentUser } = useAuth();
   const [isSigningOut, setIsSigningOut] = useState(false);
+  const [isNarrowScreen, setIsNarrowScreen] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsNarrowScreen(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const signOut = async (e) => {
     e.preventDefault()
@@ -34,10 +46,15 @@ const AccountPage = () => {
 
   return (
     <div className="flex h-screen">
-      <LeftSidebar user={currentUser} signOut={signOut} page="Account Settings"/>
+      {!isNarrowScreen && (
+        <LeftSidebar user={currentUser} signOut={signOut} page="Account Settings" />
+      )}
       <div className="flex-grow flex flex-col items-center overflow-auto p-4">
         Account Settings Page
       </div>
+      {isNarrowScreen && (
+        <LeftSidebar user={currentUser} signOut={signOut} page="Account Settings" />
+      )}
     </div>
   );
 };
