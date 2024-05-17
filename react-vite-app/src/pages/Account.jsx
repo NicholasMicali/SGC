@@ -8,6 +8,7 @@ import Line from "../../src/assets/AcctSettingsLine.svg";
 import { doFetchUserProfile, doUpdateUserProfile, doDeleteUserProfile } from "../firebase/firestore.js";
 import { doPasswordReset, doDeleteUser } from "../firebase/auth.js";
 
+
 // TO DO: 
 //       - use the userProfile data to initialze the value of the form. 
 //       - make each input handle change -> update the state variables with set fucntion . 
@@ -19,6 +20,7 @@ import { doPasswordReset, doDeleteUser } from "../firebase/auth.js";
 const AccountPage = () => {
   const { currentUser } = useAuth();
   const [isSigningOut, setIsSigningOut] = useState(false);
+  const [isNarrowScreen, setIsNarrowScreen] = useState(window.innerWidth <= 768);
   const [userProfile, setUserProfile] = useState(null);
   const [profilePic, setProfilePic] = useState(null); // not stored in db yet
   const [firstName, setFirstName] = useState('');
@@ -244,7 +246,9 @@ const AccountPage = () => {
 
   return (
     <div className="flex h-screen">
-      <LeftSidebar user={currentUser} signOut={signOut} page="Account Settings" />
+      {!isNarrowScreen && (
+        <LeftSidebar user={currentUser} signOut={signOut} page="Account Settings" />
+      )}
       <div className="flex-grow flex flex-col items-center overflow-auto p-4">
         <div style={containerStyle}>
           {profilePic ? (
@@ -294,7 +298,9 @@ const AccountPage = () => {
           <button style={redButton}>Delete Account</button>
         </div>
       </div>
-      <RightSidebar />
+      {isNarrowScreen && (
+        <LeftSidebar user={currentUser} signOut={signOut} page="Account Settings" />
+      )}
     </div>
   );
 };
