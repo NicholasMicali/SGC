@@ -1,6 +1,6 @@
 import { db } from "../firebase/firebase";
 import { doc, setDoc } from "firebase/firestore"; 
-import { collection, addDoc, updateDoc, arrayUnion, getDoc, query, where, getDocs } from "firebase/firestore";
+import { collection, addDoc, updateDoc, arrayUnion, getDoc, query, where, getDocs, deleteDoc } from "firebase/firestore";
 
 
 export const doCreateUserProfile = async (uid, email, userType, firstName, lastName, location) => {
@@ -14,6 +14,22 @@ export const doCreateUserProfile = async (uid, email, userType, firstName, lastN
   }, { merge: true });  // Use setDoc to merge data
 };
 
+
+export const doUpdateUserProfile = async (uid, email, userType, firstName, lastName, location) => {
+  const userDocRef = doc(db, "user_profiles", uid);
+  return updateDoc(userDocRef, {
+    userType,
+    firstName,
+    lastName,
+    email,
+    location
+  }, { merge: true });
+};
+
+export const doDeleteUserProfile = async (uid) => {
+  const userDocRef = doc(db, "user_profiles", uid);
+  return deleteDoc(userDocRef);
+}
 
 export const doCreateCard = async (uid, title, code, text, cEmail) => {
   const cardsCollectionRef = collection(db, "cards");
