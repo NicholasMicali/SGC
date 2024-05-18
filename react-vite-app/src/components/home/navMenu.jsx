@@ -8,6 +8,7 @@ import TwitterIcon from "../../assets/TwitterIcon.svg"
 import YoutubeIcon from "../../assets/YoutubeIcon.svg"
 import InstagramIcon from "../../assets/InstagramIcon.svg"
 import FacebookIcon from "../../assets/FacebookIcon.svg"
+import classroomIcon from "../../assets/classroom.svg"
 import NavItem from "./navItem";
 
 const NavMenu = ({page}) => {
@@ -25,6 +26,7 @@ const NavMenu = ({page}) => {
           <NavItem icon={InspirationIcon} text="Inspiration" page={page} onClick={() => onClick('/inspiration')}/>
           <NavItem icon={JournalIcon} text="Journal" page={page} onClick={() => onClick('/journal')}/>
           <NavItem icon={AccountSettingsIcon} text="Account Settings" page={page} onClick={() => onClick('/account')}/>
+          <NavItem icon={classroomIcon} text="Classroom" page={page} onClick={() => onClick('/classroom')}/>
           <div className="mt-8 bg-gradient-to-r from-gradient-start via-gradient-mid to-gradient-end inline-block text-transparent bg-clip-text cursor-pointer">
             Give us Feedback
           </div>
