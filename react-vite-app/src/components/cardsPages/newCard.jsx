@@ -1,17 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CustomInput from '../auth/customInput';
-import { doCreateCard, doCardToUserProfile } from "../../firebase/firestore";
+import { doCreateCard, doCardToUserProfile, doFetchUserProfile, doCreatePost, doPostToCard, doFetchCard } from "../../firebase/firestore";
 import ThankYou from  "./thankYou.jsx"
 
 
-const NewCard = ({back, user}) => {
+const NewCard = ({back, user, select}) => {
 
   const [isCreatingCard, setIsCreatingCard] = useState(false);
   const [title, setTitle] = useState('');
   const [code, setCode] = useState('');
   const [text, setText] = useState('');
-  const [email, setEmail] = useState('');
+  const [userProfile, setUserProfile] = useState(null);
+  const [images, setImages] = useState([]);
+  const [createdCard, setCreatedCard] = useState(null);
+  const [cid, setCid] = useState(null);
 
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const profile = await doFetchUserProfile(user.uid);
+        setUserProfile(profile.data());
+      } catch (error) {
+        console.error("Failed to fetch user profile:", error);
+      }
+    };
+
+    fetchUserProfile();
+  }, [user.uid]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -23,8 +38,14 @@ const NewCard = ({back, user}) => {
       }
       setIsCreatingCard(true);
       try {
-        const card = await doCreateCard(user.uid, title, code, text, user.email);
+        const card = await doCreateCard(user.uid, title, code, userProfile.email);
         await doCardToUserProfile(user.uid, card.id);
+        const post = await doCreatePost(card.id, user.uid, userProfile.firstName, text, userProfile.location, images);
+        await doPostToCard(card.id, post.id);
+        const cardObj = await doFetchCard(card.id);
+        setCid(card.id);
+        setCreatedCard(cardObj.data());
+        console.log(card);
       } catch (error) {
         console.error("Create card failed:", error);
         alert("Failed to create card: " + error.message);
@@ -33,12 +54,12 @@ const NewCard = ({back, user}) => {
     }
   };
 
-  if (isCreatingCard) {
+  if (isCreatingCard && createdCard) {
     return <>
      <div>Card Created: {title}
     </div>
       <ThankYou
-        onButtonClick={back}>
+        onButtonClick={() => select(createdCard, cid)}>
       </ThankYou>
    </>
   }
@@ -98,11 +119,11 @@ const NewCard = ({back, user}) => {
               required
             />
         </div>
-         <div className="flex flex-col gap-1 w-full mt-3">
-            <label htmlFor={'text'} className="self-start">Perosonal Message</label>
+        <div className="flex flex-col gap-1 w-full mt-3">
+            <label htmlFor={'text'} className="self-start">Description</label>
             <textarea
               className="h-64 resize-none rounded-3xl border-[1px] p-2 md:p-3 border-gray-400"
-              placeholder={"write about what acts of kindness you want people to do!"}
+              placeholder={"write about how you spread goodness!"}
               type='text'
               id='text'
               value={text}

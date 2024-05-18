@@ -22,7 +22,6 @@ import ChallengeIcon from "../assets/ChallengeIcon.svg"
 const HomePage = () => {
 
   const { currentUser } = useAuth();
-  // console.log(JSON.stringify(currentUser));
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [subPage, setSubPage] = useState('feed');
   const [currentCard, setCurrentCard] = useState(null);
@@ -42,30 +41,6 @@ const HomePage = () => {
     };
   }, []);
 
-/*
-  const fetchUserProfile = async () => {
-    try {
-      const profile = await doFetchUserProfile(user.uid);
-      setUserProfile(profile.data());
-    } catch (error) {
-      console.error("Failed to fetch user profile:", error);
-    }
-    return profile;
-  };
-
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      try {
-        const profile = await doFetchUserProfile(user.uid);
-        setUserProfile(profile.data());
-      } catch (error) {
-        console.error("Failed to fetch user profile:", error);
-      }
-    };
-
-    fetchUserProfile();
-  }, [currentUser]);
-*/
 
   const signOut = async (e) => {
     e.preventDefault()
@@ -174,7 +149,7 @@ const HomePage = () => {
           </>
         }
         {subPage == 'all' && <AllCards back={returnToFeed} user={currentUser} select={selectCard}/>}
-        {subPage == 'new' && <NewCard back={returnToFeed} user={currentUser}/>}
+        {subPage == 'new' && <NewCard back={returnToFeed} user={currentUser} select={selectCard}/>}
         {subPage == 'recieve' && <Recieve back={returnToFeed} user={currentUser} initCode={currentCid} first={isFirstPost}/>}
         {subPage == 'challenge' && <Challenge back={returnToFeed} user={currentUser} code={currentCard ? currentCard.code : null} cid={currentCid}/>}
       </div>

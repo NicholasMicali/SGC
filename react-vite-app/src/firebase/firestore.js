@@ -31,7 +31,7 @@ export const doDeleteUserProfile = async (uid) => {
   return deleteDoc(userDocRef);
 }
 
-export const doCreateCard = async (uid, title, code, text, cEmail) => {
+export const doCreateCard = async (uid, title, code, cEmail) => {
   const cardsCollectionRef = collection(db, "cards");
 
   // Add a new document with a generated id to the 'cards' collection
@@ -39,7 +39,6 @@ export const doCreateCard = async (uid, title, code, text, cEmail) => {
     uid,
     title,
     code,
-    text,
     cEmail,
   });
 };
@@ -52,16 +51,20 @@ export const doCardToUserProfile = async (uid, cardId) => {
   }, { merge: true });
 };
 
+export const doDeleteCard = async (cid) => {
+  const cardDocRef = doc(db, "card", cid);
+  return deleteDoc(cardDocRef);
+}
 
 
-export const doCreatePost = async (cid, uid, uName, title, desc, location, images) => {
+
+export const doCreatePost = async (cid, uid, uName, desc, location, images) => {
   const postsCollectionRef = collection(db, "posts");
 
   return addDoc(postsCollectionRef, {
     cid,
     uid,
     uName,
-    title,
     desc,
     location,
     images,

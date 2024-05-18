@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { doFetchCard } from "../../firebase/firestore";
-import { doFetchUserProfile } from "../../firebase/firestore";
+import { doFetchUserProfile, doDeleteCard } from "../../firebase/firestore";
 import CardInfo from '../home/cardInfo';
 
 
@@ -15,7 +15,7 @@ const AllCards = ({back, user, select}) => {
       try {
         const profile = await doFetchUserProfile(user.uid);
         setUserProfile(profile.data());
-        console.log(profile.data());
+        //console.log(profile.data());
         if (profile && profile.data().cards) {
           fetchCards(profile.data().cards);
         }
@@ -33,33 +33,22 @@ const AllCards = ({back, user, select}) => {
       const cardPromises = cardIds.map(cardId => doFetchCard(cardId));
       const cardObjects = await Promise.all(cardPromises);
       setCards(cardObjects.map(cardObj => cardObj.data()));
-      console.log(cards[0])
+      //console.log(cards[0])
     } catch (error) {
       console.error("Failed to fetch cards:", error);
     }
   };
 
-//to do: Make it look nicer
+  const deleteCard = async (cardId) => {
+    try {
+      //await doDeleteCard(cardId);
+      //console.log("Card Deleted");
+    } catch (error) {
+      console.error("Failed to fetch cards:", error);
+    }
+  };
 
-/* maybe use this later
-<div className="flex w-full justify-between text-xl py-2 m-4">
-            <p>{card.title}</p>
-            <p className="text-gray-500">┃</p>
-            <p>{card.location} 📍</p>
-            <p className="text-gray-500">┃</p>
-            <p>{card.furthest} miles</p>
-            <p className="text-gray-500">┃</p>
-            <p>{card.people}</p>
-            <img src={personIcon} alt="Person Icon" className="h-6 w-6 mr-2" />
-*/
 
-/*
-<div key={index} className="card">
-            <h2 className="font-bold text-xl mt-4">{card.title}</h2>
-            <p>{card.text}</p>
-            <button onClick={() => select(card)}>Select Card!</button>
-          </div>
-*/
   return (
     <div className="flex flex-col justify-center items-center gap-4 w-full">
       <button className="rounded-2xl border-[1px] py-2 px-3 border-black self-end" onClick={back}>Back</button>
@@ -67,8 +56,11 @@ const AllCards = ({back, user, select}) => {
           All Cards:
       </div>
       {cards.map((card, index) => (
-        <div className="w-full cursor-pointer" onClick={() => select(card, cids[index])}>
-          <CardInfo name={card.title} location="1" miles="250" people={card.posts ? card.posts.length : "0"}/>
+        <div className="w-full flex flex-row items-center">
+          <div className="w-full cursor-pointer" onClick={() => select(card, cids[index])}>
+            <CardInfo name={card.title} location="1" miles="250" people={card.posts ? card.posts.length : "0"}/>
+          </div>
+          <button className="rounded-2xl border-[1px] h-12 py-2 px-3 border-black" onClick={() => deleteCard(cids[index])}>Delete</button>
         </div>
       ))}
     </div>

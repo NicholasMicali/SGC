@@ -10,8 +10,6 @@ const Recieve = ({back, user, initCode, first}) => {
   const [isCodeFound, setIsCodeFound] = useState(false);
   const [code, setCode] = useState('');
   const [cid, setCid] = useState('');
-  const [name, setName] = useState('');
-  const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
   const [images, setImages] = useState([]);
 
@@ -40,7 +38,7 @@ const Recieve = ({back, user, initCode, first}) => {
       setIsCreatingPost(true);
       try {
         console.log(cid);
-        const post = await doCreatePost(cid, user.uid, name, title, desc, userProfile.location, images);
+        const post = await doCreatePost(cid, user.uid, userProfile.name, desc, userProfile.location, images);
         await doPostToCard(cid, post.id);
       } catch (error) {
         console.error("Create post failed:", error);
@@ -65,41 +63,10 @@ const Recieve = ({back, user, initCode, first}) => {
       }   
     }
   }
-/*
-  const onCodeEntered = async (e) => {
-    e.preventDefault();
-    if (!isCodeFound){
-      setIsCodeFound(true);
-      try {
-        console.log(code);
-        const card = await doFetchCard(code);
-        setCid(card.id);
-      } catch (error) {
-        console.error("Card not Found", error);
-        alert("Failed to find card: " + error.message);
-        return;
-      }   
-    }
-  }
-*/
-  if (isCreatingPost) {
-    return (
-      <>
-        <div>Act of Kindness Posted: {title}</div>
-        <ThankYou
-          onButtonClick={back}>
-        </ThankYou>
-      </>
-    );
-  }
 
-  if (isCodeFound) {
-    return (
-      <div className="flex flex-col justify-center items-center gap-4 w-full">
-        <button className="rounded-2xl border-[1px] py-2 px-3 border-black self-end" onClick={back}> Back</button>
-        <div className="self-start font-bold text-3xl">Post to card</div>
-        <form onSubmit={onSubmit} className="w-full flex flex-col gap-5 items-center">
-          <CustomInput
+
+/*
+  <CustomInput
             type="name"
             placeholder="Name"
             value={name}
@@ -115,6 +82,24 @@ const Recieve = ({back, user, initCode, first}) => {
             id="title"
             labelName="Title"
           />
+*/
+  if (isCreatingPost) {
+    return (
+      <>
+        <div>{userProfile.name} posted an act of kindness!</div>
+        <ThankYou
+          onButtonClick={back}>
+        </ThankYou>
+      </>
+    );
+  }
+
+  if (isCodeFound) {
+    return (
+      <div className="flex flex-col justify-center items-center gap-4 w-full">
+        <button className="rounded-2xl border-[1px] py-2 px-3 border-black self-end" onClick={back}> Back</button>
+        <div className="self-start font-bold text-3xl">Post to card</div>
+        <form onSubmit={onSubmit} className="w-full flex flex-col gap-5 items-center">
           <div className="flex flex-col gap-1 w-full mt-3">
             <label htmlFor={'desc'} className="self-start">Description</label>
             <textarea
