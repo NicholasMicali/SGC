@@ -70,9 +70,9 @@ const CardFeed = ({card, setSubPage, firstPost}) => {
         </>
       : 
         <>
-          <div>total posts: {card.posts.length}</div>
+          <div className="font-semibold text-2xl self-start mt-8" >Spread Goodness Posts:</div>
           {posts.map((post, index) => (
-            <TextCard loc={post.location} date={"April 24th"} title={post.title} description={post.desc} studName={post.uName}/>
+            <TextCard loc={post.location} date={"April 24th"} title={post.title} description={post.desc} studName={post.uName} first={(index == 0)}/>
           ))}
         </>
       }
