@@ -7,13 +7,14 @@ import RightSidebar from "../components/home/rightSideBar";
 import Line from "../../src/assets/AcctSettingsLine.svg";
 import { doFetchUserProfile, doUpdateUserProfile, doDeleteUserProfile } from "../firebase/firestore.js";
 import { doPasswordReset, doDeleteUser } from "../firebase/auth.js";
+import { useNavigate } from 'react-router-dom';
 
 
 // TO DO: 
 //       x use the userProfile data to initialze the value of the form. 
 //       x make each input handle change -> update the state variables with set fucntion . 
 //       x make one submit button instead of multiple, have it call doUpdate userProfile with all the data. (look at other forms in the codebase for reference)
-//       ~ use onDelete for delete profile button (add a confirmation button that pops up before it actually calls 'delete')
+//       x use onDelete for delete profile button (add a confirmation button that pops up before it actually calls 'delete')
 //       - (Profile pic doesn't exist in the database yet so don't use it in the onSubmit function, I'll fix it later)
 //       x make password button into reset password button (use onReset), when clicked render "Email Sent!" instead of the reset button;
 
@@ -29,6 +30,7 @@ const AccountPage = () => {
   const [location, setLocation] = useState('');
   const [profileUpdated, setProfileUpdated] = useState(false);
   const [resetEmailSent, setResetEmailSent] = useState(false);
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -91,19 +93,18 @@ const AccountPage = () => {
     }
   };
     
-  const onDelete = async(e) => {
-    e.preventDefault();
+  const onDelete = async () => {
     try {
       await doDeleteUserProfile(currentUser.uid);
-      await doDeleteUser();
-
+      await doDeleteUser(); 
       alert("Profile deleted.");
+      navigate('/');
     } catch (error) {
       console.error("Profile Delete failed:", error);
       alert("Failed to delete profile: " + error.message);
     }
   };
-
+  
   const onReset = async(e) => {
     e.preventDefault();
     try {
