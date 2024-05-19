@@ -28,8 +28,15 @@ export const doUpdateUserProfile = async (uid, email, userType, firstName, lastN
 
 export const doDeleteUserProfile = async (uid) => {
   const userDocRef = doc(db, "user_profiles", uid);
-  return deleteDoc(userDocRef);
-}
+  try {
+    await deleteDoc(userDocRef);
+    console.log("Profile deleted successfully");
+  } catch (error) {
+    console.error("Error deleting user profile:", error);
+    throw error;
+  }
+};
+
 
 export const doCreateCard = async (uid, title, code, cEmail) => {
   const cardsCollectionRef = collection(db, "cards");
