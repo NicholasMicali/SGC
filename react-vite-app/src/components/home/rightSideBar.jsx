@@ -19,7 +19,8 @@ const RightSidebar = ({card}) => {
                     location='1'
                     miles='250'
                     people={card.posts == null ? 0 : card.posts.length}
-                    isSidebar={true} />
+                    isSidebar={true} 
+                    color={true}/>
     </div>
   );
 };

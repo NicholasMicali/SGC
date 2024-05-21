@@ -142,6 +142,7 @@ const HomePage = () => {
               </CardsButton>
             </div>
             <CardFeed 
+              user={currentUser}
               card={currentCard}
               setSubPage={setSubPage}
               firstPost={firstPost}

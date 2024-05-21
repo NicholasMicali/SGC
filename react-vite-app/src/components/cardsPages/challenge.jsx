@@ -49,7 +49,7 @@ const Challenge = ({back, code, cid}) => {
           <textarea
             id="body"
             value={text}
-            placeholder='write about your act of kindness!'
+            placeholder='write a message to the person you are challenging!'
             onChange={(e) => setText(e.target.value)}
             required
             className="h-64 resize-none rounded-3xl border-[1px] p-2 md:p-3 border-gray-400"

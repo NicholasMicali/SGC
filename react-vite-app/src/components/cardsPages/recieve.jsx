@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CustomInput from '../auth/customInput';
-import { doCreatePost, doPostToCard, doFetchCard, doFetchUserProfile, doFetchCardByCode } from "../../firebase/firestore";
+import { doCreatePost, doPostToCard, doFetchCard, doFetchUserProfile, doFetchCardByCode, doCardToUserProfile } from "../../firebase/firestore";
+import ThankYou from  "./thankYou.jsx"
 
 // TO DO: If the user navigates from a new card on feed page to here, 
 // have this component take in the value of the card ID as a prop, the call onCodeEntered so they go right to the form.
@@ -38,8 +39,9 @@ const Recieve = ({back, user, initCode, first}) => {
       setIsCreatingPost(true);
       try {
         console.log(cid);
-        const post = await doCreatePost(cid, user.uid, userProfile.name, desc, userProfile.location, images);
+        const post = await doCreatePost(cid, user.uid, userProfile.firstName, desc, userProfile.location, images);
         await doPostToCard(cid, post.id);
+        await doCardToUserProfile(user.uid, cid);
       } catch (error) {
         console.error("Create post failed:", error);
         alert("Failed to post to card: " + error.message);
