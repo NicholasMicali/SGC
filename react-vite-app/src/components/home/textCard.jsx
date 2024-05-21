@@ -7,13 +7,10 @@ const TextCard = ({ loc, date, title, description, name, first }) => {
   return (
     <div
       className={
+        !first ?
         "mt-6 flex flex-col justify-between w-[570px] h-fit rounded-lg border-2 relative shadow-lg bg-light-pink gap-3 p-5"
+        : "mt-6 flex flex-col justify-between w-[570px] h-fit rounded-lg relative shadow-lg gap-3 p-5 bg-gradient-to-tr from-gradient-start via-gradient-mid to-gradient-end bg-opacity-40"
       }
-      // style={
-      //   !first
-      //     ? { backgroundColor: "#fff6fa", borderColor: "black" }
-      //     : { borderColor: "black" }
-      // }
     >
       {/* Location at the top left */}
       {/* <div className="absolute top-0 left-0 p-4 font-medium">

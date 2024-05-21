@@ -88,6 +88,17 @@ const HomePage = () => {
     return <Navigate to={"/"} replace={true} />;
   }
 
+/*
+      <TextCard
+              loc="San Francisco, CA"
+              date="April 24th"
+              title="Spread Goodness"
+              description="orem ipsum dolor sit amet, consectetur adipiscing elit. Sed non sollicitudin nisi, vitae suscipit nisl. Etiam mollis metus et lacus blandit ultricies. Maecenas molestie sagittis nisl, vitae convallis leo aliquet eu. Ut vestibulum cursus cursus. Donec pharetra, sem vel feugiat ultrices, dui nisl dignissim neque, faucibus hendrerit augue velit sit amet dolor. Fusce quis elit eget ligula dapibus vulputate gravida non ipsum. Nam viverra ultricies lacinia. Pellentesque risus lacus, accumsan sit amet maximus sed, "
+              name="John Doe"
+              first={true}
+            />
+*/
+
   return (
     <div className="flex h-screen">
       {!isNarrowScreen && (
@@ -149,14 +160,6 @@ const HomePage = () => {
               card={currentCard}
               setSubPage={setSubPage}
               firstPost={firstPost}
-            />
-            <TextCard
-              loc="San Francisco, CA"
-              date="April 24th"
-              title="Spread Goodness"
-              description="orem ipsum dolor sit amet, consectetur adipiscing elit. Sed non sollicitudin nisi, vitae suscipit nisl. Etiam mollis metus et lacus blandit ultricies. Maecenas molestie sagittis nisl, vitae convallis leo aliquet eu. Ut vestibulum cursus cursus. Donec pharetra, sem vel feugiat ultrices, dui nisl dignissim neque, faucibus hendrerit augue velit sit amet dolor. Fusce quis elit eget ligula dapibus vulputate gravida non ipsum. Nam viverra ultricies lacinia. Pellentesque risus lacus, accumsan sit amet maximus sed, "
-              name="John Doe"
-              first={true}
             />
           </>
         )}
