@@ -3,7 +3,7 @@ import heartIcon from "../../assets/heart.svg";
 import shareIcon from "../../assets/share.svg";
 import { Pin, ChevronsRight } from "lucide-react";
 
-const TextCard = ({ loc, date, title, description, name, first }) => {
+const TextCard = ({ loc, date, title, description, name, first, image }) => {
   return (
     <div
       className={
@@ -57,10 +57,12 @@ const TextCard = ({ loc, date, title, description, name, first }) => {
       </div>
       
       {/* description */}
-      <div className="">
-        {description}
+      <div className="flex flex-row justify-between">
+        <div className="">
+          {description}
+        </div>
+        {image && <img className="w-20 h-20" src={image}></img>}
       </div>
-
       {/* see more button */}
       <div className=" font-semibold cursor-pointer text-lg flex items-center">
         See More

@@ -72,7 +72,7 @@ const CardFeed = ({user, card, setSubPage, firstPost}) => {
         <>
           <div className="font-semibold text-2xl self-start mt-8">Goodness Posts:</div>
           {[...posts].reverse().map((post, index) => (
-            <TextCard loc={post.location} date={"April 24th"} title={post.title} description={post.desc} studName={post.uName} first={index === posts.length - 1}/>
+            <TextCard loc={post.location} date={"April 24th"} title={post.title} description={post.desc} studName={post.uName} first={index === posts.length - 1} image={post.image ? post.image : null}/>
           ))}
         </>
       }

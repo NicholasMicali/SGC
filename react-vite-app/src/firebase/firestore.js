@@ -77,23 +77,23 @@ export const doRemoveCardFromUserProfile = async (uid, cardId) => {
 };
 
 
-export const doCreatePost = async (cid, uid, uName, desc, location, images) => {
+export const doCreatePost = async (cid, uid, uName, desc, location, image) => {
   const postsCollectionRef = collection(db, "posts");
-
+  console.log(image);
   return addDoc(postsCollectionRef, {
     cid,
     uid,
     uName,
     desc,
     location,
-    images,
+    image,
   });
 };
 
 export const doPostToCard = async (cid, postId) => {
   const cardDocRef = doc(db, "cards", cid);
   return updateDoc(cardDocRef, {
-    posts: arrayUnion(postId) // Adds the new cardId to the 'cards' array without duplicates
+    posts: arrayUnion(postId)
   }, { merge: true });
 };
 
