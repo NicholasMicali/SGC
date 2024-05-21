@@ -17,7 +17,8 @@ export default {
         'selected-blue-border': "#48b8e6",
         'idle-pink': "#feb3d1",
         'idle-blue': "#d1edf9",
-        'allCards-green' : "#E0F0A4"
+        'allCards-green' : "#E0F0A4",
+        'light-pink': "#fff8f8"
       }
     },
   },
