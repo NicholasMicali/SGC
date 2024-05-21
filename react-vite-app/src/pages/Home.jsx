@@ -144,7 +144,8 @@ const HomePage = () => {
                 onClick={() => setSubPage("challenge")}
               ></CardsButton>
             </div>
-            <CardFeed
+            <CardFeed 
+              user={currentUser}
               card={currentCard}
               setSubPage={setSubPage}
               firstPost={firstPost}

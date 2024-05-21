@@ -1,6 +1,6 @@
 import { db } from "../firebase/firebase";
 import { doc, setDoc } from "firebase/firestore"; 
-import { collection, addDoc, updateDoc, arrayUnion, getDoc, query, where, getDocs, deleteDoc } from "firebase/firestore";
+import { collection, addDoc, updateDoc, arrayUnion, getDoc, query, where, getDocs, deleteDoc, arrayRemove } from "firebase/firestore";
 
 
 export const doCreateUserProfile = async (uid, email, userType, firstName, lastName, location) => {
@@ -63,6 +63,18 @@ export const doDeleteCard = async (cid) => {
   return deleteDoc(cardDocRef);
 }
 
+export const doRemoveCardFromUserProfile = async (uid, cardId) => {
+  const userDocRef = doc(db, "user_profiles", uid);
+  try {
+    await updateDoc(userDocRef, {
+      cards: arrayRemove(cardId) // Removes the cardId from the 'cards' array
+    });
+    console.log("Card removed from user profile successfully.");
+  } catch (error) {
+    console.error("Error removing card from user profile:", error);
+    throw new Error("Failed to remove card from user profile");
+  }
+};
 
 
 export const doCreatePost = async (cid, uid, uName, desc, location, images) => {

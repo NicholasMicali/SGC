@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { doFetchCard } from "../../firebase/firestore";
-import { doFetchUserProfile, doDeleteCard } from "../../firebase/firestore";
+import { doFetchUserProfile, doRemoveCardFromUserProfile } from "../../firebase/firestore";
 import CardInfo from '../home/cardInfo';
 
 
@@ -39,10 +39,12 @@ const AllCards = ({back, user, select}) => {
     }
   };
 
-  const deleteCard = async (cardId) => {
+  const removeCard = async (cardId, rIndex) => {
     try {
-      //await doDeleteCard(cardId);
-      //console.log("Card Deleted");
+      await doRemoveCardFromUserProfile(user.uid, cardId);
+      setCids((prevCids) => prevCids.filter((cid, index) => index !== rIndex));
+      setCards((prevCards) => prevCards.filter((card, index) => index !== rIndex));
+      console.log("Card Removed");
     } catch (error) {
       console.error("Failed to fetch cards:", error);
     }
@@ -58,9 +60,9 @@ const AllCards = ({back, user, select}) => {
       {cards.map((card, index) => (
         <div className="w-full flex flex-row items-center">
           <div className="w-full cursor-pointer" onClick={() => select(card, cids[index])}>
-            <CardInfo name={card.title} location="1" miles="250" people={card.posts ? card.posts.length : "0"}/>
+            <CardInfo name={card.title} location="1" miles="250" people={card.posts ? card.posts.length : "0"} color={(card.cEmail === user.email)}/>
           </div>
-          <button className="rounded-2xl border-[1px] h-12 py-2 px-3 border-black" onClick={() => deleteCard(cids[index])}>Delete</button>
+          <button className="rounded-2xl border-[1px] h-12 py-2 px-3 border-black" onClick={() => removeCard(cids[index], index)}>Remove</button>
         </div>
       ))}
     </div>
