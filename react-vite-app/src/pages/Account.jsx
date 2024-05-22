@@ -79,6 +79,7 @@ const AccountPage = () => {
       );
       setProfileUpdated(true);
       alert("Profile updated successfully!");
+      window.location.reload(); 
     } catch (error) {
       console.error("Profile Creation failed:", error);
       alert("Failed to create profile: " + error.message);
