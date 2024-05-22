@@ -69,12 +69,12 @@ const SmallMenuSidebar = ({ user, signOut, page }) => {
           <NavItem icon={SignoutIcon} text="Sign Out" page={page} onClick={signOut}/>
           <div className="w-full h-[1px] bg-gray-300"></div>
 
-          <div className="absolute bottom-0 flex flex-row items-center w-full">
+          <div className="absolute bottom-0 flex items-center w-full">
           <div className="inline-block bg-clip-text">
-            Follow us on:
+            Follow us on
           </div>
-          <div className="flex flex-row w-full items-center space-x-2">
-          <a href="" target="_blank" rel="noopener noreferrer">
+          <div className="absolute bottom-0 right-0 flex flex-row items-center space-x-2 p-2">
+          <a href="" target="_blank" rel="noopener noreferrer" className="ml-2">
             <img
               src={TwitterIcon}
               alt="Twitter Icon"
