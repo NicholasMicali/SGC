@@ -16,6 +16,7 @@ import accountPink from "../../assets/accountPink.svg";
 import inspirationPink from "../../assets/inspirationPink.svg";
 import journalPink from "../../assets/journalPink.svg";
 import SignoutIcon from "../../assets/SignoutIcon.svg";
+import MenuXIcon from "../../assets/MenuXIcon.svg";
 
 import NavItem from "./navItem";
 
@@ -33,13 +34,17 @@ const SmallMenuSidebar = ({ user, signOut, page }) => {
       <img
         src={MenuBackground}
         alt="Menu Background"
-        className="absolute top-0 right-0 w-203 h-151 z-20"
+        className={`absolute top-0 right-0 z-20 ${isSmallMenu ? 'w-100 h-75' : 'w-203 h-151'}`}
       />
       <button
         className="absolute top-6 right-10 mxy-4 font-bold z-30 mt-2 ml-3"
         onClick={() => setSmallMenu(!isSmallMenu)}
       >
-        <img src={MenuIcon} alt="Menu Icon" className="w-31 h-17" />
+        <img 
+          src={isSmallMenu ? MenuXIcon : MenuIcon} 
+          alt="Menu Icon" 
+          className={`w-31 h-17 ${isSmallMenu ? 'w-8 h-8' : ''}`} 
+        />
       </button>
 
       {isSmallMenu && (
