@@ -18,6 +18,8 @@ const Recieve = ({back, user, initCode, first}) => {
 
   const [userProfile, setUserProfile] = useState(null);
 
+  const [location, setLocation] = useState(null);
+
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
@@ -50,6 +52,28 @@ const Recieve = ({back, user, initCode, first}) => {
     }
     upload();
   }, [file]);
+
+  useEffect(() => {
+    const fetchLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            setLocation({
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            });
+          },
+          (error) => {
+            console.error("Error fetching location:", error);
+          }
+        );
+      } else {
+        console.error("Geolocation is not supported by this browser.");
+      }
+    };
+
+    fetchLocation();
+  }, []);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -159,6 +183,18 @@ const Recieve = ({back, user, initCode, first}) => {
               //style={{ display: "none" }}
             />
           </div>
+          <div className="flex flex-col gap-1 w-full mt-3">
+            <label htmlFor={'location'} className="self-start">Location</label>
+            <input
+              className="rounded-3xl border-[1px] p-2 md:p-3 border-gray-400"
+              placeholder="Fetching your location..."
+              type='text'
+              id='location'
+              value={location ? `Lat: ${location.lat}, Lng: ${location.lng}` : 'Fetching location...'}
+              readOnly
+            />
+          </div>
+
           <button type="submit" className="w-full flex items-center justify-center bg-gradient-to-tr from-gradient-start via-gradient-mid to-gradient-end rounded-3xl p-3 mt-4 bg-opacity-60 text-white font-sans text-xl">
             Post!
           </button>
