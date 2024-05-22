@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Logo from "../../assets/logo.svg";
-import MenuIcon from "../../assets/MenuIcon.svg";
-import MenuXIcon from "../../assets/MenuXIcon.svg";
-import MenuBackground from "../../assets/MenuBackground.svg";
 import NavMenu from "./navMenu";
-import SmallMenuSidebar from "./smallMenuSidebar";
 import { doFetchUserProfile } from "../../firebase/firestore";
 
 
@@ -56,7 +52,6 @@ const ProfilePic = ({ username }) => {
 const LeftSidebar = ({ user, signOut, page, back }) => {
   const [userData, setUserData] = useState(null);
   const [isMenuVisible, setIsMenuVisible] = useState(true);
-  const [isSmallMenu, setSmallMenu] = useState(false);
 
   const subPagesChangeIcon = ['all', 'new', 'recieve', 'challenge'];
 
@@ -93,24 +88,13 @@ const LeftSidebar = ({ user, signOut, page, back }) => {
     };
   }, []);
 
-  useEffect(() => {
-    if (subPagesChangeIcon.includes(page)) {
-      setSmallMenu(false);
-    }
-  })
-
-
   if (userData == null){
     return <>Not Signed In...</>
   }
 
-  const sidebarBackgroundColor = isMenuVisible ? '#fff6fa' : '#ffffff';
-
   return (
     userData && (
-       <div className={`w-64 h-full overflow-auto p-4 flex flex-col items-center`} style={{ backgroundColor: sidebarBackgroundColor }}>
-       
-        {isMenuVisible ? (
+       <div className={`w-64 h-full bg-gray-200 overflow-auto p-4 flex flex-col items-center`}>
           <>
            <img src={Logo} alt="Spread Goodness logo" className="p-4 mb-4" />
             <div className="flex flex-row mb-8 justify-center items-center">
@@ -132,33 +116,6 @@ const LeftSidebar = ({ user, signOut, page, back }) => {
               </button>
             </div>
           </>
-        ) : (
-          <div className="relative w-full h-full flex items-start justify-center">
-            <img
-              src={MenuBackground}
-              alt="Menu Background"
-              className="absolute w-203 h-151 z-0"
-            />
-            {!subPagesChangeIcon.includes(page) ? (
-              <button
-                className="relative mxy-4 font-bold z-1 mt-2 ml-3"
-                onClick={() => setSmallMenu(!isSmallMenu)}
-              >
-                <img src={MenuIcon} alt="Menu Icon" className="w-31 h-17" />
-              </button>
-            ) : (
-              <button
-                className="relative mxy-4 font-bold z-1 mt-2 ml-3"
-                onClick={back}
-              >
-                <img src={MenuXIcon} alt="Menu XIcon" className="w-31 h-17" />
-              </button>
-            )}
-          </div>
-        )}
-        {isSmallMenu && (
-          <SmallMenuSidebar user={user} signOut={signOut} page={page} />
-        )}
       </div>
     )
   );
