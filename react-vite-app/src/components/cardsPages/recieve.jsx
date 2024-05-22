@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import CustomInput from '../auth/customInput';
-import { doCreatePost, doPostToCard, doFetchCard, doFetchUserProfile, doFetchCardByCode } from "../../firebase/firestore";
+import { doCreatePost, doPostToCard, doFetchCard, doFetchUserProfile, doFetchCardByCode, doCardToUserProfile } from "../../firebase/firestore";
+import { doUploadFile } from "../../firebase/storage.js"
+import ThankYou from  "./thankYou.jsx"
 
 // TO DO: If the user navigates from a new card on feed page to here, 
 // have this component take in the value of the card ID as a prop, the call onCodeEntered so they go right to the form.
@@ -11,7 +13,8 @@ const Recieve = ({back, user, initCode, first}) => {
   const [code, setCode] = useState('');
   const [cid, setCid] = useState('');
   const [desc, setDesc] = useState('');
-  const [images, setImages] = useState([]);
+  const [image, setImage] = useState('');
+  const [file, setFile] = useState("");
 
   const [userProfile, setUserProfile] = useState(null);
 
@@ -32,14 +35,32 @@ const Recieve = ({back, user, initCode, first}) => {
     fetchUserProfile();
   }, [user.uid]);
 
+  useEffect(() => {
+    const upload = async () => {
+      if (file){
+        try {
+          const url = await doUploadFile(file);
+          console.log(url);
+          setImage(url);
+        } catch (error) {
+          console.log("Failed to upload image: " + error);
+          alert("Failed to upload image: " + error.message);
+        }
+      }
+    }
+    upload();
+  }, [file]);
+
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!isCreatingPost){
       setIsCreatingPost(true);
       try {
-        console.log(cid);
-        const post = await doCreatePost(cid, user.uid, userProfile.name, desc, userProfile.location, images);
+        //console.log(cid);
+        //const url = await upload();
+        const post = await doCreatePost(cid, user.uid, userProfile.firstName, desc, userProfile.location, image);
         await doPostToCard(cid, post.id);
+        await doCardToUserProfile(user.uid, cid);
       } catch (error) {
         console.error("Create post failed:", error);
         alert("Failed to post to card: " + error.message);
@@ -61,6 +82,18 @@ const Recieve = ({back, user, initCode, first}) => {
         alert("Failed to find card: " + error.message);
         return;
       }   
+    }
+  }
+
+  const upload = async () => {
+    if (file){
+      try {
+        const url = await doUploadFile(file);
+        setImage(url);
+      } catch (error) {
+        console.log("Failed to upload image: " + error);
+        alert("Failed to upload image: " + error.message);
+      }
     }
   }
 
@@ -110,6 +143,20 @@ const Recieve = ({back, user, initCode, first}) => {
               value={desc}
               onChange={(e) => setDesc(e.target.value)}
               required
+            />
+            <img className="w-20 h-20"
+              src={
+                file
+                  ? URL.createObjectURL(file)
+                  : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
+              }
+              alt=""
+            />
+            <input
+              type="file"
+              id="file"
+              onChange={(e) => { setFile(e.target.files[0]) }}
+              //style={{ display: "none" }}
             />
           </div>
           <button type="submit" className="w-full flex items-center justify-center bg-gradient-to-tr from-gradient-start via-gradient-mid to-gradient-end rounded-3xl p-3 mt-4 bg-opacity-60 text-white font-sans text-xl">

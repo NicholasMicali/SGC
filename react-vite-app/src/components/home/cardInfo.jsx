@@ -1,10 +1,10 @@
 import React from "react";
 
-const CardInfo = ({name, location, miles, people, isSidebar}) => {
+const CardInfo = ({name, location, miles, people, isSidebar, color}) => {
 
     if (isSidebar){
         return (
-              <div className={"flex flex-col justify-between bg-gradient-to-tr from-gradient-start via-gradient-mid to-gradient-end w-full h-full rounded-xl px-4 py-10 bg-opacity-40"}>
+              <div className={color ? "flex flex-col justify-between bg-gradient-to-tr rounded-xl px-4 py-10 from-gradient-start via-gradient-mid to-gradient-end w-full h-full bg-opacity-40" : "flex flex-col justify-between rounded-xl px-4 py-10 w-full h-full bg-opacity-40 border border-2"}>
                   <div className="flex flex-col justify-center items-center">
                       <div className="font-bold text-xl">{name}</div>
                       <div className="mt-2">Card Name</div>
@@ -27,7 +27,7 @@ const CardInfo = ({name, location, miles, people, isSidebar}) => {
 
     return (
       <div className="w-full">
-        <div className={"flex flex-row justify-between bg-gradient-to-tr rounded-xl px-20 py-4 from-gradient-start via-gradient-mid to-gradient-end w-full bg-opacity-40"}>
+        <div className={color ? "flex flex-row justify-between bg-gradient-to-tr rounded-xl px-20 py-4 from-gradient-start via-gradient-mid to-gradient-end w-full bg-opacity-40" : "flex flex-row justify-between rounded-xl px-20 py-4 w-full bg-opacity-40 border-2"} style={{backgroundColor: '#fff6fa'}}>
             <div className="flex flex-col justify-center items-center">
                 <div className="font-bold text-xl">{name}</div>
                 <div className="mt-2">Card Name</div>

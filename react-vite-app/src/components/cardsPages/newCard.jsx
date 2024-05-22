@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import CustomInput from '../auth/customInput';
 import { doCreateCard, doCardToUserProfile, doFetchUserProfile, doCreatePost, doPostToCard, doFetchCard } from "../../firebase/firestore";
 import ThankYou from  "./thankYou.jsx"
+import StickerDrop from "./stickerDrop.jsx";
 
 
 const NewCard = ({back, user, select}) => {
@@ -134,8 +135,8 @@ const NewCard = ({back, user, select}) => {
         <button type="submit" className="w-full flex items-center justify-center bg-gradient-to-tr from-gradient-start via-gradient-mid to-gradient-end rounded-3xl p-3 mt-4 bg-opacity-60 text-white font-sans text-xl">
           Create Card!
         </button>
-        
       </form>
+      <StickerDrop/>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { db } from "../firebase/firebase";
 import { doc, setDoc } from "firebase/firestore"; 
-import { collection, addDoc, updateDoc, arrayUnion, getDoc, query, where, getDocs, deleteDoc } from "firebase/firestore";
+import { collection, addDoc, updateDoc, arrayUnion, getDoc, query, where, getDocs, deleteDoc, arrayRemove } from "firebase/firestore";
 
 
 export const doCreateUserProfile = async (uid, email, userType, firstName, lastName, location) => {
@@ -63,25 +63,37 @@ export const doDeleteCard = async (cid) => {
   return deleteDoc(cardDocRef);
 }
 
+export const doRemoveCardFromUserProfile = async (uid, cardId) => {
+  const userDocRef = doc(db, "user_profiles", uid);
+  try {
+    await updateDoc(userDocRef, {
+      cards: arrayRemove(cardId) // Removes the cardId from the 'cards' array
+    });
+    console.log("Card removed from user profile successfully.");
+  } catch (error) {
+    console.error("Error removing card from user profile:", error);
+    throw new Error("Failed to remove card from user profile");
+  }
+};
 
 
-export const doCreatePost = async (cid, uid, uName, desc, location, images) => {
+export const doCreatePost = async (cid, uid, uName, desc, location, image) => {
   const postsCollectionRef = collection(db, "posts");
-
+  console.log(image);
   return addDoc(postsCollectionRef, {
     cid,
     uid,
     uName,
     desc,
     location,
-    images,
+    image,
   });
 };
 
 export const doPostToCard = async (cid, postId) => {
   const cardDocRef = doc(db, "cards", cid);
   return updateDoc(cardDocRef, {
-    posts: arrayUnion(postId) // Adds the new cardId to the 'cards' array without duplicates
+    posts: arrayUnion(postId)
   }, { merge: true });
 };
 
