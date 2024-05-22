@@ -7,16 +7,9 @@ import RightSidebar from "../components/home/rightSideBar";
 import Line from "../../src/assets/AcctSettingsLine.svg";
 import { doFetchUserProfile, doUpdateUserProfile, doDeleteUserProfile } from "../firebase/firestore.js";
 import { doPasswordReset, doDeleteUser } from "../firebase/auth.js";
+import { doUploadFile } from "../firebase/storage.js"
 import { useNavigate } from 'react-router-dom';
 
-
-// TO DO: 
-//       x use the userProfile data to initialze the value of the form. 
-//       x make each input handle change -> update the state variables with set fucntion . 
-//       x make one submit button instead of multiple, have it call doUpdate userProfile with all the data. (look at other forms in the codebase for reference)
-//       x use onDelete for delete profile button (add a confirmation button that pops up before it actually calls 'delete')
-//       - (Profile pic doesn't exist in the database yet so don't use it in the onSubmit function, I'll fix it later)
-//       x make password button into reset password button (use onReset), when clicked render "Email Sent!" instead of the reset button;
 
 const AccountPage = () => {
   const { currentUser } = useAuth();
@@ -30,6 +23,8 @@ const AccountPage = () => {
   const [location, setLocation] = useState('');
   const [profileUpdated, setProfileUpdated] = useState(false);
   const [resetEmailSent, setResetEmailSent] = useState(false);
+  const [file, setFile] = useState(null);
+  const [image, setImage] = useState('');
   const navigate = useNavigate();
 
 
@@ -52,6 +47,22 @@ const AccountPage = () => {
       fetchUserProfile();
     }
   }, [currentUser]);
+
+  useEffect(() => {
+    const upload = async () => {
+      if (file){
+        try {
+          const url = await doUploadFile(file);
+          console.log(url);
+          setImage(url);
+        } catch (error) {
+          console.log("Failed to upload image: " + error);
+          alert("Failed to upload image: " + error.message);
+        }
+      }
+    }
+    upload();
+  }, [file]);
   
 
   const signOut = async (e) => {
@@ -70,12 +81,13 @@ const AccountPage = () => {
     e.preventDefault();
     try {
       await doUpdateUserProfile(
-        currentUser.uid, //dont change
+        currentUser.uid,
         email,
-        userProfile.userType, //dont change
+        userProfile.userType,
         firstName, 
         lastName,
-        location
+        location,
+        image,
       );
       setProfileUpdated(true);
       alert("Profile updated successfully!");
@@ -269,15 +281,8 @@ const AccountPage = () => {
             <button style={smallBlueButton}>Upload Image</button>
             <button style={smallRedButton}>Remove</button>
           </div>
-  */
 
-  return (
-    <div className="flex h-screen">
-      {!isNarrowScreen && (
-        <LeftSidebar user={currentUser} signOut={signOut} page="Account Settings" />
-      )}
-      <div className="flex-grow flex flex-col items-center overflow-auto p-4">
-        <div style={containerStyle}>
+
           {profilePic ? (
             <img
               src={profilePic}
@@ -289,12 +294,43 @@ const AccountPage = () => {
               Default
             </div>
           )}
+
           <input
             type="file"
             id="profile-pic"
             onChange={handleFileChange}
             accept="image/*"
             className="mb-8"
+          />
+  */
+
+  return (
+    <div className="flex h-screen">
+      {!isNarrowScreen && (
+        <LeftSidebar user={currentUser} signOut={signOut} page="Account Settings" />
+      )}
+      <div className="flex-grow flex flex-col items-center overflow-auto p-4">
+        <div style={containerStyle}>
+          {file ?
+            <img className="w-20 h-20 rounded-full mb-4"
+              src={URL.createObjectURL(file)}
+              alt=""
+            />
+          :
+            <img className="w-20 h-20 rounded-full mb-4"
+              src={
+                userProfile?.image
+                  ? userProfile.image
+                  : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
+              }
+              alt=""
+            />
+          }
+          <input
+            type="file"
+            id="file"
+            onChange={(e) => { setFile(e.target.files[0]) }}
+            className="mb-4"
           />
           <img src={Line} style={lineSeparatorStyle} alt="Line" />
           <div style={inputFieldContainerStyle}>

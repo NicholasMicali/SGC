@@ -15,14 +15,15 @@ export const doCreateUserProfile = async (uid, email, userType, firstName, lastN
 };
 
 
-export const doUpdateUserProfile = async (uid, email, userType, firstName, lastName, location) => {
+export const doUpdateUserProfile = async (uid, email, userType, firstName, lastName, location, image) => {
   const userDocRef = doc(db, "user_profiles", uid);
   return updateDoc(userDocRef, {
     userType,
     firstName,
     lastName,
     email,
-    location
+    location,
+    image,
   }, { merge: true });
 };
 

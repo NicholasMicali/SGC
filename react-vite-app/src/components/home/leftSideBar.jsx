@@ -114,9 +114,9 @@ const LeftSidebar = ({ user, signOut, page, back }) => {
           <>
            <img src={Logo} alt="Spread Goodness logo" className="p-4 mb-4" />
             <div className="flex flex-row mb-8 justify-center items-center">
-              {user.photoURL ? (
+              {userData.image ? (
                 <img
-                  src={user.photoURL + ""}
+                  src={userData.image}
                   alt=""
                   className="w-12 h-12 rounded-full mr-2"
                 />

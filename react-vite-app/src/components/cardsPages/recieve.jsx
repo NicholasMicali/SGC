@@ -109,18 +109,6 @@ const Recieve = ({back, user, initCode, first}) => {
     }
   }
 
-  const upload = async () => {
-    if (file){
-      try {
-        const url = await doUploadFile(file);
-        setImage(url);
-      } catch (error) {
-        console.log("Failed to upload image: " + error);
-        alert("Failed to upload image: " + error.message);
-      }
-    }
-  }
-
 
 /*
   <CustomInput
@@ -168,7 +156,8 @@ const Recieve = ({back, user, initCode, first}) => {
               onChange={(e) => setDesc(e.target.value)}
               required
             />
-            <img className="w-20 h-20"
+            <div className="text-xl self-start font-semibold my-4">Add a photo:</div>
+            <img className="w-32 h-32"
               src={
                 file
                   ? URL.createObjectURL(file)
