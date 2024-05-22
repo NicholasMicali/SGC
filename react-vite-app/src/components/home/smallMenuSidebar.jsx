@@ -35,11 +35,11 @@ const SmallMenuSidebar = ({ user, signOut, page }) => {
         <img
           src={MenuBackground}
           alt="Menu Background"
-          className="absolute top-0 right-0 w-203 h-151 z-10"
+          className="absolute top-0 right-0 w-203 h-151 z-20"
         />
       )}
       <button
-        className="absolute top-0 right-0 z-30 p-1"
+        className={`z-30 p-1 ${isSmallMenu ? 'absolute top-0 right-0' : 'absolute top-6 right-10 mt-2 ml-3'}`}
         onClick={() => setSmallMenu(!isSmallMenu)}
       >
         <img 
