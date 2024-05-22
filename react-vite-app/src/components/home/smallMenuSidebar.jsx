@@ -70,7 +70,7 @@ const SmallMenuSidebar = ({ user, signOut, page }) => {
           <div className="w-full h-[1px] bg-gray-300"></div>
 
           <div className="absolute bottom-0 flex items-center w-full">
-          <div className="inline-block bg-clip-text">
+          <div style={{ fontSize: '2vw' }}>
             Follow us on
           </div>
           <div className="absolute bottom-0 right-0 flex flex-row items-center space-x-2 p-2">
