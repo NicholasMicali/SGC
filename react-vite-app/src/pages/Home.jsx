@@ -19,6 +19,7 @@ import ReceiveIcon from "../assets/ReceiveIcon.svg";
 import ChallengeIcon from "../assets/ChallengeIcon.svg";
 import TextCard from "../components/home/textCard.jsx";
 import SmallMenuSidebar from "../components/home/smallMenuSidebar.jsx";
+import SmallSearchBar from "../components/home/smallSearchBar.jsx";
 
 const HomePage = () => {
   const { currentUser } = useAuth();
@@ -194,10 +195,16 @@ const HomePage = () => {
       {!isNarrowScreen ? (
         <RightSidebar card={currentCard} />
       ) : (
+        <>
           <SmallMenuSidebar 
             user={currentUser} 
             signOut={signOut} 
             page={subPage} />
+          <SmallSearchBar
+            user={currentUser}
+            signOut={signOut} 
+            page={subPage} />
+        </>
       )}
     </div>
   );
