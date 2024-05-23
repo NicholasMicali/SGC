@@ -3,6 +3,7 @@ import CustomInput from '../auth/customInput';
 import { doCreatePost, doPostToCard, doFetchCard, doFetchUserProfile, doFetchCardByCode, doCardToUserProfile } from "../../firebase/firestore";
 import { doUploadFile } from "../../firebase/storage.js"
 import ThankYou from  "./thankYou.jsx"
+import StickerDrop from "./stickerDrop.jsx";
 
 // TO DO: If the user navigates from a new card on feed page to here, 
 // have this component take in the value of the card ID as a prop, the call onCodeEntered so they go right to the form.
@@ -15,7 +16,7 @@ const Recieve = ({back, user, initCode, first}) => {
   const [desc, setDesc] = useState('');
   const [image, setImage] = useState('');
   const [file, setFile] = useState("");
-
+  const [stickers, setStickers] = useState([]);
   const [userProfile, setUserProfile] = useState(null);
 
   const [location, setLocation] = useState(null);
@@ -82,7 +83,7 @@ const Recieve = ({back, user, initCode, first}) => {
       try {
         //console.log(cid);
         //const url = await upload();
-        const post = await doCreatePost(cid, user.uid, userProfile.firstName, desc, userProfile.location, image);
+        const post = await doCreatePost(cid, user.uid, userProfile.firstName, desc, userProfile.location, image, stickers);
         await doPostToCard(cid, post.id);
         await doCardToUserProfile(user.uid, cid);
       } catch (error) {
@@ -110,24 +111,14 @@ const Recieve = ({back, user, initCode, first}) => {
   }
 
 
-/*
-  <CustomInput
-            type="name"
-            placeholder="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            id="name"
-            labelName="Name"
-          />
-          <CustomInput
-            type="title"
-            placeholder="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            id="title"
-            labelName="Title"
-          />
-*/
+  const selectSticker = (src) => {
+    if (stickers.length < 3) {
+      setStickers([...stickers, src])
+    }
+    //console.log(stickers);
+  }
+
+
   if (isCreatingPost) {
     return (
       <>
@@ -156,8 +147,8 @@ const Recieve = ({back, user, initCode, first}) => {
               onChange={(e) => setDesc(e.target.value)}
               required
             />
-            <div className="text-xl self-start font-semibold my-4">Add a photo:</div>
-            <img className="w-32 h-32"
+            <div className="self-start mt-6">Add a photo:</div>
+            <img className="w-32 h-32 mb-2"
               src={
                 file
                   ? URL.createObjectURL(file)
@@ -169,9 +160,18 @@ const Recieve = ({back, user, initCode, first}) => {
               type="file"
               id="file"
               onChange={(e) => { setFile(e.target.files[0]) }}
-              //style={{ display: "none" }}
+              className="mb-4"
             />
           </div>
+          {(stickers.length > 0) &&
+            <div className="flex flex-row self-start mt-8 items-center">
+                {stickers.map((sticker) => (
+                  <img src={sticker} className="w-8 h-8 mr-2"/>
+                ))}
+                <button onClick={(e) => {e.preventDefault; setStickers([]);}} className="rounded-2xl border-[1px] py-2 px-3 border-black">Clear</button>
+            </div>
+          }
+          <StickerDrop select={selectSticker}/>
           <div className="flex flex-col gap-1 w-full mt-3">
             <label htmlFor={'location'} className="self-start">Location</label>
             <input

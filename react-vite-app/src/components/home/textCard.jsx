@@ -3,7 +3,7 @@ import heartIcon from "../../assets/heart.svg";
 import shareIcon from "../../assets/share.svg";
 import { Pin, ChevronsRight } from "lucide-react";
 
-const TextCard = ({ loc, date, title, description, name, first, image }) => {
+const TextCard = ({ loc, date, title, description, name, first, image, stickers }) => {
   return (
     <div
       className={
@@ -80,9 +80,17 @@ const TextCard = ({ loc, date, title, description, name, first, image }) => {
             Student
           </div>
         </div>
-        <div>
-          🐔🐼🐸
-        </div>
+        {stickers ?
+          <div className="flex flex-row self-start mt-8 items-center">
+              {stickers.map((sticker) => (
+                <img src={sticker} className="w-4 h-4 mr-1"/>
+              ))}
+          </div>
+        :
+          <div>
+            🐔🐼🐸
+          </div>
+        }
       </div>
     </div>
   );
