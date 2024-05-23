@@ -203,7 +203,8 @@ const HomePage = () => {
           <SmallSearchBar
             user={currentUser}
             signOut={signOut} 
-            page={subPage} />
+            page={subPage} 
+            onSearch={handleSearch}/>
         </>
       )}
     </div>
