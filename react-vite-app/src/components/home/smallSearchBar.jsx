@@ -4,7 +4,7 @@ import SearchBackground from "../../assets/searchBackground.svg";
 import SearchBackground2 from "../../assets/searchBackground2.svg";
 import SearchIcon from "../../assets/searchIcon.svg";
 import SignoutIcon from "../../assets/SignoutIcon.svg";
-import SearchXIcon from "../../assets/MenuXIcon.svg";
+import SearchXIcon from "../../assets/SearchXIcon.svg";
 import SearchBar from "./searchbar.jsx";
 
 import NavItem from "./navItem";

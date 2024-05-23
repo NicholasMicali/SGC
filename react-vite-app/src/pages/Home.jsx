@@ -114,7 +114,11 @@ const HomePage = () => {
       <div className="flex-grow flex flex-col items-center overflow-auto px-20 py-10">
         {subPage == "feed" && (
           <>
-            <SearchBar onSearch={handleSearch} width="full" />
+            {!isNarrowScreen ? (
+              <SearchBar onSearch={handleSearch} width="full" />
+            ) : (
+              <SmallSearchBar user={currentUser} signOut={signOut} page={subPage} onSearch={handleSearch} />
+            )}
             <div className="flex flex-row justify-between gap-4 my-4 w-full">
               <CardsButton
                 width="180px"
@@ -200,11 +204,6 @@ const HomePage = () => {
             user={currentUser} 
             signOut={signOut} 
             page={subPage} />
-          <SmallSearchBar
-            user={currentUser}
-            signOut={signOut} 
-            page={subPage} 
-            onSearch={handleSearch}/>
         </>
       )}
     </div>
