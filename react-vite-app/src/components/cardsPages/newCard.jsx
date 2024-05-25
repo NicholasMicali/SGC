@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CustomInput from '../auth/customInput';
-import { doCreateCard, doCardToUserProfile, doFetchUserProfile, doCreatePost, doPostToCard, doFetchCard } from "../../firebase/firestore";
+import { doCreateCard, doCardToUserProfile, doFetchUserProfile, doCreatePost, doPostToCard, doFetchCard, doIncrementCard } from "../../firebase/firestore";
+import { doUploadFile } from "../../firebase/storage.js"
 import ThankYou from  "./thankYou.jsx"
 import StickerDrop from "./stickerDrop.jsx";
 
@@ -12,9 +13,11 @@ const NewCard = ({back, user, select}) => {
   const [code, setCode] = useState('');
   const [text, setText] = useState('');
   const [userProfile, setUserProfile] = useState(null);
-  const [images, setImages] = useState([]);
   const [createdCard, setCreatedCard] = useState(null);
   const [cid, setCid] = useState(null);
+  const [image, setImage] = useState('');
+  const [file, setFile] = useState("");
+  const [stickers, setStickers] = useState([]);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -29,6 +32,22 @@ const NewCard = ({back, user, select}) => {
     fetchUserProfile();
   }, [user.uid]);
 
+  useEffect(() => {
+    const upload = async () => {
+      if (file){
+        try {
+          const url = await doUploadFile(file);
+          console.log(url);
+          setImage(url);
+        } catch (error) {
+          console.log("Failed to upload image: " + error);
+          alert("Failed to upload image: " + error.message);
+        }
+      }
+    }
+    upload();
+  }, [file]);
+
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!isCreatingCard){
@@ -41,12 +60,16 @@ const NewCard = ({back, user, select}) => {
       try {
         const card = await doCreateCard(user.uid, title, code, userProfile.email);
         await doCardToUserProfile(user.uid, card.id);
-        const post = await doCreatePost(card.id, user.uid, userProfile.firstName, text, userProfile.location, images);
+        const post = await doCreatePost(card.id, user.uid, userProfile.firstName, text, userProfile.location, image, stickers);
         await doPostToCard(card.id, post.id);
         const cardObj = await doFetchCard(card.id);
         setCid(card.id);
         setCreatedCard(cardObj.data());
-        console.log(card);
+        //console.log(card);
+        if (userProfile?.classrooms) {
+          const classPromises = userProfile.classrooms.map(classId => doIncrementCard(classId));
+          await Promise.all(classPromises);
+        }
       } catch (error) {
         console.error("Create card failed:", error);
         alert("Failed to create card: " + error.message);
@@ -54,6 +77,16 @@ const NewCard = ({back, user, select}) => {
       }   
     }
   };
+
+  const selectSticker = (src) => {
+    if (stickers.length < 3) {
+      setStickers([...stickers, src])
+    }
+    //console.log(stickers);
+  }
+
+
+
 
   if (isCreatingCard && createdCard) {
     return <>
@@ -121,22 +154,45 @@ const NewCard = ({back, user, select}) => {
             />
         </div>
         <div className="flex flex-col gap-1 w-full mt-3">
-            <label htmlFor={'text'} className="self-start">Description</label>
-            <textarea
-              className="h-64 resize-none rounded-3xl border-[1px] p-2 md:p-3 border-gray-400"
-              placeholder={"write about how you spread goodness!"}
-              type='text'
-              id='text'
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              required
-            />
+          <label htmlFor={'text'} className="self-start">Description</label>
+          <textarea
+            className="h-64 resize-none rounded-3xl border-[1px] p-2 md:p-3 border-gray-400"
+            placeholder={"write about how you spread goodness!"}
+            type='text'
+            id='text'
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            required
+          />
+          <div className="self-start mt-6">Add a photo:</div>
+          <img className="w-32 h-32 mb-2"
+            src={
+              file
+                ? URL.createObjectURL(file)
+                : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
+            }
+            alt=""
+          />
+          <input
+            type="file"
+            id="file"
+            onChange={(e) => { setFile(e.target.files[0]) }}
+            className="mb-4"
+          />
+          {(stickers.length > 0) &&
+            <div className="flex flex-row self-start mt-8 items-center">
+                {stickers.map((sticker) => (
+                  <img src={sticker} className="w-8 h-8 mr-2"/>
+                ))}
+                <button onClick={(e) => {e.preventDefault; setStickers([]);}} className="rounded-2xl border-[1px] py-2 px-3 border-black">Clear</button>
+            </div>
+          }
+          <StickerDrop select={selectSticker}/>
         </div>
         <button type="submit" className="w-full flex items-center justify-center bg-gradient-to-tr from-gradient-start via-gradient-mid to-gradient-end rounded-3xl p-3 mt-4 bg-opacity-60 text-white font-sans text-xl">
           Create Card!
         </button>
       </form>
-      <StickerDrop/>
     </div>
   );
 };

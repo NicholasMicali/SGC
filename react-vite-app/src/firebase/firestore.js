@@ -1,6 +1,6 @@
 import { db } from "../firebase/firebase";
 import { doc, setDoc } from "firebase/firestore"; 
-import { collection, addDoc, updateDoc, arrayUnion, getDoc, query, where, getDocs, deleteDoc, arrayRemove } from "firebase/firestore";
+import { collection, addDoc, updateDoc, arrayUnion, getDoc, query, where, getDocs, deleteDoc, arrayRemove, increment } from "firebase/firestore";
 
 
 export const doCreateUserProfile = async (uid, email, userType, firstName, lastName, location) => {
@@ -151,4 +151,91 @@ export const doFetchPost = async (pid) => {
   const postDocRef = doc(db, "posts", pid);
   return getDoc(postDocRef);
 }
+
+
+
+
+export const doCreateClassroom = async (uid, tName, cName, students) => {
+  const classCollectionRef = collection(db, "classrooms");
+  return addDoc(classCollectionRef, {
+    uid,
+    tName,
+    cName,
+    students,
+    cards: 0,
+    posts: 0,
+  });
+};
+
+
+export const doClassroomToProfile = async (uid, classId) => {
+  const userDocRef = doc(db, "user_profiles", uid);
+  return updateDoc(userDocRef, {
+    classrooms: arrayUnion(classId)
+  }, { merge: true });
+};
+
+
+export const doJoinClassroom = async (classId, uid) => {
+  const classDocRef = doc(db, "classrooms", classId);
+  return updateDoc(classDocRef, {
+    students: arrayUnion(uid)
+  }, { merge: true });
+};
+
+
+export const doFetchClassByName = async (cName) => {
+  const classCollectionRef = collection(db, "classrooms");
+
+  // Create a query that finds cards where the 'code' field matches the provided code
+  const q = query(classCollectionRef, where("cName", "==", cName));
+
+  try {
+    const querySnapshot = await getDocs(q);
+
+    // Check if no documents were found
+    if (querySnapshot.empty) {
+      //console.error("no documents found");
+      return null;
+    }
+
+    const firstDoc = querySnapshot.docs[0];
+    //return firstDoc;
+    return {
+      id: firstDoc.id,
+      ...firstDoc.data()
+    };
+    
+
+  } catch (error) {
+    console.error("Error fetching class by name:", error);
+    return null;
+  }
+};
+
+
+export const doFetchClassroom = async (classId) => {
+  const classDocRef = doc(db, "classrooms", classId);
+  return getDoc(classDocRef);
+}
+
+
+export const doIncrementCard = async (classId) => {
+  const classDocRef = doc(db, "classrooms", classId);
+  return updateDoc(classDocRef, {
+    cards: increment(1) 
+  });
+};
+
+export const doIncrementPost = async (classId) => {
+  const classDocRef = doc(db, "classrooms", classId);
+  return updateDoc(classDocRef, {
+    posts: increment(1)
+  });
+};
+
+
+
+
+
 
