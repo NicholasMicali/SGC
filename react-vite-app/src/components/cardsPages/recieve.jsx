@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CustomInput from '../auth/customInput';
-import { doCreatePost, doPostToCard, doFetchCard, doFetchUserProfile, doFetchCardByCode, doCardToUserProfile } from "../../firebase/firestore";
+import { doCreatePost, doPostToCard, doFetchUserProfile, doFetchCardByCode, doCardToUserProfile, doIncrementUserPosts, doIncrementPost } from "../../firebase/firestore";
 import { doUploadFile } from "../../firebase/storage.js"
 import ThankYou from  "./thankYou.jsx"
 import StickerDrop from "./stickerDrop.jsx";
@@ -13,6 +13,7 @@ const Recieve = ({back, user, initCode, first}) => {
   const [isCodeFound, setIsCodeFound] = useState(false);
   const [code, setCode] = useState('');
   const [cid, setCid] = useState('');
+  const [currentCard, setCurrentCard] = useState(null);
   const [desc, setDesc] = useState('');
   const [image, setImage] = useState('');
   const [file, setFile] = useState("");
@@ -86,6 +87,11 @@ const Recieve = ({back, user, initCode, first}) => {
         const post = await doCreatePost(cid, user.uid, userProfile.firstName, desc, userProfile.location, image, stickers);
         await doPostToCard(cid, post.id);
         await doCardToUserProfile(user.uid, cid);
+        if (currentCard?.classrooms) {
+          const classPromises = userProfile.classrooms.map(classId => doIncrementPost(classId));
+          await Promise.all(classPromises);
+        }
+        await doIncrementUserPosts(user.uid);
       } catch (error) {
         console.error("Create post failed:", error);
         alert("Failed to post to card: " + error.message);
@@ -102,6 +108,7 @@ const Recieve = ({back, user, initCode, first}) => {
         console.log(code);
         const card = await doFetchCardByCode(code);
         setCid(card.id);
+        setCurrentCard(card.data());
       } catch (error) {
         console.error("Card not Found", error);
         alert("Failed to find card: " + error.message);

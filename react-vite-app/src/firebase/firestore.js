@@ -10,7 +10,9 @@ export const doCreateUserProfile = async (uid, email, userType, firstName, lastN
     firstName,
     lastName,
     email,
-    location
+    location,
+    card: 0,
+    post: 0,
   }, { merge: true });  // Use setDoc to merge data
 };
 
@@ -39,7 +41,7 @@ export const doDeleteUserProfile = async (uid) => {
 };
 
 
-export const doCreateCard = async (uid, title, code, cEmail) => {
+export const doCreateCard = async (uid, title, code, cEmail, classrooms) => {
   const cardsCollectionRef = collection(db, "cards");
 
   // Add a new document with a generated id to the 'cards' collection
@@ -48,6 +50,7 @@ export const doCreateCard = async (uid, title, code, cEmail) => {
     title,
     code,
     cEmail,
+    classrooms,
   });
 };
 
@@ -235,7 +238,19 @@ export const doIncrementPost = async (classId) => {
 };
 
 
+export const doIncrementUserCards = async (uid) => {
+  const userDocRef = doc(db, "user_profiles", uid);
+  return updateDoc(userDocRef, {
+    card: increment(1)
+  });
+};
 
+export const doIncrementUserPosts = async (uid) => {
+  const userDocRef = doc(db, "user_profiles", uid);
+  return updateDoc(userDocRef, {
+    post: increment(1)
+  });
+};
 
 
 

@@ -197,7 +197,7 @@ const HomePage = () => {
         )}
       </div>
       {!isNarrowScreen ? (
-        <RightSidebar card={currentCard} />
+        <></>
       ) : (
         <>
           <SmallMenuSidebar 

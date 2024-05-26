@@ -3,6 +3,7 @@ import { useAuth } from '../auth/index';
 import { doSignOut } from '../firebase/auth.js';
 import { Navigate } from 'react-router-dom';
 import LeftSidebar from '../components/home/leftSideBar';
+import SmallMenuSidebar from '../components/home/smallMenuSidebar.jsx';
 import { doFetchUserProfile, doCreateClassroom, doJoinClassroom, doClassroomToProfile, doFetchClassByName, doFetchClassroom } from '../firebase/firestore.js';
 
 const Classroom = () => {
@@ -35,12 +36,13 @@ const Classroom = () => {
           const userData = profile.data();
           setUserProfile(userData);
           if (profile && profile.data().classrooms) {
-            fetchClassrooms(profile.data().classrooms);
-          }
-          if (profile && (profile.data().userType == "Teacher") && classrooms){
-            fetchStudents(classrooms);
-            console.log("fetched students");
-            console.log(students[0]);
+            const classes = await fetchClassrooms(profile.data().classrooms);
+            setClassrooms(classes);
+            if (profile.data().userType == "Teacher") {
+              fetchStudents(classes);
+              console.log("fetched students");
+              //console.log(students);
+            }
           }
         } catch (error) {
           console.error("Failed to fetch user profile:", error);
@@ -57,7 +59,7 @@ const Classroom = () => {
       try {
         const classPromises = classIds.map(classId => doFetchClassroom(classId));
         const classObjects = await Promise.all(classPromises);
-        setClassrooms(classObjects.map(classObj => classObj.data()));
+        return(classObjects.map(classObj => classObj.data()));
       } catch (error) {
         console.error("Failed to fetch classrooms:", error);
       }
@@ -65,31 +67,31 @@ const Classroom = () => {
 
 
     const fetchStudents = async (classrooms) => {
+      if (classrooms.length == 0) {
+        console.log("no classrooms");
+        return;
+      }
       try {
         const students2DArray = await Promise.all(
           classrooms.map(async (classroom) => {
             const studentIds = classroom.students;
+            console.log(classroom.students);
             const studentPromises = studentIds.map((studentId) => doFetchUserProfile(studentId));
             const studentObjects = await Promise.all(studentPromises);
             return studentObjects.map((studentObj) => studentObj.data());
           })
         );
+        if (!students2DArray){
+          console.log("No students found");
+          return
+        }
+        console.log(students2DArray);
         setStudents(students2DArray);
       } catch (error) {
         console.error("Failed to fetch students:", error);
       }
     };
-    /*
-    const fetchStudents = async (studentIds) => {
-      try {
-        const studentPromises = studentIds.map(studentId => doFetchUserProfile(studentId));
-        const studentObjects = await Promise.all(studentPromises);
-        setClassrooms(studentObjects.map(studentObj => studentObj.data()));
-      } catch (error) {
-        console.error("Failed to fetch students:", error);
-      }
-    };
-  */
+
   
     const signOut = async (e) => {
       e.preventDefault()
@@ -139,8 +141,6 @@ const Classroom = () => {
       }
     }
 
-
-  
   
     if (isSigningOut) {
       return (<Navigate to={"/"} replace={true} />)
@@ -198,14 +198,18 @@ const Classroom = () => {
                 <div className="w-full flex flex-col">
                   <div className="w-full flex flex-row items-center">
                     <div>
-                      {classroom.cName} | Students: {classroom.students.length} | cards: {classroom.cards} | posts: {classroom.posts}
+                      {classroom.cName} | Students: {classroom.students.length} | cards: {classroom.cards} | People Challenged: {classroom.posts}
                     </div>
                     <button className="rounded-2xl border-[1px] h-12 py-2 px-3 border-black ml-4">Delete</button>
                   </div>
                   <div className="text-xl">Students:</div>
-                  {students[index].map((student) => (
-                    <div className="ml-4">Student: {student.firstName}</div>
-                  ))}
+                  {students[index] && 
+                    <>
+                      {students[index].map((student) => (
+                        <div className="ml-4">Student: {student.firstName} | cards: {student.card} | posts: {student.post}</div>
+                      ))}
+                    </>
+                  }
                 </div>
               ))}
               {!toggleCreate ?
@@ -236,8 +240,11 @@ const Classroom = () => {
           }
         </div>
         {isNarrowScreen && (
-          <LeftSidebar user={currentUser} signOut={signOut} page="Classroom" />
-        )}
+          <SmallMenuSidebar 
+            user={currentUser} 
+            signOut={signOut} 
+            page="inspiration" />
+      )}
       </div>
     );
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CustomInput from '../auth/customInput';
-import { doCreateCard, doCardToUserProfile, doFetchUserProfile, doCreatePost, doPostToCard, doFetchCard, doIncrementCard } from "../../firebase/firestore";
+import { doCreateCard, doCardToUserProfile, doFetchUserProfile, doCreatePost, doPostToCard, doFetchCard, doIncrementCard, doIncrementUserCards } from "../../firebase/firestore";
 import { doUploadFile } from "../../firebase/storage.js"
 import ThankYou from  "./thankYou.jsx"
 import StickerDrop from "./stickerDrop.jsx";
@@ -58,7 +58,8 @@ const NewCard = ({back, user, select}) => {
       }
       setIsCreatingCard(true);
       try {
-        const card = await doCreateCard(user.uid, title, code, userProfile.email);
+        const classrooms = userProfile.classrooms ? userProfile.classrooms : [];
+        const card = await doCreateCard(user.uid, title, code, userProfile.email, classrooms);
         await doCardToUserProfile(user.uid, card.id);
         const post = await doCreatePost(card.id, user.uid, userProfile.firstName, text, userProfile.location, image, stickers);
         await doPostToCard(card.id, post.id);
@@ -70,6 +71,8 @@ const NewCard = ({back, user, select}) => {
           const classPromises = userProfile.classrooms.map(classId => doIncrementCard(classId));
           await Promise.all(classPromises);
         }
+        await doIncrementUserCards(user.uid);
+
       } catch (error) {
         console.error("Create card failed:", error);
         alert("Failed to create card: " + error.message);
