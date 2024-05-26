@@ -18,6 +18,8 @@ import NewCardIcon from "../assets/NewCardIcon.svg";
 import ReceiveIcon from "../assets/ReceiveIcon.svg";
 import ChallengeIcon from "../assets/ChallengeIcon.svg";
 import TextCard from "../components/home/textCard.jsx";
+import SmallMenuSidebar from "../components/home/smallMenuSidebar.jsx";
+import SmallSearchBar from "../components/home/smallSearchBar.jsx";
 
 const HomePage = () => {
   const { currentUser } = useAuth();
@@ -100,7 +102,7 @@ const HomePage = () => {
 */
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen z-0">
       {!isNarrowScreen && (
         <LeftSidebar
           user={currentUser}
@@ -112,7 +114,11 @@ const HomePage = () => {
       <div className="flex-grow flex flex-col items-center overflow-auto px-20 py-10">
         {subPage == "feed" && (
           <>
-            <SearchBar onSearch={handleSearch} width="full" />
+            {!isNarrowScreen ? (
+              <SearchBar onSearch={handleSearch} width="full" />
+            ) : (
+              <SmallSearchBar user={currentUser} signOut={signOut} page={subPage} onSearch={handleSearch} />
+            )}
             <div className="flex flex-row justify-between gap-4 my-4 w-full">
               <CardsButton
                 width="180px"
@@ -193,12 +199,12 @@ const HomePage = () => {
       {!isNarrowScreen ? (
         <RightSidebar card={currentCard} />
       ) : (
-        <LeftSidebar
-          user={currentUser}
-          signOut={signOut}
-          page={subPage}
-          back={returnToFeed}
-        />
+        <>
+          <SmallMenuSidebar 
+            user={currentUser} 
+            signOut={signOut} 
+            page={subPage} />
+        </>
       )}
     </div>
   );

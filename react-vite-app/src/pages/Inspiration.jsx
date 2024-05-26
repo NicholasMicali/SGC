@@ -4,21 +4,24 @@ import { doSignOut } from '../firebase/auth.js';
 import { Navigate } from 'react-router-dom';
 import LeftSidebar from '../components/home/leftSideBar';
 import RightSidebar from '../components/home/rightSideBar';
+import SmallMenuSidebar from '../components/home/smallMenuSidebar'
 
 
 const InspirationPage = () => {
   const { currentUser } = useAuth();
   const [isSigningOut, setIsSigningOut] = useState(false);
-  const [isNarrowScreen, setIsNarrowScreen] = useState(window.innerWidth <= 768);
+  const [isNarrowScreen, setIsNarrowScreen] = useState(
+    window.innerWidth <= 768
+  );
 
   useEffect(() => {
     const handleResize = () => {
       setIsNarrowScreen(window.innerWidth <= 768);
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -54,7 +57,10 @@ const InspirationPage = () => {
         Inspiration Page
       </div>
       {isNarrowScreen && (
-        <LeftSidebar user={currentUser} signOut={signOut} page="Inspiration" />
+          <SmallMenuSidebar 
+            user={currentUser} 
+            signOut={signOut} 
+            page="inspiration" />
       )}
     </div>
   );
