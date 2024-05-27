@@ -17,16 +17,14 @@ const LoginPage = () => {
   const [errMessage, setErrMessage] = useState("");
   const [isSigningIn, setIsSigningIn] = useState(false);
 
-  const onGoogleSignIn = (e) => {
+  const onGoogleSignIn = async (e) => {
     e.preventDefault();
-    //if(!isSigningIn) {
-    const user = doSignInWithGoogle().catch((err) => {
+    const user = await doSignInWithGoogle().catch((err) => {
       setErrMessage(err);
       console.error("Login with google failed:", err);
       alert("Failed to login with google:", err.message);
     });
     setIsSigningIn(true);
-    //}
   };
 
   const handleToggle = () => {
