@@ -4,6 +4,8 @@ import { doSignOut } from '../firebase/auth.js';
 import { Navigate } from 'react-router-dom';
 import LeftSidebar from '../components/home/leftSideBar';
 import SmallMenuSidebar from '../components/home/smallMenuSidebar.jsx';
+import ClassroomInfo from '../components/home/classroomInfo.jsx';
+import StudentInfo from '../components/home/studentInfo.jsx';
 import { doFetchUserProfile, doCreateClassroom, doJoinClassroom, doClassroomToProfile, doFetchClassByName, doFetchClassroom } from '../firebase/firestore.js';
 
 const Classroom = () => {
@@ -40,7 +42,7 @@ const Classroom = () => {
             setClassrooms(classes);
             if (profile.data().userType == "Teacher") {
               fetchStudents(classes);
-              console.log("fetched students");
+              //console.log("fetched students");
               //console.log(students);
             }
           }
@@ -85,7 +87,7 @@ const Classroom = () => {
           console.log("No students found");
           return
         }
-        console.log(students2DArray);
+        //console.log(students2DArray);
         setStudents(students2DArray);
       } catch (error) {
         console.error("Failed to fetch students:", error);
@@ -146,7 +148,11 @@ const Classroom = () => {
       return (<Navigate to={"/"} replace={true} />)
     }
   
+    //<button className="rounded-2xl border-[1px] h-12 py-2 px-3 border-black ml-4">Delete</button>
   
+    //<div className="ml-4">Student: {student.firstName} | cards: {student.card} | posts: {student.post}</div>
+
+
     return (
       <div className="flex h-screen">
         {!isNarrowScreen && (
@@ -156,19 +162,15 @@ const Classroom = () => {
           <div className="self-start text-2xl font-bold">Classrooms:</div>
           {userProfile?.userType == 'Student' &&
             <div className="w-full">
-              <div>Student</div>
               {classrooms.map((classroom, index) => (
                 <div className="w-full flex flex-row items-center">
-                  <div>
-                    {classroom.cName} | Students: {classroom.students.length} | cards: {classroom.cards} | posts: {classroom.posts}
-                  </div>
-                  <button className="rounded-2xl border-[1px] h-12 py-2 px-3 border-black ml-4">Leave</button>
+                  <ClassroomInfo classroom={classroom}/>
                 </div>
               ))}
               {!toggleJoin ?
-                <div className="w-full flex flex-col rounded-2 bg-blue-500" onClick={() => setToggleJoin(true)}>
-                  <>+</>
-                  <>Join Classroom</>
+                <div className="w-full flex flex-col justify-center items-center bg-blue-500 bg-opacity-40 rounded-xl py-4 mt-6" onClick={() => setToggleJoin(true)}>
+                  <div>+</div>
+                  <div>Join Classroom</div>
                 </div>
               :
                 <>
@@ -193,29 +195,27 @@ const Classroom = () => {
           }
           {userProfile?.userType == 'Teacher' &&
             <>
-              <div>Teacher</div>
               {classrooms.map((classroom, index) => (
                 <div className="w-full flex flex-col">
                   <div className="w-full flex flex-row items-center">
-                    <div>
-                      {classroom.cName} | Students: {classroom.students.length} | cards: {classroom.cards} | People Challenged: {classroom.posts}
-                    </div>
-                    <button className="rounded-2xl border-[1px] h-12 py-2 px-3 border-black ml-4">Delete</button>
+                    <ClassroomInfo classroom={classroom}/>
                   </div>
-                  <div className="text-xl">Students:</div>
-                  {students[index] && 
-                    <>
-                      {students[index].map((student) => (
-                        <div className="ml-4">Student: {student.firstName} | cards: {student.card} | posts: {student.post}</div>
-                      ))}
-                    </>
-                  }
+                  <div className="w-full flex flex-col pl-8 bg-gray-500 bg-opacity-30 rounded-xl py-6">
+                    <div className="text-xl">Students:</div>
+                    {students[index] && 
+                      <>
+                        {students[index].map((student) => (
+                          <StudentInfo student={student}/>
+                        ))}
+                      </>
+                    }
+                  </div>
                 </div>
               ))}
               {!toggleCreate ?
-                <div className="w-full flex flex-col rounded-2 bg-blue-500 mt-6" onClick={() => setToggleCreate(true)}>
-                  <>+</>
-                  <>Create Classroom</>
+                <div className="w-full flex flex-col justify-center items-center bg-blue-500 bg-opacity-40 rounded-xl py-4 mt-6" onClick={() => setToggleCreate(true)}>
+                  <div>+</div>
+                  <div>Create Classroom</div>
                 </div>
               :
                 <>
