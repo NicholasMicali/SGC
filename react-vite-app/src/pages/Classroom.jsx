@@ -6,7 +6,7 @@ import LeftSidebar from '../components/home/leftSideBar';
 import SmallMenuSidebar from '../components/home/smallMenuSidebar.jsx';
 import ClassroomInfo from '../components/home/classroomInfo.jsx';
 import StudentInfo from '../components/home/studentInfo.jsx';
-import { doFetchUserProfile, doCreateClassroom, doJoinClassroom, doClassroomToProfile, doFetchClassByName, doFetchClassroom } from '../firebase/firestore.js';
+import { doFetchUserProfile, doCreateClassroom, doJoinClassroom, doClassroomToProfile, doFetchClassByName, doFetchClassroom, doRemoveClassroomFromUserProfile, doRemoveStudentFromClassroom } from '../firebase/firestore.js';
 
 const Classroom = () => {
     const { currentUser } = useAuth();
@@ -143,6 +143,31 @@ const Classroom = () => {
       }
     }
 
+
+    const leaveClassroom = async (classroom) => {
+      if (window.confirm("Are you sure you want to leave this classroom? This action cannot be undone.")) {
+        try {
+          console.log(classroom);
+          await doRemoveClassroomFromUserProfile(currentUser.uid, classroom);
+          await doRemoveStudentFromClassroom(currentUser.uid, classroom);
+          window.location.reload(); 
+        } catch (error) {
+          console.log("Failed to leave classroom: " + error);
+        }
+      }
+    }
+
+    const removeClassroom = async (classroom) => {
+      if (window.confirm("Are you sure you want to delete this classroom? This action cannot be undone.")) {
+        try {
+          await doRemoveClassroomFromUserProfile(currentUser.uid, classroom);
+          window.location.reload(); 
+        } catch (error) {
+          console.log("Failed to leave classroom: " + error);
+        }
+      }
+    }
+
   
     if (isSigningOut) {
       return (<Navigate to={"/"} replace={true} />)
@@ -165,6 +190,7 @@ const Classroom = () => {
               {classrooms.map((classroom, index) => (
                 <div className="w-full flex flex-row items-center">
                   <ClassroomInfo classroom={classroom}/>
+                  <button onClick={() => leaveClassroom(userProfile.classrooms[index])} className="rounded-2xl border-[1px] h-12 py-2 px-3 border-black ml-4">Leave</button>
                 </div>
               ))}
               {!toggleJoin ?
@@ -199,6 +225,7 @@ const Classroom = () => {
                 <div className="w-full flex flex-col">
                   <div className="w-full flex flex-row items-center">
                     <ClassroomInfo classroom={classroom}/>
+                    <button onClick={() => removeClassroom(userProfile.classrooms[index])} className="rounded-2xl border-[1px] h-12 py-2 px-3 border-black ml-4">Delete</button>
                   </div>
                   <div className="w-full flex flex-col pl-8 bg-gray-500 bg-opacity-30 rounded-xl py-6">
                     <div className="text-xl">Students:</div>

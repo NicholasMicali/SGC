@@ -223,6 +223,33 @@ export const doFetchClassroom = async (classId) => {
 }
 
 
+export const doRemoveClassroomFromUserProfile = async (uid, classId) => {
+  const userDocRef = doc(db, "user_profiles", uid);
+  try {
+    await updateDoc(userDocRef, {
+      classrooms: arrayRemove(classId) // Removes the cardId from the 'cards' array
+    });
+    console.log("classroom from user profile successfully.");
+  } catch (error) {
+    console.error("Error removing classroom from user profile:", error);
+    throw new Error("Failed to remove classroom from user profile");
+  }
+};
+
+export const doRemoveStudentFromClassroom = async (uid, classId) => {
+  const classDocRef = doc(db, "classrooms", classId);
+  try {
+    await updateDoc(classDocRef, {
+      students: arrayRemove(uid) // Removes the cardId from the 'cards' array
+    });
+    console.log("Student removed from classroom successfully.");
+  } catch (error) {
+    console.error("Error removing student from classroom:", error);
+    throw new Error("Failed to remove student from classroom");
+  }
+};
+
+
 export const doIncrementCard = async (classId) => {
   const classDocRef = doc(db, "classrooms", classId);
   return updateDoc(classDocRef, {

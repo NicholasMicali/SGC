@@ -8,32 +8,10 @@ const TextCard = ({ loc, date, title, description, name, first, image, stickers 
     <div
       className={
         !first ?
-        "mt-6 flex flex-col justify-between w-[570px] h-fit rounded-lg border-2 relative shadow-lg bg-light-pink gap-3 p-5"
-        : "mt-6 flex flex-col justify-between w-[570px] h-fit rounded-lg relative shadow-lg gap-3 p-5 bg-gradient-to-tr from-gradient-start via-gradient-mid to-gradient-end bg-opacity-40"
+        "mt-6 flex flex-col justify-between max-w-[570px] h-fit rounded-lg border-2 relative shadow-lg bg-light-pink gap-3 p-5"
+        : "mt-6 flex flex-col justify-between max-w-[570px] h-fit rounded-lg relative shadow-lg gap-3 p-5 bg-gradient-to-tr from-gradient-light-start via-gradient-light-mid to-gradient-light-end bg-opacity-40"
       }
     >
-      {/* Location at the top left */}
-      {/* <div className="absolute top-0 left-0 p-4 font-medium">
-        {loc}
-        {"  |  "}
-        {date}
-      </div> */}
-
-      {/* Title and description centered */}
-      {/* <div className="flex flex-col justify-center items-center h-full">
-        <h2 className="absolute top-14 transform -translate-y-1/2 left-0 p-4 font-semibold text-xl">
-          {title}
-        </h2>
-        <p className="text-base pt-12 p-4 text-med">{description}</p>
-      </div> */}
-
-      {/* <div
-        className="absolute bottom-0 left-0 m-3 p-1 font-small text-sm"
-        style={{ borderRadius: "5px", backgroundColor: "aqua" }}
-      >
-        {name}
-      </div> */}
-      {/* top row */}
       <div className="flex justify-between">
         <div className="flex items-center">
           📍
@@ -61,7 +39,7 @@ const TextCard = ({ loc, date, title, description, name, first, image, stickers 
         <div className="">
           {description}
         </div>
-        {image && <img className="w-20 h-20" src={image}></img>}
+        {image && <img className="w-20 h-20 ml-2" src={image}></img>}
       </div>
       {/* see more button */}
       <div className=" font-semibold cursor-pointer text-lg flex items-center">
@@ -80,15 +58,11 @@ const TextCard = ({ loc, date, title, description, name, first, image, stickers 
             Student
           </div>
         </div>
-        {stickers ?
+        {stickers &&
           <div className="flex flex-row self-start mt-8 items-center">
               {stickers.map((sticker) => (
                 <img src={sticker} className="w-4 h-4 mr-1"/>
               ))}
-          </div>
-        :
-          <div>
-            🐔🐼🐸
           </div>
         }
       </div>
