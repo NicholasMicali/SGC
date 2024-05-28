@@ -32,25 +32,38 @@ const SmallMenuSidebar = ({ user, signOut, page }) => {
   return (
     <>
       {!isSmallMenu && (
+        <>
         <img
           src={MenuBackground}
           alt="Menu Background"
           className="absolute top-0 right-0 w-203 h-151 z-20"
         />
-      )}
-      <button
-        className={`z-30 p-1 ${isSmallMenu ? 'absolute top-0 right-0' : 'absolute top-6 right-10 mt-2 ml-3'}`}
+        <button
+        className="z-30 p-1 absolute top-6 right-8 mt-2 ml-3"
         onClick={() => setSmallMenu(!isSmallMenu)}
       >
         <img 
-          src={isSmallMenu ? MenuXIcon : MenuIcon} 
+          src={MenuIcon} 
           alt="Menu Icon" 
-          className={`w-31 h-17 ${isSmallMenu ? 'w-8 h-8' : ''}`} 
+          className="w-31 h-17 w-8 h-8"
         />
       </button>
+      </>
+      )}
+      
 
       {isSmallMenu && (
-        <>
+        <div className="fixed top-0 right-0 w-64 h-full bg-white z-40 shadow-lg p-4">
+          <button
+        className="z-30 p-1 absolute top-0 right-0"
+        onClick={() => setSmallMenu(!isSmallMenu)}
+      >
+        <img 
+          src={MenuXIcon} 
+          alt="Menu Icon" 
+          className="w-31 h-17 w-8 h-8"
+        />
+      </button>
         <div className="relative flex flex-col w-full items-start p-2 mxy-8 gap-2 z-10">
           <NavItem icon={page === "Feed" ? FeedIcon : HomeBlack} text="Feed" page={page} onClick={() => onClick('/home')}/>
           <div className="w-full h-[1px] bg-gray-300"></div>
@@ -105,7 +118,7 @@ const SmallMenuSidebar = ({ user, signOut, page }) => {
       </div>
       </div>
         </div>
-      </>
+        </div>
 
       )}
     </>
