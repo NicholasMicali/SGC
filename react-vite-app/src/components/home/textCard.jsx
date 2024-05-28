@@ -8,8 +8,8 @@ const TextCard = ({ loc, date, title, description, name, first, image, stickers 
     <div
       className={
         !first ?
-        "mt-6 flex flex-col justify-between max-w-[570px] h-fit rounded-lg border-2 relative shadow-lg bg-light-pink gap-3 p-5"
-        : "mt-6 flex flex-col justify-between max-w-[570px] h-fit rounded-lg relative shadow-lg gap-3 p-5 bg-gradient-to-tr from-gradient-light-start via-gradient-light-mid to-gradient-light-end bg-opacity-40"
+        "mt-6 flex flex-col justify-between w-[570px] h-fit rounded-lg border-2 relative shadow-lg bg-light-pink gap-3 p-5"
+        : "mt-6 flex flex-col justify-between w-[570px] h-fit rounded-lg relative shadow-lg gap-3 p-5 bg-gradient-to-tr from-gradient-light-start via-gradient-light-mid to-gradient-light-end bg-opacity-40"
       }
     >
       <div className="flex justify-between">
@@ -52,14 +52,14 @@ const TextCard = ({ loc, date, title, description, name, first, image, stickers 
         <div className="flex items-center">
           {name}
           &nbsp;
-          |
+          | 
           &nbsp;
           <div className=" text-sm font-semibold bg-blue-200 pl-[5px] pr-[5px] rounded-md">
             Student
           </div>
         </div>
         {stickers &&
-          <div className="flex flex-row self-start mt-8 items-center">
+          <div className="flex flex-row self-start mt-8 items-center gap-1">
               {stickers.map((sticker) => (
                 <img src={sticker} className="w-4 h-4 mr-1"/>
               ))}

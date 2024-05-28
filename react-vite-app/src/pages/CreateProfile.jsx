@@ -78,7 +78,7 @@ const CreateProfilePage = () => {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-tr from-purple-500 to-pink-500">
       <form
         onSubmit={onSubmit}
-        className="w-3/4 lg:w-1/2 xl:w-1/3 p-5 bg-white shadow rounded-lg flex flex-col gap-5"
+        className="w-3/4 lg:w-1/2 xl:w-1/3 max-sm:min-w-[600px] p-5 bg-white shadow rounded-lg flex flex-col gap-5"
       >
         <div className="flex justify-between">
           <h2 className="text-xl font-bold">Profile Setup</h2>
@@ -88,7 +88,7 @@ const CreateProfilePage = () => {
         {step === 1 && (
           <div className="flex flex-col items-center gap-4">
             <h3 className="text-lg font-semibold">Who are you?</h3>
-            <div className="flex justify-center gap-4">
+            <div className="flex max-sm:flex-col justify-center gap-4">
               <CardsButton
                 text="Teacher"
                 backgroundColor="#D1EDF9"

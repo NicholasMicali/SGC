@@ -5,19 +5,16 @@ import { Navigate } from "react-router-dom";
 import { doFetchCardByCode } from "../firebase/firestore.js";
 import SearchBar from "../components/home/searchbar.jsx";
 import LeftSidebar from "../components/home/leftSideBar";
-import RightSidebar from "../components/home/rightSideBar";
 import AllCards from "../components/cardsPages/allCards.jsx";
 import CardFeed from "../components/cardsPages/cardFeed.jsx";
 import NewCard from "../components/cardsPages/newCard.jsx";
 import Challenge from "../components/cardsPages/challenge.jsx";
 import Recieve from "../components/cardsPages/recieve.jsx";
 import CardsButton from "../components/cardsPages/cardsButton.jsx";
-import GetStarted from "../components/home/getStarted.jsx";
 import AllCardIcon from "../assets/AllCardIcon.svg";
 import NewCardIcon from "../assets/NewCardIcon.svg";
 import ReceiveIcon from "../assets/ReceiveIcon.svg";
 import ChallengeIcon from "../assets/ChallengeIcon.svg";
-import TextCard from "../components/home/textCard.jsx";
 import SmallMenuSidebar from "../components/home/smallMenuSidebar.jsx";
 import SmallSearchBar from "../components/home/smallSearchBar.jsx";
 import Logo from "../assets/logo.svg";
@@ -90,17 +87,6 @@ const HomePage = () => {
   if (isSigningOut) {
     return <Navigate to={"/"} replace={true} />;
   }
-
-/*
-      <TextCard
-              loc="San Francisco, CA"
-              date="April 24th"
-              title="Spread Goodness"
-              description="orem ipsum dolor sit amet, consectetur adipiscing elit. Sed non sollicitudin nisi, vitae suscipit nisl. Etiam mollis metus et lacus blandit ultricies. Maecenas molestie sagittis nisl, vitae convallis leo aliquet eu. Ut vestibulum cursus cursus. Donec pharetra, sem vel feugiat ultrices, dui nisl dignissim neque, faucibus hendrerit augue velit sit amet dolor. Fusce quis elit eget ligula dapibus vulputate gravida non ipsum. Nam viverra ultricies lacinia. Pellentesque risus lacus, accumsan sit amet maximus sed, "
-              name="John Doe"
-              first={true}
-            />
-*/
 
   return (
     <div className="flex h-screen z-0">
