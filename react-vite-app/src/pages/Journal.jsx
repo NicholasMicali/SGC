@@ -4,6 +4,7 @@ import { doSignOut } from '../firebase/auth.js';
 import { Navigate } from 'react-router-dom';
 import LeftSidebar from '../components/home/leftSideBar';
 import RightSidebar from '../components/home/rightSideBar';
+import SmallMenuSidebar from '../components/home/smallMenuSidebar'
 
 
 const JournalPage = () => {
@@ -53,7 +54,10 @@ const JournalPage = () => {
         Journal Page
       </div>
       {isNarrowScreen && (
-        <LeftSidebar user={currentUser} signOut={signOut} page="Journal" />
+          <SmallMenuSidebar 
+            user={currentUser} 
+            signOut={signOut} 
+            page="Journal" />
       )}
     </div>
   );

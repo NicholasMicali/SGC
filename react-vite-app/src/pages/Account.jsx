@@ -9,6 +9,7 @@ import { doFetchUserProfile, doUpdateUserProfile, doDeleteUserProfile } from "..
 import { doPasswordReset, doDeleteUser } from "../firebase/auth.js";
 import { doUploadFile } from "../firebase/storage.js"
 import { useNavigate } from 'react-router-dom';
+import SmallMenuSidebar from '../components/home/smallMenuSidebar'
 
 
 const AccountPage = () => {
@@ -385,7 +386,10 @@ const AccountPage = () => {
         </div>
       </div>
       {isNarrowScreen && (
-        <LeftSidebar user={currentUser} signOut={signOut} page="Account Settings" />
+          <SmallMenuSidebar 
+            user={currentUser} 
+            signOut={signOut} 
+            page="Account Settings" />
       )}
     </div>
   );
