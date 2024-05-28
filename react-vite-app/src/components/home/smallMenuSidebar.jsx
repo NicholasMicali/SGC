@@ -81,45 +81,43 @@ const SmallMenuSidebar = ({ user, signOut, page }) => {
           <div className="w-full h-[1px] bg-gray-300"></div>
           <NavItem icon={SignoutIcon} text="Sign Out" page={page} onClick={signOut}/>
           <div className="w-full h-[1px] bg-gray-300"></div>
-
-          <div className="absolute bottom-0 flex items-center w-full">
-          <div style={{ fontSize: '2vw' }}>
-            Follow us on
+          <div className="fixed bottom-0 right-0 z-50 flex items-center justify-between p-4">
+              <div className="mr-5">
+                Follow us on
+              </div>
+              <div className="flex flex-row items-center space-x-3">
+                <a href="" target="_blank" rel="noopener noreferrer" className="ml-2">
+                  <img
+                    src={TwitterIcon}
+                    alt="Twitter Icon"
+                    className="cursor-pointer hover:fill-pink-500"
+                  />
+                </a>
+                <a href="" target="_blank" rel="noopener noreferrer">
+                  <img
+                    src={YoutubeIcon}
+                    alt="Youtube Icon"
+                    className="cursor-pointer"
+                  />
+                </a>
+                <a href="" target="_blank" rel="noopener noreferrer">
+                  <img
+                    src={InstagramIcon}
+                    alt="Instagram Icon"
+                    className="cursor-pointer"
+                  />
+                </a>
+                <a href="" target="_blank" rel="noopener noreferrer">
+                  <img
+                    src={FacebookIcon}
+                    alt="Facebook Icon"
+                    className="cursor-pointer"
+                  />
+                </a>
+              </div>
+            </div>
           </div>
-          <div className="absolute bottom-0 right-0 flex flex-row items-center space-x-2 p-2">
-          <a href="" target="_blank" rel="noopener noreferrer" className="ml-2">
-            <img
-              src={TwitterIcon}
-              alt="Twitter Icon"
-              className="cursor-pointer hover:fill-pink-500"
-            />
-          </a>
-          <a href="" target="_blank" rel="noopener noreferrer">
-            <img
-              src={YoutubeIcon}
-              alt="Youtube Icon"
-              className="cursor-pointer"
-            />
-          </a>
-          <a href="" target="_blank" rel="noopener noreferrer">
-            <img
-              src={InstagramIcon}
-              alt="Instagram Icon"
-              className="cursor-pointer"
-            />
-          </a>
-          <a href="" target="_blank" rel="noopener noreferrer">
-            <img
-              src={FacebookIcon}
-              alt="Facebook Icon"
-              className="cursor-pointer"
-            />
-          </a>
-      </div>
-      </div>
         </div>
-        </div>
-
       )}
     </>
   );
