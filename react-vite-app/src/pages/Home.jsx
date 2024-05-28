@@ -203,7 +203,7 @@ const HomePage = () => {
           <SmallMenuSidebar 
             user={currentUser} 
             signOut={signOut} 
-            page={subPage} />
+            page={"Feed"} />
         </>
       )}
     </div>

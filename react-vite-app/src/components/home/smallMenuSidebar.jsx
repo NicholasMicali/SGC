@@ -2,19 +2,20 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import MenuBackground from "../../assets/MenuBackground.svg";
 import MenuIcon from "../../assets/MenuIcon.svg";
+import HomeBlack from "../../assets/HomeBlack.svg";
 import FeedIcon from "../../assets/FeedIcon.svg";
 import InspirationIcon from "../../assets/InspirationIcon.svg"; 
+import inspirationPink from "../../assets/inspirationPink.svg";
 import JournalIcon from "../../assets/JournalIcon.svg"; 
+import journalPink from "../../assets/journalPink.svg";
 import AccountSettingsIcon from "../../assets/AccountSettingsIcon.svg";
+import accountPink from "../../assets/accountPink.svg";
+import classroomIcon from "../../assets/classroom.svg";
+import classroomPink from "../../assets/classroomPink.svg";
 import TwitterIcon from "../../assets/TwitterIcon.svg";
 import YoutubeIcon from "../../assets/YoutubeIcon.svg";
 import InstagramIcon from "../../assets/InstagramIcon.svg";
 import FacebookIcon from "../../assets/FacebookIcon.svg";
-import classroomIcon from "../../assets/classroom.svg";
-import HomeBlack from "../../assets/HomeBlack.svg";
-import accountPink from "../../assets/accountPink.svg";
-import inspirationPink from "../../assets/inspirationPink.svg";
-import journalPink from "../../assets/journalPink.svg";
 import SignoutIcon from "../../assets/SignoutIcon.svg";
 import MenuXIcon from "../../assets/MenuXIcon.svg";
 
@@ -73,7 +74,7 @@ const SmallMenuSidebar = ({ user, signOut, page }) => {
           <div className="w-full h-[1px] bg-gray-300"></div>
           <NavItem icon={page === "Account Settings" ? accountPink : AccountSettingsIcon} text="Account Settings" page={page} onClick={() => onClick('/account')}/>
           <div className="w-full h-[1px] bg-gray-300"></div>
-          <NavItem icon={classroomIcon} text="Classroom" page={page} onClick={() => onClick('/classroom')}/>
+          <NavItem icon={page === "Classroom" ? classroomPink : classroomIcon} text="Classroom" page={page} onClick={() => onClick('/classroom')}/>
           <div className="w-full h-[1px] bg-gray-300"></div>
           <div className="bg-gradient-to-r from-gradient-start via-gradient-mid to-gradient-end inline-block text-transparent bg-clip-text cursor-pointer">
             Give us Feedback
