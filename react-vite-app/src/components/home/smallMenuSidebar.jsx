@@ -56,12 +56,12 @@ const SmallMenuSidebar = ({ user, signOut, page }) => {
       {isSmallMenu && (
         <div className="fixed top-0 right-0 w-64 h-full bg-white z-40 shadow-lg p-4">
           <button
-        className="z-30 p-1 absolute top-0 right-0"
+        className="z-30 p-1 absolute top-2 right-1"
         onClick={() => setSmallMenu(!isSmallMenu)}
       >
         <img 
           src={MenuXIcon} 
-          alt="Menu Icon" 
+          alt="Menu X" 
           className="w-31 h-17 w-8 h-8"
         />
       </button>
