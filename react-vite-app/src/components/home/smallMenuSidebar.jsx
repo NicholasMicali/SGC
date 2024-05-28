@@ -18,7 +18,6 @@ import InstagramIcon from "../../assets/InstagramIcon.svg";
 import FacebookIcon from "../../assets/FacebookIcon.svg";
 import SignoutIcon from "../../assets/SignoutIcon.svg";
 import MenuXIcon from "../../assets/MenuXIcon.svg";
-
 import NavItem from "./navItem";
 
 const SmallMenuSidebar = ({ user, signOut, page }) => {
@@ -29,7 +28,7 @@ const SmallMenuSidebar = ({ user, signOut, page }) => {
   const onClick = (path) => {
       navigate(path);  // Navigates to the given path
   };
-  
+
   return (
     <>
       {!isSmallMenu && (
