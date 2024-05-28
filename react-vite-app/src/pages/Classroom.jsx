@@ -270,7 +270,7 @@ const Classroom = () => {
           <SmallMenuSidebar 
             user={currentUser} 
             signOut={signOut} 
-            page="inspiration" />
+            page="Classroom" />
       )}
       </div>
     );

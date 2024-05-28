@@ -20,6 +20,7 @@ import ChallengeIcon from "../assets/ChallengeIcon.svg";
 import TextCard from "../components/home/textCard.jsx";
 import SmallMenuSidebar from "../components/home/smallMenuSidebar.jsx";
 import SmallSearchBar from "../components/home/smallSearchBar.jsx";
+import Logo from "../assets/logo.svg";
 
 const HomePage = () => {
   const { currentUser } = useAuth();
@@ -109,7 +110,7 @@ const HomePage = () => {
           signOut={signOut}
           page="Feed"
           back={returnToFeed}
-        />
+        /> 
       )}
       <div className="flex-grow flex flex-col items-center overflow-auto px-20 py-10">
         {subPage == "feed" && (
@@ -118,6 +119,10 @@ const HomePage = () => {
               <SearchBar onSearch={handleSearch} width="full" />
             ) : (
               <SmallSearchBar user={currentUser} signOut={signOut} page={subPage} onSearch={handleSearch} />
+            )}
+
+            {isNarrowScreen && (
+              <img src={Logo} alt="Spread Goodness logo" className="p-4" />
             )}
             <div className="flex flex-row justify-between gap-4 my-4 w-full">
               <CardsButton
@@ -203,7 +208,7 @@ const HomePage = () => {
           <SmallMenuSidebar 
             user={currentUser} 
             signOut={signOut} 
-            page={subPage} />
+            page={"Feed"} />
         </>
       )}
     </div>

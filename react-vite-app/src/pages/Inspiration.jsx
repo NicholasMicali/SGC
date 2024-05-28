@@ -60,7 +60,7 @@ const InspirationPage = () => {
           <SmallMenuSidebar 
             user={currentUser} 
             signOut={signOut} 
-            page="inspiration" />
+            page="Inspiration" />
       )}
     </div>
   );
