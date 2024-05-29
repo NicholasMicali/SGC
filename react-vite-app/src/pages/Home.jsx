@@ -242,10 +242,11 @@ const HomePage = () => {
             back={returnToFeed}
             user={currentUser}
             select={selectCard}
+            isNarrowScreen={isNarrowScreen}
           />
         )}
         {subPage === "new" && (
-          <NewCard back={returnToFeed} user={currentUser} select={selectCard} />
+          <NewCard back={returnToFeed} user={currentUser} select={selectCard} isNarrowScreen={isNarrowScreen} />
         )}
         {subPage === "receive" && (
           <Recieve

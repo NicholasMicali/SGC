@@ -6,7 +6,7 @@ import CardsButton from "./cardsButton.jsx";
 import NewCardIcon from "../../assets/NewCardIcon.svg";
 
 
-const AllCards = ({back, user, select}) => {
+const AllCards = ({back, user, select, isNarrowScreen}) => {
 
   const [userProfile, setUserProfile] = useState(null);
   const [cards, setCards] = useState([]);
@@ -62,7 +62,7 @@ const AllCards = ({back, user, select}) => {
       {cards.map((card, index) => (
         <div className="w-full flex flex-row items-center">
           <div className="w-full cursor-pointer" onClick={() => select(card, cids[index])}>
-            <CardInfo name={card.title} location="1" miles="250" people={card.posts ? card.posts.length : "0"} color={(card.cEmail === user.email)}/>
+            <CardInfo name={card.title} location="1" miles="250" people={card.posts ? card.posts.length : "0"} color={(card.cEmail === user.email)} isNarrowScreen={isNarrowScreen}/>
           </div>
           <button className="rounded-2xl border-[1px] h-12 py-2 px-3 ml-4 border-black" onClick={() => removeCard(cids[index], index)}>Delete</button>
         </div>
