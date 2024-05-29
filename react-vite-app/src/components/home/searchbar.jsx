@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 
 const SearchBar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -21,12 +22,14 @@ const SearchBar = ({ onSearch }) => {
     onChange={handleInputChange}
     className="flex-grow px-6 py-2 rounded-full focus:outline-none border border-blue-300 bg-blue-50 placeholder-blue-300"
   />
-  <button
+  <motion.button
     type="submit"
-    className="ml-1 px-4 bg-blue-500 text-white rounded-full hover:bg-blue-300"
+    className="ml-1 px-4 bg-blue-500 text-white rounded-full "
+    whileTap = {{ scale: 0.8 }}
+     whileHover={{scale: 1.1, backgroundColor: "#2563EB"}}
   >
     ✓
-  </button>
+  </motion.button>
 </form>
   );
 };

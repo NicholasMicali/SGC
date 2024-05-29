@@ -101,10 +101,8 @@ const HomePage = () => {
       <div className="flex-grow flex flex-col items-center overflow-auto px-20 py-10">
         {subPage == "feed" && (
           <>
-            {!isNarrowScreen ? (
+            {!isNarrowScreen && (
               <SearchBar onSearch={handleSearch} width="full" />
-            ) : (
-              <SmallSearchBar user={currentUser} signOut={signOut} page={subPage} onSearch={handleSearch} />
             )}
 
             {isNarrowScreen && (
@@ -186,10 +184,16 @@ const HomePage = () => {
             cid={currentCid}
           />
         )}
+        
+        {isNarrowScreen && (
+        <SmallSearchBar 
+          user={currentUser} 
+          signOut={signOut} 
+          page={"Feed"} 
+          onSearch={handleSearch} />
+      )}
       </div>
-      {!isNarrowScreen ? (
-        <></>
-      ) : (
+      {isNarrowScreen && (
         <>
           <SmallMenuSidebar 
             user={currentUser} 
