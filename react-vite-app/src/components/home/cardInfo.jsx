@@ -7,19 +7,19 @@ const CardInfo = ({name, location, miles, people, isSidebar, color, isNarrowScre
               <div className={color ? "flex flex-row justify-between bg-gradient-to-tr rounded-xl px-2 py-2 from-gradient-light-start via-gradient-light-mid to-gradient-light-end w-full h-1/8 bg-opacity-40" : "flex flex-col justify-between rounded-xl px-4 py-10 w-full h-full bg-opacity-40 border border-2"}>
                   <div className="flex flex-col justify-center items-center">
                       <div className="font-bold text-sm">{name}</div>
-                      <div className="">Card Name</div>
+                      <div className="text-sm">Card Name</div>
                   </div>
                   <div className="flex flex-col justify-center items-center">
                       <div className="font-bold text-sm">{location}</div>
-                      <div className="">Locations 📍</div>
+                      <div className="text-sm">Locations 📍</div>
                   </div>
                   <div className="flex flex-col justify-center items-center">
                       <div className="font-bold text-sm">{miles} miles</div>
-                      <div className="">Distance</div>
+                      <div className="text-sm">Distance</div>
                   </div>
                   <div className="flex flex-col justify-center items-center">
                       <div className="font-bold text-sm">{people}</div>
-                      <div className="">People</div>
+                      <div className="text-sm">People</div>
                   </div>
               </div>
           );
