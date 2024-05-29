@@ -6,7 +6,7 @@ import { doFetchPost } from '../../firebase/firestore.js';
 import NoPosts from '../home/noPosts.jsx';
 import NewCardIcon from "../../assets/NewCardIcon.svg"
 
-const CardFeed = ({user, card, setSubPage, firstPost}) => {
+const CardFeed = ({user, card, setSubPage, firstPost, isNarrowScreen}) => {
   const [cardExists, setCardExists] = useState(false);
   const [posts, setPosts] = useState([]);
 
@@ -51,7 +51,7 @@ const CardFeed = ({user, card, setSubPage, firstPost}) => {
       <div className="self-start">
           Card Info:
       </div>
-      <CardInfo name={card.title} location="1" miles="250" people={card.posts == null ? 0 : card.posts.length} color={(card.cEmail === user.email)}/>
+      <CardInfo name={card.title} location="1" miles="250" people={card.posts == null ? 0 : card.posts.length} color={(card.cEmail === user.email)} isNarrowScreen={isNarrowScreen}/>
       {card.posts == null ? 
         <>
           <NoPosts 
@@ -72,7 +72,7 @@ const CardFeed = ({user, card, setSubPage, firstPost}) => {
         <>
           <div className="font-semibold text-2xl self-start mt-8">Goodness Posts:</div>
           {[...posts].reverse().map((post, index) => (
-            <TextCard loc={post.location} date={"April 24th"} title={post.title} description={post.desc} name={post.uName} first={index === posts.length - 1} image={post.image ? post.image : null} stickers={post?.stickers}/>
+            <TextCard loc={post.location} date={"April 24th"} title={post.title} description={post.desc} name={post.uName} first={index === posts.length - 1} image={post.image ? post.image : null} stickers={post?.stickers} isNarrowScreen={isNarrowScreen}/>
           ))}
         </>
       }

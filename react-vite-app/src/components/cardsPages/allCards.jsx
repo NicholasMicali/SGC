@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { doFetchCard } from "../../firebase/firestore";
 import { doFetchUserProfile, doRemoveCardFromUserProfile } from "../../firebase/firestore";
 import CardInfo from '../home/cardInfo';
+import CardsButton from "./cardsButton.jsx";
+import NewCardIcon from "../../assets/NewCardIcon.svg";
 
 
-const AllCards = ({back, user, select}) => {
+const AllCards = ({back, user, select, isNarrowScreen}) => {
 
   const [userProfile, setUserProfile] = useState(null);
   const [cards, setCards] = useState([]);
@@ -54,17 +56,32 @@ const AllCards = ({back, user, select}) => {
   return (
     <div className="flex flex-col justify-center items-center gap-4 w-full">
       <button className="rounded-2xl border-[1px] py-2 px-3 border-black self-end" onClick={back}>Back</button>
-      <div className="self-start">
+      <div className="self-start text-3xl mt-2 font-bold">
           All Cards:
       </div>
       {cards.map((card, index) => (
         <div className="w-full flex flex-row items-center">
           <div className="w-full cursor-pointer" onClick={() => select(card, cids[index])}>
-            <CardInfo name={card.title} location="1" miles="250" people={card.posts ? card.posts.length : "0"} color={(card.cEmail === user.email)}/>
+            <CardInfo name={card.title} location="1" miles="250" people={card.posts ? card.posts.length : "0"} color={(card.cEmail === user.email)} isNarrowScreen={isNarrowScreen}/>
           </div>
-          <button className="rounded-2xl border-[1px] h-12 py-2 px-3 border-black" onClick={() => removeCard(cids[index], index)}>Remove</button>
+          <button className="rounded-2xl border-[1px] h-12 py-2 px-3 ml-4 border-black" onClick={() => removeCard(cids[index], index)}>Delete</button>
         </div>
       ))}
+      {(cards.length == 0) &&
+        <div className="flex flex-row gap-3 items-center justify-center mt-4">
+          <div className="font-semibold text-2xl">No Cards Yet:</div>
+          <CardsButton
+              width="180px"
+              height="51.75px"
+              text="New Card"
+              borderColor="#48B8E6"
+              textColor="#1D9FD5"
+              backgroundColor="#D1EDF9"
+              icon={NewCardIcon}
+              onClick={back}
+          ></CardsButton>
+        </div>
+      }
     </div>
   );
 };

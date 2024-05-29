@@ -63,6 +63,15 @@ const AccountPage = () => {
       }
     }
     upload();
+
+    const handleResize = () => {
+      setIsNarrowScreen(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, [file]);
   
 
