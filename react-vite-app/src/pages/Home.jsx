@@ -110,48 +110,97 @@ const HomePage = () => {
             {isNarrowScreen && (
               <img src={Logo} alt="Spread Goodness logo" className="p-4" />
             )}
-            <div className="flex flex-row justify-between gap-4 my-4 w-full">
-              <CardsButton
-                width="180px"
-                height="51.75px"
-                text="All cards"
-                borderColor="#BEDF3D"
-                textColor="#8DAB1C"
-                backgroundColor="#EAF4C0"
-                icon={AllCardIcon}
-                onClick={() => setSubPage("all")}
-              ></CardsButton>
-              <CardsButton
-                width="180px"
-                height="51.75px"
-                text="New Card"
-                borderColor="#48B8E6"
-                textColor="#1D9FD5"
-                backgroundColor="#D1EDF9"
-                icon={NewCardIcon}
-                onClick={() => setSubPage("new")}
-              ></CardsButton>
-              <CardsButton
-                width="180px"
-                height="51.75px"
-                text="Receive"
-                borderColor="#F2DD69"
-                textColor="#EDD134"
-                backgroundColor="#FCF7DA"
-                icon={ReceiveIcon}
-                onClick={() => setSubPage("recieve")}
-              ></CardsButton>
-              <CardsButton
-                width="180px"
-                height="51.75px"
-                text="Challenge"
-                borderColor="#FD3B8A"
-                textColor="#FC086B"
-                backgroundColor="#FFD3E5"
-                icon={ChallengeIcon}
-                onClick={() => setSubPage("challenge")}
-              ></CardsButton>
-            </div>
+            {!isNarrowScreen ? (
+              <div className="flex flex-row justify-between gap-4 my-4 w-full">
+                <CardsButton
+                  width="180px"
+                  height="51.75px"
+                  text="All cards"
+                  borderColor="#BEDF3D"
+                  textColor="#8DAB1C"
+                  backgroundColor="#EAF4C0"
+                  icon={AllCardIcon}
+                  onClick={() => setSubPage("all")}
+                ></CardsButton>
+                <CardsButton
+                  width="180px"
+                  height="51.75px"
+                  text="New Card"
+                  borderColor="#48B8E6"
+                  textColor="#1D9FD5"
+                  backgroundColor="#D1EDF9"
+                  icon={NewCardIcon}
+                  onClick={() => setSubPage("new")}
+                ></CardsButton>
+                <CardsButton
+                  width="180px"
+                  height="51.75px"
+                  text="Receive"
+                  borderColor="#F2DD69"
+                  textColor="#EDD134"
+                  backgroundColor="#FCF7DA"
+                  icon={ReceiveIcon}
+                  onClick={() => setSubPage("recieve")}
+                ></CardsButton>
+                <CardsButton
+                  width="180px"
+                  height="51.75px"
+                  text="Challenge"
+                  borderColor="#FD3B8A"
+                  textColor="#FC086B"
+                  backgroundColor="#FFD3E5"
+                  icon={ChallengeIcon}
+                  onClick={() => setSubPage("challenge")}
+                ></CardsButton>
+              </div>
+            ) : (
+              <div className="flex flex-col justify-center my-4 w-full">
+                <div className="flex flex-row justify-center gap-4 my-2 w-full">
+                  <CardsButton
+                    width="180px"
+                    height="51.75px"
+                    text="All cards"
+                    borderColor="#BEDF3D"
+                    textColor="#8DAB1C"
+                    backgroundColor="#EAF4C0"
+                    icon={AllCardIcon}
+                    onClick={() => setSubPage("all")}
+                  ></CardsButton>
+                  <CardsButton
+                    width="180px"
+                    height="51.75px"
+                    text="New Card"
+                    borderColor="#48B8E6"
+                    textColor="#1D9FD5"
+                    backgroundColor="#D1EDF9"
+                    icon={NewCardIcon}
+                    onClick={() => setSubPage("new")}
+                  ></CardsButton>
+                </div>
+                <div className="flex flex-row justify-center gap-4 my-2 w-full">
+                  <CardsButton
+                    width="180px"
+                    height="51.75px"
+                    text="Receive"
+                    borderColor="#F2DD69"
+                    textColor="#EDD134"
+                    backgroundColor="#FCF7DA"
+                    icon={ReceiveIcon}
+                    onClick={() => setSubPage("recieve")}
+                  ></CardsButton>
+                  <CardsButton
+                    width="180px"
+                    height="51.75px"
+                    text="Challenge"
+                    borderColor="#FD3B8A"
+                    textColor="#FC086B"
+                    backgroundColor="#FFD3E5"
+                    icon={ChallengeIcon}
+                    onClick={() => setSubPage("challenge")}
+                    ></CardsButton>
+                </div>
+              </div>
+            )}
             <CardFeed 
               user={currentUser}
               card={currentCard}
