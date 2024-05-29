@@ -3,7 +3,8 @@ import heartIcon from "../../assets/heart.svg";
 import shareIcon from "../../assets/share.svg";
 import { Pin, ChevronsRight } from "lucide-react";
 
-const TextCard = ({ loc, date, title, description, name, first, image, stickers }) => {
+const TextCard = ({ loc, date, title, description, name, first, image, stickers, isNarrowScreen }) => {
+  const cardHeight = isNarrowScreen ? 'h-auto' : 'h-[10px]';
   return (
     <div
       className={

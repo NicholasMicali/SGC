@@ -206,6 +206,7 @@ const HomePage = () => {
               card={currentCard}
               setSubPage={setSubPage}
               firstPost={firstPost}
+              isNarrowScreen = {isNarrowScreen}
             />
           </>
         )}
