@@ -1,14 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../auth/index';
 import { doSignOut } from '../firebase/auth.js';
 import { Navigate } from 'react-router-dom';
-import LeftSidebar from '../components/home/leftSideBar';
+import { LeftSidebar } from '../components/home/leftSideBar';
 import RightSidebar from '../components/home/rightSideBar';
+import SmallMenuSidebar from '../components/home/smallMenuSidebar'
 
 
 const InspirationPage = () => {
   const { currentUser } = useAuth();
   const [isSigningOut, setIsSigningOut] = useState(false);
+  const [isNarrowScreen, setIsNarrowScreen] = useState(
+    window.innerWidth <= 768
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsNarrowScreen(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
 
   const signOut = async (e) => {
     e.preventDefault()
@@ -34,10 +50,18 @@ const InspirationPage = () => {
 
   return (
     <div className="flex h-screen">
-      <LeftSidebar user={currentUser} signOut={signOut} page="Inspiration"/>
+      {!isNarrowScreen && (
+        <LeftSidebar user={currentUser} signOut={signOut} page="Inspiration" />
+      )}
       <div className="flex-grow flex flex-col items-center overflow-auto p-4">
         Inspiration Page
       </div>
+      {isNarrowScreen && (
+          <SmallMenuSidebar 
+            user={currentUser} 
+            signOut={signOut} 
+            page="Inspiration" />
+      )}
     </div>
   );
 };

@@ -9,6 +9,7 @@ import NotFoundPage from './pages/NotFound';
 import AccountPage from './pages/Account';
 import InspirationPage from './pages/Inspiration';
 import JournalPage from './pages/Journal';
+import Classroom from './pages/Classroom';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/account" element={<AccountPage/>}/>
             <Route path="/inspiration" element={<InspirationPage/>}/>
             <Route path="/journal" element={<JournalPage/>}/>
+            <Route path="/classroom" element={<Classroom/>}/>
             <Route path="" element={<NotFoundPage/>}/>
           </Routes>
         </AuthProvider>

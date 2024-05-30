@@ -1,6 +1,6 @@
 # SGC: Spread Goodness Challenge MVP
 The purpose of this repository if to develop the MVP for the spread goodness challenge web application.
-Production hosted here: https://spreadgoodness-72ac1
+Production hosted here: [spreadgoodness-72ac1.web.app](https://spreadgoodness-72ac1.web.app/)
 
 This project will be implemented with react, vite, and firebase
 Firebase project dashboard: https://console.firebase.google.com/project/spreadgoodness-72ac1

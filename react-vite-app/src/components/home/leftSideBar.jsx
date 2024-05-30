@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Logo from "../../assets/logo.svg";
 import NavMenu from "./navMenu";
 import { doFetchUserProfile } from "../../firebase/firestore";
+
+
 const ProfilePic = ({ username }) => {
   const colors = {
     A: "#FF8C00",
@@ -33,6 +35,7 @@ const ProfilePic = ({ username }) => {
   };
   const firstChar = username.charAt(0).toUpperCase();
   const color = colors[firstChar];
+
   return (
     <div
       className="relative w-12 h-12 rounded-full mr-3"
@@ -45,8 +48,23 @@ const ProfilePic = ({ username }) => {
   );
 };
 
-const LeftSidebar = ({ user, signOut, page }) => {
+
+
+const LeftSidebar = ({ user, signOut, page, back }) => {
   const [userData, setUserData] = useState(null);
+  const [isMenuVisible, setIsMenuVisible] = useState(true);
+
+  const subPagesChangeIcon = ['all', 'new', 'recieve', 'challenge'];
+
+
+
+  const handleResize = () => {
+    if (window.innerWidth <= 768) {
+      setIsMenuVisible(false);
+    } else {
+      setIsMenuVisible(true);
+    }
+  };
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -61,31 +79,48 @@ const LeftSidebar = ({ user, signOut, page }) => {
     fetchUserProfile();
   }, [user]);
 
+  useEffect(() => {
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  if (userData == null){
+    return <>Not Signed In...</>
+  }
+
   return (
     userData && (
-      <div className="w-64 bg-[#fff6fa] h-full overflow-auto p-4 flex flex-col items-center">
-        <img src={Logo} alt="Spread Goodness logo" className="p-4 mb-4" />
-        <div className="flex flex-row mb-8 justify-center items-center">
-          {user.photoURL ? (
-            <img
-              src={user.photoURL + ""}
-              alt=""
-              className="w-12 h-12 rounded-full mr-2"
-            />
-          ) : (
-            <ProfilePic username={userData.name} />
-          )}
-          <div>{userData.name}</div>
-        </div>
-        <NavMenu page={page} />
-        <div className="flex flex-col justify-end h-full">
-          <button className="mxy-4 font-bold" onClick={signOut}>
-            Sign Out
-          </button>
-        </div>
+       <div className={`w-64 h-full bg-gray-200 overflow-auto p-4 flex flex-col items-center`}>
+          <>
+           <img src={Logo} alt="Spread Goodness logo" className="p-4 mb-4" />
+            <div className="flex flex-row mb-8 justify-center items-center">
+              {userData.image ? (
+                <img
+                  src={userData.image}
+                  alt=""
+                  className="w-12 h-12 rounded-full mr-2"
+                />
+              ) : (
+                <ProfilePic username={userData.firstName} />
+              )}
+              <div>{userData.firstName + " " + userData.lastName}</div>
+            </div>
+            <NavMenu page={page} />
+            <div className="flex flex-col justify-end h-full">
+              <button className="mxy-4 font-bold" onClick={signOut}>
+                Sign Out
+              </button>
+            </div>
+          </>
       </div>
     )
   );
 };
 
-export default LeftSidebar;
+
+export { LeftSidebar, ProfilePic }

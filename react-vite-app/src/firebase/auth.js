@@ -1,6 +1,8 @@
 import { auth } from "./firebase";
+import { getAuth } from 'firebase/auth';
 
-import { GoogleAuthProvider, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+
+import { GoogleAuthProvider, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, signInWithPopup, sendPasswordResetEmail, deleteUser } from "firebase/auth";
 
 export const doCreateUserWithEmailAndPassword = async (email, password) => {
   return createUserWithEmailAndPassword(auth, email, password);
@@ -20,11 +22,24 @@ export const doSignOut = () => {
   return auth.signOut();
 };
 
-/*
+
 export const doPasswordReset = (email) => {
   return sendPasswordResetEmail(auth, email);
 };
 
+
+export const doDeleteUser = async () => {
+  const auth = getAuth();
+  try {
+    await deleteUser(auth.currentUser);
+    console.log("Auth user deleted successfully");
+  } catch (error) {
+    console.error("Failed to delete auth user:", error);
+    throw error;
+  }
+};
+
+/*
 export const doPasswordChange = (password) => {
   return updatePassword(auth.currentUser, password);
 };
