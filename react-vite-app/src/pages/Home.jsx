@@ -26,7 +26,6 @@ const HomePage = () => {
   const [currentCard, setCurrentCard] = useState(null);
   const [currentCid, setCurrentCid] = useState(null);
   const [isFirstPost, setIsFirstPost] = useState(false);
-  const [userProfile, setUserProfile] = useState(null);
   const [isNarrowScreen, setIsNarrowScreen] = useState(
     window.innerWidth <= 820
   );
@@ -184,7 +183,7 @@ const HomePage = () => {
                   page={subPage}
                   onSearch={handleSearch}
                 />
-                <img src={Logo} alt="Spread Goodness logo" className="p-4" />
+                <img src={Logo} alt="Spread Goodness logo" className="p-4 z-0" />
                 <div className="flex flex-col justify-center my-4 w-full">
                   <div className="flex flex-row justify-center gap-4 my-2 w-full">
                     <CardsButton
