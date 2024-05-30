@@ -6,7 +6,7 @@ import ThankYou from  "./thankYou.jsx"
 import StickerDrop from "./stickerDrop.jsx";
 
 
-const NewCard = ({back, user, select, isNarrowScreen}) => {
+const NewCard = ({back, user, select, isNarrowScreen, selectChallenge}) => {
 
   const [isCreatingCard, setIsCreatingCard] = useState(false);
   const [title, setTitle] = useState('');
@@ -93,10 +93,8 @@ const NewCard = ({back, user, select, isNarrowScreen}) => {
 
   if (isCreatingCard && createdCard) {
     return <>
-     <div>Card Created: {title}
-    </div>
       <ThankYou
-        onButtonClick={() => select(createdCard, cid)} isNarrowScreen={isNarrowScreen}>
+        onButtonClick={() => select(createdCard, cid)} isNarrowScreen={isNarrowScreen} onChallenge={() => selectChallenge(createdCard, cid)}>
       </ThankYou>
    </>
   }

@@ -4,9 +4,10 @@ import { doFetchUserProfile, doRemoveCardFromUserProfile } from "../../firebase/
 import CardInfo from '../home/cardInfo';
 import CardsButton from "./cardsButton.jsx";
 import NewCardIcon from "../../assets/NewCardIcon.svg";
+import StudentInfo from '../home/studentInfo.jsx';
 
 
-const AllCards = ({back, user, select, isNarrowScreen}) => {
+const AllCards = ({back, user, select, isNarrowScreen, newCard}) => {
 
   const [userProfile, setUserProfile] = useState(null);
   const [cards, setCards] = useState([]);
@@ -53,11 +54,33 @@ const AllCards = ({back, user, select, isNarrowScreen}) => {
   };
 
 
+  /*
+     {(cards.length == 0) &&
+        <div className="font-semibold text-2xl">No Cards Yet:</div>
+      }
+  */
+ if (userProfile == null){
+  console.log("No user profile");
+ }
+
   return (
-    <div className="flex flex-col justify-center items-center gap-4 w-full">
+    <div className="flex flex-col justify-center items-center gap-8 w-full">
       <button className="rounded-2xl border-[1px] py-2 px-3 border-black self-end" onClick={back}>Back</button>
       <div className="self-start text-3xl mt-2 font-bold">
-          All Cards:
+          My Cards:
+      </div>
+      <div className="self-start w-full flex flex-row gap-6 items-center">
+        {userProfile && <StudentInfo student={userProfile} isNarrowScreen={isNarrowScreen}/>}
+        <CardsButton
+          width="180px"
+          height="51.75px"
+          text="New Card"
+          borderColor="#48B8E6"
+          textColor="#1D9FD5"
+          backgroundColor="#D1EDF9"
+          icon={NewCardIcon}
+          onClick={newCard}
+        ></CardsButton>
       </div>
       {cards.map((card, index) => (
         <div className="w-full flex flex-row items-center">
@@ -67,21 +90,6 @@ const AllCards = ({back, user, select, isNarrowScreen}) => {
           <button className="rounded-2xl border-[1px] h-12 py-2 px-3 ml-4 border-black" onClick={() => removeCard(cids[index], index)}>Delete</button>
         </div>
       ))}
-      {(cards.length == 0) &&
-        <div className="flex flex-row gap-3 items-center justify-center mt-4">
-          <div className="font-semibold text-2xl">No Cards Yet:</div>
-          <CardsButton
-              width="180px"
-              height="51.75px"
-              text="New Card"
-              borderColor="#48B8E6"
-              textColor="#1D9FD5"
-              backgroundColor="#D1EDF9"
-              icon={NewCardIcon}
-              onClick={back}
-          ></CardsButton>
-        </div>
-      }
     </div>
   );
 };

@@ -73,10 +73,24 @@ const HomePage = () => {
     setSubPage("feed");
   };
 
+  const toNewCard = () => {
+    setSubPage("new");
+  }
+
+  const toAllCards = () => {
+    setSubPage("all");
+  }
+
   const selectCard = (card, cid) => {
     setCurrentCard(card);
     setCurrentCid(cid);
     setSubPage("feed");
+  };
+
+  const selectCardToChallenge = (card, cid) => {
+    setCurrentCard(card);
+    setCurrentCid(cid);
+    setSubPage("challenge");
   };
 
   const firstPost = () => {
@@ -243,10 +257,16 @@ const HomePage = () => {
             user={currentUser}
             select={selectCard}
             isNarrowScreen={isNarrowScreen}
+            newCard={toNewCard}
           />
         )}
         {subPage === "new" && (
-          <NewCard back={returnToFeed} user={currentUser} select={selectCard} isNarrowScreen={isNarrowScreen} />
+          <NewCard 
+            back={returnToFeed} 
+            user={currentUser} 
+            select={selectCard} 
+            isNarrowScreen={isNarrowScreen} 
+            selectChallenge={selectCardToChallenge}/>
         )}
         {subPage === "receive" && (
           <Recieve
@@ -254,6 +274,8 @@ const HomePage = () => {
             user={currentUser}
             initCode={currentCid}
             first={isFirstPost}
+            select={selectCard} 
+            selectChallenge={selectCardToChallenge}
           />
         )}
         {subPage === "challenge" && (
@@ -262,6 +284,7 @@ const HomePage = () => {
             user={currentUser}
             code={currentCard ? currentCard.code : null}
             cid={currentCid}
+            cards={toAllCards}
           />
         )}
       </>

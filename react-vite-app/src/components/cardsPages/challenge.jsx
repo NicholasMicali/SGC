@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import backOfCard from "../../assets/backOfCard.jpg";
+import AllCardIcon from "../../assets/AllCardIcon.svg";
+import CardsButton from './cardsButton';
 
-const Challenge = ({back, code, cid}) => {
+const Challenge = ({back, code, cid, cards}) => {
 
   const [email, setEmail] = useState('');
   const [text, setText] = useState('');
@@ -21,8 +23,17 @@ const Challenge = ({back, code, cid}) => {
     <>
       <button className="rounded-2xl border-[1px] py-2 px-3 border-black self-end" onClick={back}>Back</button>
       <div className="font-semibold text-2xl mt-4">No card selected</div>
-      <img src={backOfCard} className="w-4/12 mb-4 mt-4"></img>
-      <button onClick={back} className="w-full flex items-center justify-center bg-gradient-to-tr from-gradient-start via-gradient-mid to-gradient-end rounded-3xl p-3 mt-8 bg-opacity-60 text-white font-sans text-xl">Select Card</button>
+      <img src={backOfCard} className="w-5/12 mb-4 mt-4"></img>
+      <CardsButton
+        width="180px"
+        height="51.75px"
+        text="My cards"
+        borderColor="#BEDF3D"
+        textColor="#8DAB1C"
+        backgroundColor="#EAF4C0"
+        icon={AllCardIcon}
+        onClick={cards}
+      />
     </>
     );
   }

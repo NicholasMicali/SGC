@@ -183,8 +183,8 @@ const Classroom = () => {
         {!isNarrowScreen && (
           <LeftSidebar user={currentUser} signOut={signOut} page="Classroom" />
         )}
-        <div className="flex-grow flex flex-col items-center overflow-auto p-4">
-          <div className="self-start text-2xl font-bold">Classrooms:</div>
+        <div className="flex-grow flex flex-col items-center overflow-auto p-4 mt-10">
+          <div className="self-start text-3xl font-bold mb-4">Classrooms:</div>
           {userProfile?.userType == 'Student' &&
             <div className="w-full">
               {classrooms.map((classroom, index) => (
@@ -232,7 +232,7 @@ const Classroom = () => {
                     {students[index] && 
                       <>
                         {students[index].map((student) => (
-                          <StudentInfo student={student}/>
+                          <StudentInfo student={student} isNarrowScreen={isNarrowScreen}/>
                         ))}
                       </>
                     }
