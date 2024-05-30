@@ -28,12 +28,12 @@ const HomePage = () => {
   const [isFirstPost, setIsFirstPost] = useState(false);
   const [userProfile, setUserProfile] = useState(null);
   const [isNarrowScreen, setIsNarrowScreen] = useState(
-    window.innerWidth <= 768
+    window.innerWidth <= 820
   );
 
   useEffect(() => {
     const handleResize = () => {
-      setIsNarrowScreen(window.innerWidth <= 768);
+      setIsNarrowScreen(window.innerWidth <= 820);
     };
 
     window.addEventListener("resize", handleResize);

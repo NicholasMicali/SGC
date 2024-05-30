@@ -18,11 +18,11 @@ const Classroom = () => {
     const [createName, setCreateName] = useState('');
     const [classrooms, setClassrooms] = useState([]);
     const [students, setStudents] = useState([]);
-    const [isNarrowScreen, setIsNarrowScreen] = useState(window.innerWidth <= 768);
+    const [isNarrowScreen, setIsNarrowScreen] = useState(window.innerWidth <= 820);
   
     useEffect(() => {
       const handleResize = () => {
-        setIsNarrowScreen(window.innerWidth <= 768);
+        setIsNarrowScreen(window.innerWidth <= 820);
       };
   
       window.addEventListener('resize', handleResize);

@@ -11,12 +11,12 @@ const InspirationPage = () => {
   const { currentUser } = useAuth();
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [isNarrowScreen, setIsNarrowScreen] = useState(
-    window.innerWidth <= 768
+    window.innerWidth <= 820
   );
 
   useEffect(() => {
     const handleResize = () => {
-      setIsNarrowScreen(window.innerWidth <= 768);
+      setIsNarrowScreen(window.innerWidth <= 820);
     };
 
     window.addEventListener("resize", handleResize);

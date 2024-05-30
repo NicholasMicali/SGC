@@ -58,7 +58,7 @@ const LeftSidebar = ({ user, signOut, page, back }) => {
 
 
   const handleResize = () => {
-    if (window.innerWidth <= 768) {
+    if (window.innerWidth <= 820) {
       setIsMenuVisible(false);
     } else {
       setIsMenuVisible(true);
