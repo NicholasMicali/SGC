@@ -4,7 +4,7 @@ import { doSignOut } from "../firebase/auth.js";
 import { Navigate } from "react-router-dom";
 import { doFetchCardByCode } from "../firebase/firestore.js";
 import SearchBar from "../components/home/searchbar.jsx";
-import LeftSidebar from "../components/home/leftSideBar";
+import { LeftSidebar } from "../components/home/leftSideBar";
 import AllCards from "../components/cardsPages/allCards.jsx";
 import CardFeed from "../components/cardsPages/cardFeed.jsx";
 import NewCard from "../components/cardsPages/newCard.jsx";

@@ -122,4 +122,4 @@ const LeftSidebar = ({ user, signOut, page, back }) => {
 };
 
 
-export default LeftSidebar;
+export { LeftSidebar, ProfilePic }
