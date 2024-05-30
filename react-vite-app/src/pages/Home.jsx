@@ -18,6 +18,7 @@ import ChallengeIcon from "../assets/ChallengeIcon.svg";
 import SmallMenuSidebar from "../components/home/smallMenuSidebar.jsx";
 import SmallSearchBar from "../components/home/smallSearchBar.jsx";
 import Logo from "../assets/logo.svg";
+import SmallProfile from "../components/home/smallProfile.jsx"
 
 const HomePage = () => {
   const { currentUser } = useAuth();
@@ -183,7 +184,13 @@ const HomePage = () => {
                   page={subPage}
                   onSearch={handleSearch}
                 />
-                <img src={Logo} alt="Spread Goodness logo" className="p-4 z-0" />
+                <div className = "flex flex-row">
+                  {/* <SmallProfile
+                    user={currentUser}
+                  /> */}
+                  <img src={Logo} alt="Spread Goodness logo" className="p-4 z-0" />
+                  
+                </div>
                 <div className="flex flex-col justify-center my-4 w-full">
                   <div className="flex flex-row justify-center gap-4 my-2 w-full">
                     <CardsButton
