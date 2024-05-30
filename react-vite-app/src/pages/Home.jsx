@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../auth/index";
-import { doSignOut } from "../firebase/auth.js";
 import { Navigate } from "react-router-dom";
 import { doFetchCardByCode } from "../firebase/firestore.js";
 import SearchBar from "../components/home/searchbar.jsx";
@@ -41,20 +40,6 @@ const HomePage = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
-  const signOut = async (e) => {
-    e.preventDefault();
-    try {
-      const user = await doSignOut();
-    } catch (error) {
-      // Handle errors here, such as displaying a message to the user
-      console.error("Log out failed:", error);
-      alert("Failed to log out: " + error.message);
-      return;
-    }
-    //console.log("user logged out: " + user);
-    setIsSigningOut(true);
-  };
 
   const handleSearch = async (searchTerm) => {
     try {
@@ -173,8 +158,6 @@ const HomePage = () => {
       );
     } else {
       return (
-        <div className="flex h-screen z-0">
-          <SmallMenuSidebar user={currentUser} signOut={signOut} page="Feed" />
           <div className="flex-grow flex flex-col items-center overflow-auto px-5 py-10">
             {subPage === "feed" ? (
               <>
@@ -243,7 +226,6 @@ const HomePage = () => {
               renderSubPage()
             )}
           </div>
-        </div>
       );
     }
   };

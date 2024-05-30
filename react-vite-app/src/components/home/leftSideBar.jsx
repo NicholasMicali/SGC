@@ -95,7 +95,7 @@ const LeftSidebar = ({ user, signOut, page, back }) => {
 
   return (
     userData && (
-       <div className={`w-64 h-full bg-gray-200 overflow-auto p-4 flex flex-col items-center`}>
+       <div className={`w-64 h-full bg-light-pink overflow-auto p-4 flex flex-col items-center`}>
           <>
            <img src={Logo} alt="Spread Goodness logo" className="p-4 mb-4" />
             <div className="flex flex-row mb-8 justify-center items-center">
@@ -112,7 +112,7 @@ const LeftSidebar = ({ user, signOut, page, back }) => {
             </div>
             <NavMenu page={page} />
             <div className="flex flex-col justify-end h-full">
-              <button className="mxy-4 font-bold" onClick={signOut}>
+              <button className="m-4 font-bold" onClick={signOut}>
                 Sign Out
               </button>
             </div>
