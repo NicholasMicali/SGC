@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import { doFetchUserProfile } from "../../firebase/firestore.js";
 import MenuBackground from "../../assets/MenuBackground.svg";
 import MenuIcon from "../../assets/MenuIcon.svg";
 import HomeBlack from "../../assets/HomeBlack.svg";
@@ -20,51 +19,18 @@ import FacebookIcon from "../../assets/FacebookIcon.svg";
 import SignoutIcon from "../../assets/SignoutIcon.svg";
 import MenuXIcon from "../../assets/MenuXIcon.svg";
 import NavItem from "./navItem";
-import ProfilePic from "./profilePic";
 
 const SmallMenuSidebar = ({ user, signOut, page }) => {
   const [isSmallMenu, setSmallMenu] = useState(false);
-  const [userData, setUserData] = useState(null);
+
   const navigate = useNavigate();  // Hook for navigation
 
   const onClick = (path) => {
       navigate(path);  // Navigates to the given path
   };
 
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      try {
-        if (user && user.uid) {  
-          const profile = await doFetchUserProfile(user.uid);
-          const profileData = profile.data();
-          setUserData(profileData);
-        }
-      } catch (error) {
-        console.error("Failed to fetch user profile:", error);
-      }
-    };
-
-    fetchUserProfile();
-  }, [user]);
-
   return (
     <>
-      {userData && (
-        <div className="absolute top-5 left-3 flex flex-col items-center">
-          {userData.image ? (
-            <img
-              src={userData.image}
-              alt=""
-              className="w-12 h-12 rounded-full mr-2"
-            />
-          ) : (
-            <ProfilePic username={userData.firstName} className="w-12 h-12 rounded-full mr-2" />
-          )}
-          <div className="text-lg font-medium">
-            {userData.firstName + " " + userData.lastName}
-          </div>
-        </div>
-      )}
       {!isSmallMenu && (
         <>
         <img
