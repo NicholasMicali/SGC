@@ -5,6 +5,8 @@ import CardInfo from '../home/cardInfo';
 import CardsButton from "./cardsButton.jsx";
 import NewCardIcon from "../../assets/NewCardIcon.svg";
 import StudentInfo from '../home/studentInfo.jsx';
+import Logo from "../../assets/logo.svg";
+import SmallProfile from "../home/smallProfile.jsx"
 
 
 const AllCards = ({back, user, select, isNarrowScreen, newCard}) => {
@@ -65,9 +67,16 @@ const AllCards = ({back, user, select, isNarrowScreen, newCard}) => {
 
   return (
     <div className="flex flex-col justify-center items-center gap-8 w-full">
-      <button className="rounded-2xl border-[1px] py-2 px-3 border-black self-end" onClick={back}>Back</button>
-      <div className="self-start text-3xl mt-2 font-bold">
+      <div className = "flex flex-col items-start">
+      <img src={Logo} alt="Spread Goodness logo" className="p-4 z-0" />    
+      </div>
+      <div className="flex flex-row justify-between w-full px-5">
+        <div className="text-3xl mt-2 font-bold">
           My Cards:
+        </div>
+        <button className="rounded-2xl border-[1px] py-2 px-3 border-black" onClick={back}>
+          Back
+        </button>
       </div>
       <div className="self-start w-full flex flex-row gap-6 items-center">
         {userProfile && <StudentInfo student={userProfile} isNarrowScreen={isNarrowScreen}/>}

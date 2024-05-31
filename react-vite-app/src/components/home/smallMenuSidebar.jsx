@@ -20,6 +20,8 @@ import SignoutIcon from "../../assets/SignoutIcon.svg";
 import MenuXIcon from "../../assets/MenuXIcon.svg";
 import NavItem from "./navItem";
 
+import MenuBackgroundPNG from "../../assets/MenuBackground.png";
+
 const SmallMenuSidebar = ({ user, signOut, page }) => {
   const [isSmallMenu, setSmallMenu] = useState(false);
 
@@ -34,7 +36,7 @@ const SmallMenuSidebar = ({ user, signOut, page }) => {
       {!isSmallMenu && (
         <>
         <img
-          src={MenuBackground}
+          src={MenuBackgroundPNG}
           alt="Menu Background"
           className="absolute top-0 right-0 w-203 h-151 z-20"
         />

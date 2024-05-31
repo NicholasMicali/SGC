@@ -15,7 +15,7 @@ import SmallMenuSidebar from '../components/home/smallMenuSidebar'
 const AccountPage = () => {
   const { currentUser } = useAuth();
   const [isSigningOut, setIsSigningOut] = useState(false);
-  const [isNarrowScreen, setIsNarrowScreen] = useState(window.innerWidth <= 768);
+  const [isNarrowScreen, setIsNarrowScreen] = useState(window.innerWidth <= 820);
   const [userProfile, setUserProfile] = useState(null);
   const [profilePic, setProfilePic] = useState(null); // not stored in db yet
   const [firstName, setFirstName] = useState('');
@@ -65,7 +65,7 @@ const AccountPage = () => {
     upload();
 
     const handleResize = () => {
-      setIsNarrowScreen(window.innerWidth <= 768);
+      setIsNarrowScreen(window.innerWidth <= 820);
     };
 
     window.addEventListener("resize", handleResize);

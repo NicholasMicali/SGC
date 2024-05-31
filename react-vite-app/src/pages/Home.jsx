@@ -18,6 +18,7 @@ import ChallengeIcon from "../assets/ChallengeIcon.svg";
 import SmallMenuSidebar from "../components/home/smallMenuSidebar.jsx";
 import SmallSearchBar from "../components/home/smallSearchBar.jsx";
 import Logo from "../assets/logo.svg";
+import SmallProfile from "../components/home/smallProfile.jsx"
 
 const HomePage = () => {
   const { currentUser } = useAuth();
@@ -26,14 +27,13 @@ const HomePage = () => {
   const [currentCard, setCurrentCard] = useState(null);
   const [currentCid, setCurrentCid] = useState(null);
   const [isFirstPost, setIsFirstPost] = useState(false);
-  const [userProfile, setUserProfile] = useState(null);
   const [isNarrowScreen, setIsNarrowScreen] = useState(
-    window.innerWidth <= 768
+    window.innerWidth <= 820
   );
 
   useEffect(() => {
     const handleResize = () => {
-      setIsNarrowScreen(window.innerWidth <= 768);
+      setIsNarrowScreen(window.innerWidth <= 820);
     };
 
     window.addEventListener("resize", handleResize);
@@ -184,7 +184,13 @@ const HomePage = () => {
                   page={subPage}
                   onSearch={handleSearch}
                 />
-                <img src={Logo} alt="Spread Goodness logo" className="p-4" />
+                <div className = "flex flex-row">
+                  {/* <SmallProfile
+                    user={currentUser}
+                  /> */}
+                  <img src={Logo} alt="Spread Goodness logo" className="p-4 z-0" />
+                  
+                </div>
                 <div className="flex flex-col justify-center my-4 w-full">
                   <div className="flex flex-row justify-center gap-4 my-2 w-full">
                     <CardsButton
