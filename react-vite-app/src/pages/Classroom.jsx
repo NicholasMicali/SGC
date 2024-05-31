@@ -202,10 +202,10 @@ const Classroom = () => {
 
 
     return (
-      <div className="flex h-screen">
-        {!isNarrowScreen && (
-          <LeftSidebar user={currentUser} signOut={signOut} page="Classroom" />
-        )}
+      // <div className="flex h-screen">
+      //   {!isNarrowScreen && (
+      //     <LeftSidebar user={currentUser} signOut={signOut} page="Classroom" />
+      //   )}
         <div className="flex-grow flex flex-col items-center overflow-auto p-4 mt-10">
           <div className="self-start text-3xl font-bold mb-4">Classrooms:</div>
           {userProfile?.userType == 'Student' &&
@@ -297,13 +297,13 @@ const Classroom = () => {
             </>
           }
         </div>
-        {isNarrowScreen && (
-          <SmallMenuSidebar 
-            user={currentUser} 
-            signOut={signOut} 
-            page="Classroom" />
-      )}
-      </div>
+      //   {isNarrowScreen && (
+      //     <SmallMenuSidebar 
+      //       user={currentUser} 
+      //       signOut={signOut} 
+      //       page="Classroom" />
+      // )}
+      // </div>
     );
 }
 

@@ -50,21 +50,10 @@ const ProfilePic = ({ username }) => {
 
 
 
-const LeftSidebar = ({ user, signOut, page, back }) => {
+const LeftSidebar = ({ user, signOut, page, back, setPage }) => {
   const [userData, setUserData] = useState(null);
-  const [isMenuVisible, setIsMenuVisible] = useState(true);
 
   const subPagesChangeIcon = ['all', 'new', 'recieve', 'challenge'];
-
-
-
-  const handleResize = () => {
-    if (window.innerWidth <= 768) {
-      setIsMenuVisible(false);
-    } else {
-      setIsMenuVisible(true);
-    }
-  };
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -79,23 +68,13 @@ const LeftSidebar = ({ user, signOut, page, back }) => {
     fetchUserProfile();
   }, [user]);
 
-  useEffect(() => {
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
   if (userData == null){
     return <>Not Signed In...</>
   }
 
   return (
     userData && (
-       <div className={`w-64 h-full bg-light-pink overflow-auto p-4 flex flex-col items-center`}>
+       <div className={`w-64 h-full bg-light-pink overflow-auto p-4 flex flex-col items-center max-md:hidden`}>
           <>
            <img src={Logo} alt="Spread Goodness logo" className="p-4 mb-4" />
             <div className="flex flex-row mb-8 justify-center items-center">
@@ -110,7 +89,7 @@ const LeftSidebar = ({ user, signOut, page, back }) => {
               )}
               <div>{userData.firstName + " " + userData.lastName}</div>
             </div>
-            <NavMenu page={page} />
+            <NavMenu page={page} setPage={setPage} />
             <div className="flex flex-col justify-end h-full">
               <button className="m-4 font-bold" onClick={signOut}>
                 Sign Out

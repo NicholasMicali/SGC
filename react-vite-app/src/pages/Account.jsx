@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../auth/index";
-import { doSignOut } from "../firebase/auth.js";
 import { Navigate } from "react-router-dom";
-import { LeftSidebar } from "../components/home/leftSideBar";
-import RightSidebar from "../components/home/rightSideBar";
 import Line from "../../src/assets/AcctSettingsLine.svg";
 import { doFetchUserProfile, doUpdateUserProfile, doDeleteUserProfile } from "../firebase/firestore.js";
 import { doPasswordReset, doDeleteUser } from "../firebase/auth.js";
 import { doUploadFile } from "../firebase/storage.js"
 import { useNavigate } from 'react-router-dom';
-import SmallMenuSidebar from '../components/home/smallMenuSidebar'
 
 
 const AccountPage = () => {
@@ -73,19 +69,6 @@ const AccountPage = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, [file]);
-  
-
-  const signOut = async (e) => {
-    e.preventDefault();
-    try {
-      await doSignOut();
-    } catch (error) {
-      console.error("Log out failed:", error);
-      alert("Failed to log out: " + error.message);
-      return;
-    }
-    setIsSigningOut(true);
-  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -315,10 +298,10 @@ const AccountPage = () => {
   */
 
   return (
-    <div className="flex h-screen">
-      {!isNarrowScreen && (
-        <LeftSidebar user={currentUser} signOut={signOut} page="Account Settings" />
-      )}
+    // <div className="flex h-screen">
+    //   {!isNarrowScreen && (
+    //     <LeftSidebar user={currentUser} signOut={signOut} page="Account Settings" />
+    //   )}
       <div className="flex-grow flex flex-col items-center overflow-auto p-4">
         <div style={containerStyle}>
           {file ?
@@ -394,13 +377,13 @@ const AccountPage = () => {
           <button style={redButton} onClick={confirmDelete}>Delete Account</button>
         </div>
       </div>
-      {isNarrowScreen && (
-          <SmallMenuSidebar 
-            user={currentUser} 
-            signOut={signOut} 
-            page="Account Settings" />
-      )}
-    </div>
+    //   {isNarrowScreen && (
+    //       <SmallMenuSidebar 
+    //         user={currentUser} 
+    //         signOut={signOut} 
+    //         page="Account Settings" />
+    //   )}
+    // </div>
   );
 };
 

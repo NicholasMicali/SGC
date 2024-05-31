@@ -14,7 +14,7 @@ const variants = {
 
 const transition = { duration: 0.5, ease: [0.04, 0.62, 0.23, 0.98] };
 
-const SmallSearchBar = ({ user, signOut, page, onSearch }) => {
+const SmallSearchBar = ({ user, signOut, page, onSearch, setPage }) => {
   const [isSmallSearch, setSmallSearch] = useState(false);
 
   const navigate = useNavigate(); // Hook for navigation
