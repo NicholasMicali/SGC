@@ -48,7 +48,7 @@ const LeftSidebar = ({ user, signOut, page, back }) => {
 
   return (
     userData && (
-       <div className={`w-64 h-full bg-gray-200 overflow-auto p-4 flex flex-col items-center`}>
+       <div className={`w-64 h-full bg-pink-200 bg-opacity-40 overflow-auto p-4 flex flex-col items-center`}>
           <>
            <img src={Logo} alt="Spread Goodness logo" className="p-4 mb-4" />
             <div className="flex flex-row mb-8 justify-center items-center">
