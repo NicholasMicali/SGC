@@ -35,23 +35,19 @@ const SmallMenuSidebar = ({ user, signOut, page, setPage }) => {
   return (
     <>
       {!isSmallMenu && (
-        <>
+        <div className="md:hidden">
         <img
           src={MenuBackgroundPNG}
           alt="Menu Background"
           className="absolute top-0 right-0 w-203 h-151 z-20"
         />
         <button
-        className="z-30 p-1 absolute top-6 right-8 mt-2 ml-3"
-        onClick={() => setSmallMenu(!isSmallMenu)}
-      >
-        <img 
-          src={MenuIcon} 
-          alt="Menu Icon" 
-          className="w-31 h-17 w-8 h-8"
-        />
-      </button>
-      </>
+          className="z-30 p-1 absolute top-6 right-8 mt-2 ml-3"
+          onClick={() => setSmallMenu(!isSmallMenu)}
+        >
+          <img src={MenuIcon} alt="Menu Icon" className="w-31 h-17 w-8 h-8" />
+        </button>
+      </div>
       )}
 
       {isSmallMenu && (

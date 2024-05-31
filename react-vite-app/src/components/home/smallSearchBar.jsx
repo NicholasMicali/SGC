@@ -24,41 +24,6 @@ const SmallSearchBar = ({ user, signOut, page, onSearch, setPage }) => {
   };
 
   return (
-    // <>
-    //   {!isSmallSearch ? (
-    //   <img
-    //     src={SearchBackground}
-    //     alt="Search Background"
-    //     className="absolute bottom-0 left-0 w-203 h-151 z-20"
-    //   />
-    // ) : (
-    //   <motion.div
-    //     variants={variants}
-    //     initial="closed"
-    //     animate={isSmallSearch ? "open" : "closed"}
-    //     transition={{duration: 0.5}}
-    //   >
-    //     <img
-    //       src={SearchBackground2}
-    //       alt="Search Background2"
-    //       className="absolute bottom-0 left-0 w-full h-auto z-20"
-    //     />
-    //     <div className="absolute bottom-0 left-20 z-20 w-3/4">
-    //       <SearchBar onSearch={onSearch}/>
-    //     </div>
-    //   </motion.div>
-    // )}
-    //   <button
-    //     className={`z-30 p-1 ${isSmallSearch ? 'absolute bottom-0 left-0' : 'absolute bottom-0 left-0'}`}
-    //     onClick={() => setSmallSearch(!isSmallSearch)}
-    //   >
-    //     <img
-    //       src={isSmallSearch ? SearchXIcon : SearchIcon}
-    //       alt="SearchBar Icon"
-    //       className={`w-31 h-17 ${isSmallSearch ? 'w-8 h-8' : ''}`}
-    //     />
-    //   </button>
-    // </>
     <div className="w-screen absolute bottom-0">
       <motion.div
         variants={variants}
