@@ -13,22 +13,24 @@ const CreateProfilePage = () => {
   const [userRole, setUserRole] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [profilePic, setProfilePic] = useState(null); // not stored
+  const [age, setAge] = useState("");
   const [location, setLocation] = useState("");
   const [isProfileCreated, setIsProfileCreated] = useState(false);
 
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      try {
-        const profile = await doFetchUserProfile(currentUser.uid);
-        if (profile.data() !== undefined) {
-          console.log(profile.data())
-          setIsProfileCreated(true);
+      if (currentUser) {
+        try {
+          const profile = await doFetchUserProfile(currentUser.uid);
+          if (profile.data() !== undefined) {
+            console.log(profile.data())
+            setIsProfileCreated(true);
+          }
+        } catch (error) {
+          console.error("First Time User: " + error);
         }
-      } catch (error) {
-        console.error("First Time User: " + error);
-      }
+     }
     };
 
     fetchUserProfile();
@@ -61,7 +63,8 @@ const CreateProfilePage = () => {
         userRole,
         firstName,
         lastName,
-        location
+        location,
+        age
       );
       setIsProfileCreated(true);
     } catch (error) {
@@ -125,29 +128,6 @@ const CreateProfilePage = () => {
 
         {step === 2 && (
           <div className="flex flex-col items-center gap-4">
-            <label
-              htmlFor="profile-pic"
-              className="cursor-pointer flex flex-col items-center justify-center"
-            >
-              {profilePic ? (
-                <img
-                  src={profilePic}
-                  alt="Profile Picture"
-                  className="w-20 h-20 rounded-full object-cover border border-gray-200"
-                />
-              ) : (
-                <div className="w-20 h-20 rounded-full bg-gray-300 flex items-center justify-center text-center">
-                  Click to Upload
-                </div>
-              )}
-              <input
-                type="file"
-                id="profile-pic"
-                onChange={handleFileChange}
-                accept="image/*"
-                className="hidden"
-              />
-            </label>
             <CustomInput
               type="text"
               placeholder="First Name"
@@ -162,6 +142,15 @@ const CreateProfilePage = () => {
               onChange={(e) => setLastName(e.target.value)}
               labelName="Last Name"
             />
+            <div className="w-3/12 self-start">
+              <CustomInput
+                type="text"
+                placeholder="Age"
+                value={age}
+                onChange={(e) => setAge(e.target.value)}
+                labelName="Age"
+              />
+            </div>
             <div className="flex justify-center w-full mt-6">
               <CardsButton
                 text="Next"

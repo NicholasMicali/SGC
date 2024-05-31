@@ -3,7 +3,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { collection, addDoc, updateDoc, arrayUnion, getDoc, query, where, getDocs, deleteDoc, arrayRemove, increment } from "firebase/firestore";
 
 
-export const doCreateUserProfile = async (uid, email, userType, firstName, lastName, location) => {
+export const doCreateUserProfile = async (uid, email, userType, firstName, lastName, location, age) => {
   const userDoc = doc(db, "user_profiles", uid);  // Create a reference to the user profile document
   return setDoc(userDoc, {
     userType,
@@ -11,6 +11,7 @@ export const doCreateUserProfile = async (uid, email, userType, firstName, lastN
     lastName,
     email,
     location,
+    age,
     card: 0,
     post: 0,
   }, { merge: true });  // Use setDoc to merge data

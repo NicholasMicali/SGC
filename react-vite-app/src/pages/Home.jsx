@@ -15,6 +15,7 @@ import ReceiveIcon from "../assets/ReceiveIcon.svg";
 import ChallengeIcon from "../assets/ChallengeIcon.svg";
 import SmallSearchBar from "../components/home/smallSearchBar.jsx";
 import Logo from "../assets/logo.svg";
+import SmallProfile from "../components/home/smallProfile.jsx"
 
 const HomePage = () => {
   const { currentUser } = useAuth();
@@ -24,12 +25,12 @@ const HomePage = () => {
   const [currentCid, setCurrentCid] = useState(null);
   const [isFirstPost, setIsFirstPost] = useState(false);
   const [isNarrowScreen, setIsNarrowScreen] = useState(
-    window.innerWidth <= 768
+    window.innerWidth <= 820
   );
 
   useEffect(() => {
     const handleResize = () => {
-      setIsNarrowScreen(window.innerWidth <= 768);
+      setIsNarrowScreen(window.innerWidth <= 820);
     };
 
     window.addEventListener("resize", handleResize);
