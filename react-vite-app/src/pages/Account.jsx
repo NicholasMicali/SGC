@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../auth/index";
 import { doSignOut } from "../firebase/auth.js";
 import { Navigate } from "react-router-dom";
-import LeftSidebar from "../components/home/leftSideBar";
+import { LeftSidebar } from "../components/home/leftSideBar";
 import RightSidebar from "../components/home/rightSideBar";
 import Line from "../../src/assets/AcctSettingsLine.svg";
 import { doFetchUserProfile, doUpdateUserProfile, doDeleteUserProfile } from "../firebase/firestore.js";

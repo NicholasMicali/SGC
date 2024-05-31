@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { useAuth } from '../auth/index';
 import { doSignOut } from '../firebase/auth.js';
 import { Navigate } from 'react-router-dom';
-import LeftSidebar from '../components/home/leftSideBar';
+import { LeftSidebar } from '../components/home/leftSideBar';
 import SmallMenuSidebar from '../components/home/smallMenuSidebar.jsx';
 import ClassroomInfo from '../components/home/classroomInfo.jsx';
 import StudentInfo from '../components/home/studentInfo.jsx';
+import TeacherInfo from '../components/home/teacherInfo.jsx';
 import { doFetchUserProfile, doCreateClassroom, doJoinClassroom, doClassroomToProfile, doFetchClassByName, doFetchClassroom, doRemoveClassroomFromUserProfile, doRemoveStudentFromClassroom } from '../firebase/firestore.js';
 
 const Classroom = () => {
@@ -19,6 +20,7 @@ const Classroom = () => {
     const [classrooms, setClassrooms] = useState([]);
     const [students, setStudents] = useState([]);
     const [isNarrowScreen, setIsNarrowScreen] = useState(window.innerWidth <= 820);
+    const [teachers, setTeachers] = useState(null);
   
     useEffect(() => {
       const handleResize = () => {
@@ -44,6 +46,12 @@ const Classroom = () => {
               fetchStudents(classes);
               //console.log("fetched students");
               //console.log(students);
+            }
+            if (classes) {
+              const teachersArray = await fetchTeachers(classes);
+              setTeachers(teachersArray);
+              console.log("fetched teachers:");
+              console.log(teachersArray);
             }
           }
         } catch (error) {
@@ -91,6 +99,21 @@ const Classroom = () => {
         setStudents(students2DArray);
       } catch (error) {
         console.error("Failed to fetch students:", error);
+      }
+    };
+
+    const fetchTeachers = async (classrooms) => {
+      console.log(classrooms);
+      if (classrooms.length == 0) {
+        console.log("no classrooms");
+        return;
+      }
+      try {
+        const teacherPromises = classrooms.map(classroom => doFetchUserProfile(classroom.uid));
+        const teacherObjects = await Promise.all(teacherPromises);
+        return(teacherObjects.map(teachObj => teachObj.data()));
+      } catch (error) {
+        console.error("Failed to fetch teachers:", error);
       }
     };
 
@@ -188,9 +211,17 @@ const Classroom = () => {
           {userProfile?.userType == 'Student' &&
             <div className="w-full">
               {classrooms.map((classroom, index) => (
-                <div className="w-full flex flex-row items-center">
-                  <ClassroomInfo classroom={classroom}/>
-                  <button onClick={() => leaveClassroom(userProfile.classrooms[index])} className="rounded-2xl border-[1px] h-12 py-2 px-3 border-black ml-4">Leave</button>
+                <div className="w-full flex flex-col">
+                  <div className="w-full flex flex-row items-center">
+                    <ClassroomInfo classroom={classroom} isNarrowScreen={isNarrowScreen}/>
+                    <button onClick={() => leaveClassroom(userProfile.classrooms[index])} className="rounded-2xl border-[1px] h-12 py-2 px-3 border-black ml-4">Leave</button>
+                  </div>
+                  <div className="w-full flex flex-col pl-8 mb-4 mt-2">
+                    <div className="text-xl">Teacher:</div>
+                    {teachers && teachers[index] && 
+                      <TeacherInfo teacher={teachers[index]} isNarrowScreen={isNarrowScreen}/>
+                    }
+                    </div>
                 </div>
               ))}
               {!toggleJoin ?
@@ -224,10 +255,10 @@ const Classroom = () => {
               {classrooms.map((classroom, index) => (
                 <div className="w-full flex flex-col">
                   <div className="w-full flex flex-row items-center">
-                    <ClassroomInfo classroom={classroom}/>
+                    <ClassroomInfo classroom={classroom} isNarrowScreen={isNarrowScreen}/>
                     <button onClick={() => removeClassroom(userProfile.classrooms[index])} className="rounded-2xl border-[1px] h-12 py-2 px-3 border-black ml-4">Delete</button>
                   </div>
-                  <div className="w-full flex flex-col pl-8 bg-gray-500 bg-opacity-30 rounded-xl py-6">
+                  <div className="w-full flex flex-col pl-8 border-2 bg-opacity-30 rounded-xl py-6">
                     <div className="text-xl">Students:</div>
                     {students[index] && 
                       <>
