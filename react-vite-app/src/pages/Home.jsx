@@ -16,6 +16,7 @@ import ChallengeIcon from "../assets/ChallengeIcon.svg";
 import SmallSearchBar from "../components/home/smallSearchBar.jsx";
 import Logo from "../assets/logo.svg";
 import SmallProfile from "../components/home/smallProfile.jsx"
+import WalkthroughModal from "../components/home/walkthroughModal.jsx";
 
 const HomePage = () => {
   const { currentUser } = useAuth();
@@ -27,6 +28,8 @@ const HomePage = () => {
   const [isNarrowScreen, setIsNarrowScreen] = useState(
     window.innerWidth <= 820
   );
+  const [showWalkthrough, setShowWalkthrough] = useState(false);
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -95,17 +98,25 @@ const HomePage = () => {
     setSubPage("recieve");
   };
 
+  const handleWalkthroughClose = () => {
+    setShowWalkthrough(false);
+  };
+  const handleWalkthroughOpen = () => {
+    setShowWalkthrough(true);
+  };
+
   if (isSigningOut) {
     return <Navigate to={"/"} replace={true} />;
   }
   const renderContent = () => {
     return (
+    <>
+      {showWalkthrough && <WalkthroughModal onClose={handleWalkthroughClose} />}
       <div
         className={
-          isNarrowScreen
+          (isNarrowScreen
             ? "flex-grow flex flex-col items-center overflow-auto px-5 py-10 md:hidden"
-            : "flex-grow flex flex-col items-center overflow-auto px-20 py-10 max-md:hidden"
-        }
+            : "flex-grow flex flex-col items-center overflow-auto px-24 py-10 max-md:hidden") + (showWalkthrough ? ' blur-sm' : '')}
       >
         {subPage === "feed" ? (
           <>
@@ -218,12 +229,14 @@ const HomePage = () => {
               setSubPage={setSubPage}
               firstPost={firstPost}
               isNarrowScreen={isNarrowScreen}
+              handleOpen={handleWalkthroughOpen}
             />
           </>
         ) : (
           renderSubPage()
         )}
       </div>
+    </>
     );
   };
 
