@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../auth/index";
-import { doSignOut } from "../firebase/auth.js";
 import { Navigate } from "react-router-dom";
 import { doFetchCardByCode } from "../firebase/firestore.js";
 import SearchBar from "../components/home/searchbar.jsx";
-import { LeftSidebar } from "../components/home/leftSideBar";
 import AllCards from "../components/cardsPages/allCards.jsx";
 import CardFeed from "../components/cardsPages/cardFeed.jsx";
 import NewCard from "../components/cardsPages/newCard.jsx";
@@ -15,7 +13,6 @@ import AllCardIcon from "../assets/AllCardIcon.svg";
 import NewCardIcon from "../assets/NewCardIcon.svg";
 import ReceiveIcon from "../assets/ReceiveIcon.svg";
 import ChallengeIcon from "../assets/ChallengeIcon.svg";
-import SmallMenuSidebar from "../components/home/smallMenuSidebar.jsx";
 import SmallSearchBar from "../components/home/smallSearchBar.jsx";
 import Logo from "../assets/logo.svg";
 import SmallProfile from "../components/home/smallProfile.jsx"
@@ -75,11 +72,11 @@ const HomePage = () => {
 
   const toNewCard = () => {
     setSubPage("new");
-  }
+  };
 
   const toAllCards = () => {
     setSubPage("all");
-  }
+  };
 
   const selectCard = (card, cid) => {
     setCurrentCard(card);
@@ -102,20 +99,31 @@ const HomePage = () => {
     return <Navigate to={"/"} replace={true} />;
   }
   const renderContent = () => {
-    if (!isNarrowScreen) {
-      return (
-        <div className="flex h-screen z-0">
-          <LeftSidebar
-            user={currentUser}
-            signOut={signOut}
-            page="Feed"
-            back={returnToFeed}
-          />
-          <div className="flex-grow flex flex-col items-center overflow-auto px-20 py-10">
-            {subPage === "feed" ? (
-              <>
-                <SearchBar onSearch={handleSearch} width="full" />
-                <div className="flex flex-row justify-between gap-4 my-4 w-full">
+    return (
+      <div
+        className={
+          isNarrowScreen
+            ? "flex-grow flex flex-col items-center overflow-auto px-5 py-10 md:hidden"
+            : "flex-grow flex flex-col items-center overflow-auto px-20 py-10 max-md:hidden"
+        }
+      >
+        {subPage === "feed" ? (
+          <>
+            {isNarrowScreen ? (
+              <SmallSearchBar
+                user={currentUser}
+                signOut={signOut}
+                page={subPage}
+                onSearch={handleSearch}
+              />
+            ) : (
+              <SearchBar onSearch={handleSearch} width="full" />
+            )}
+
+            <img src={Logo} alt="Spread Goodness logo" className="p-4" />
+            {isNarrowScreen ? (
+              <div className="flex flex-col justify-center my-4 w-full">
+                <div className="flex flex-row justify-center gap-4 my-2 w-full">
                   <CardsButton
                     width="180px"
                     height="51.75px"
@@ -136,6 +144,8 @@ const HomePage = () => {
                     icon={NewCardIcon}
                     onClick={() => setSubPage("new")}
                   />
+                </div>
+                <div className="flex flex-row justify-center gap-4 my-2 w-full">
                   <CardsButton
                     width="180px"
                     height="51.75px"
@@ -157,101 +167,64 @@ const HomePage = () => {
                     onClick={() => setSubPage("challenge")}
                   />
                 </div>
-                <CardFeed
-                  user={currentUser}
-                  card={currentCard}
-                  setSubPage={setSubPage}
-                  firstPost={firstPost}
-                  isNarrowScreen={isNarrowScreen}
-                />
-              </>
+              </div>
             ) : (
-              renderSubPage()
-            )}
-          </div>
-        </div>
-      );
-    } else {
-      return (
-        <div className="flex h-screen z-0">
-          <SmallMenuSidebar user={currentUser} signOut={signOut} page="Feed" />
-          <div className="flex-grow flex flex-col items-center overflow-auto px-5 py-10">
-            {subPage === "feed" ? (
-              <>
-                <SmallSearchBar
-                  user={currentUser}
-                  signOut={signOut}
-                  page={subPage}
-                  onSearch={handleSearch}
+              <div className="flex flex-row justify-between gap-4 my-4 w-full">
+                <CardsButton
+                  width="180px"
+                  height="51.75px"
+                  text="All cards"
+                  borderColor="#BEDF3D"
+                  textColor="#8DAB1C"
+                  backgroundColor="#EAF4C0"
+                  icon={AllCardIcon}
+                  onClick={() => setSubPage("all")}
                 />
-                <div className = "flex flex-row">
-                  {/* <SmallProfile
-                    user={currentUser}
-                  /> */}
-                  <img src={Logo} alt="Spread Goodness logo" className="p-4 z-0" />
-                  
-                </div>
-                <div className="flex flex-col justify-center my-4 w-full">
-                  <div className="flex flex-row justify-center gap-4 my-2 w-full">
-                    <CardsButton
-                      width="180px"
-                      height="51.75px"
-                      text="All cards"
-                      borderColor="#BEDF3D"
-                      textColor="#8DAB1C"
-                      backgroundColor="#EAF4C0"
-                      icon={AllCardIcon}
-                      onClick={() => setSubPage("all")}
-                    />
-                    <CardsButton
-                      width="180px"
-                      height="51.75px"
-                      text="New Card"
-                      borderColor="#48B8E6"
-                      textColor="#1D9FD5"
-                      backgroundColor="#D1EDF9"
-                      icon={NewCardIcon}
-                      onClick={() => setSubPage("new")}
-                    />
-                  </div>
-                  <div className="flex flex-row justify-center gap-4 my-2 w-full">
-                    <CardsButton
-                      width="180px"
-                      height="51.75px"
-                      text="Receive"
-                      borderColor="#F2DD69"
-                      textColor="#EDD134"
-                      backgroundColor="#FCF7DA"
-                      icon={ReceiveIcon}
-                      onClick={() => setSubPage("receive")}
-                    />
-                    <CardsButton
-                      width="180px"
-                      height="51.75px"
-                      text="Challenge"
-                      borderColor="#FD3B8A"
-                      textColor="#FC086B"
-                      backgroundColor="#FFD3E5"
-                      icon={ChallengeIcon}
-                      onClick={() => setSubPage("challenge")}
-                    />
-                  </div>
-                </div>
-                <CardFeed
-                  user={currentUser}
-                  card={currentCard}
-                  setSubPage={setSubPage}
-                  firstPost={firstPost}
-                  isNarrowScreen={isNarrowScreen}
+                <CardsButton
+                  width="180px"
+                  height="51.75px"
+                  text="New Card"
+                  borderColor="#48B8E6"
+                  textColor="#1D9FD5"
+                  backgroundColor="#D1EDF9"
+                  icon={NewCardIcon}
+                  onClick={() => setSubPage("new")}
                 />
-              </>
-            ) : (
-              renderSubPage()
+                <CardsButton
+                  width="180px"
+                  height="51.75px"
+                  text="Receive"
+                  borderColor="#F2DD69"
+                  textColor="#EDD134"
+                  backgroundColor="#FCF7DA"
+                  icon={ReceiveIcon}
+                  onClick={() => setSubPage("receive")}
+                />
+                <CardsButton
+                  width="180px"
+                  height="51.75px"
+                  text="Challenge"
+                  borderColor="#FD3B8A"
+                  textColor="#FC086B"
+                  backgroundColor="#FFD3E5"
+                  icon={ChallengeIcon}
+                  onClick={() => setSubPage("challenge")}
+                />
+              </div>
             )}
-          </div>
-        </div>
-      );
-    }
+            <CardFeed
+              user={currentUser}
+              card={currentCard}
+              setSubPage={setSubPage}
+              firstPost={firstPost}
+              isNarrowScreen={isNarrowScreen}
+            />
+          </>
+        ) : (
+          renderSubPage()
+        )}
+      </div>
+    );
   };
 
   const renderSubPage = () => {
@@ -267,12 +240,13 @@ const HomePage = () => {
           />
         )}
         {subPage === "new" && (
-          <NewCard 
-            back={returnToFeed} 
-            user={currentUser} 
-            select={selectCard} 
-            isNarrowScreen={isNarrowScreen} 
-            selectChallenge={selectCardToChallenge}/>
+          <NewCard
+            back={returnToFeed}
+            user={currentUser}
+            select={selectCard}
+            isNarrowScreen={isNarrowScreen}
+            selectChallenge={selectCardToChallenge}
+          />
         )}
         {subPage === "receive" && (
           <Recieve
@@ -280,7 +254,7 @@ const HomePage = () => {
             user={currentUser}
             initCode={currentCid}
             first={isFirstPost}
-            select={selectCard} 
+            select={selectCard}
             selectChallenge={selectCardToChallenge}
           />
         )}

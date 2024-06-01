@@ -55,12 +55,6 @@ const AllCards = ({back, user, select, isNarrowScreen, newCard}) => {
     }
   };
 
-
-  /*
-     {(cards.length == 0) &&
-        <div className="font-semibold text-2xl">No Cards Yet:</div>
-      }
-  */
  if (userProfile == null){
   console.log("No user profile");
  }
