@@ -207,12 +207,12 @@ const Classroom = () => {
       //   {!isNarrowScreen && (
       //     <LeftSidebar user={currentUser} signOut={signOut} page="Classroom" />
       //   )}
-        <div className="flex-grow flex flex-col items-center overflow-auto p-4 mt-10">
-          <div className="text-3xl font-bold mb-4">Classrooms</div>
+        <div className="flex-grow flex flex-col items-center overflow-auto p-4 mt-6">
+          <div className="text-[4rem] self-start font-bold mb-4">Classrooms</div>
           {userProfile?.userType == 'Student' &&
             <div className="w-full">
               {classrooms.map((classroom, index) => (
-                <div className="w-full flex flex-col">
+                <div className="w-full flex flex-col mt-6">
                   <div className="w-full flex flex-row items-center">
                     <ClassroomInfo classroom={classroom} isNarrowScreen={isNarrowScreen}/>
                     <button onClick={() => leaveClassroom(userProfile.classrooms[index])} className="py-2 px-2 ml-2"><Trash></Trash></button>
@@ -226,9 +226,8 @@ const Classroom = () => {
                 </div>
               ))}
               {!toggleJoin ?
-                <div className="w-full flex flex-col justify-center items-center bg-green-500 bg-opacity-40 rounded-xl py-4 mt-6" onClick={() => setToggleJoin(true)}>
-                  <div>+</div>
-                  <div>Join Classroom</div>
+                <div className="self-center max-w-sm flex flex-col justify-center items-center bg-green-500 bg-opacity-40 rounded-xl py-4 mt-10" onClick={() => setToggleJoin(true)}>
+                  <div>+ Join Classroom</div>
                 </div>
               :
                 <>
@@ -254,7 +253,7 @@ const Classroom = () => {
           {userProfile?.userType == 'Teacher' &&
             <>
               {classrooms.map((classroom, index) => (
-                <div className="w-full flex flex-col">
+                <div className="w-full flex flex-col mt-6">
                   <div className="w-full flex flex-row items-center">
                     <ClassroomInfo classroom={classroom} isNarrowScreen={isNarrowScreen}/>
                     <button onClick={() => removeClassroom(userProfile.classrooms[index])} className="py-2 px-3 ml-4"><Trash></Trash></button>

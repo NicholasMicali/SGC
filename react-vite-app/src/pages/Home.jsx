@@ -26,14 +26,18 @@ const HomePage = () => {
   const [currentCid, setCurrentCid] = useState(null);
   const [isFirstPost, setIsFirstPost] = useState(false);
   const [isNarrowScreen, setIsNarrowScreen] = useState(
-    window.innerWidth <= 820
+    window.innerWidth <= 840
+  );
+  const [isMediumScreen, setIsMediumScreen] = useState(
+    window.innerWidth <= 1050
   );
   const [showWalkthrough, setShowWalkthrough] = useState(false);
 
 
   useEffect(() => {
     const handleResize = () => {
-      setIsNarrowScreen(window.innerWidth <= 820);
+      setIsNarrowScreen(window.innerWidth <= 840);
+      setIsMediumScreen(window.innerWidth <= 1050);
     };
 
     window.addEventListener("resize", handleResize);
@@ -115,22 +119,25 @@ const HomePage = () => {
       <div
         className={
           (isNarrowScreen
-            ? "flex-grow flex flex-col items-center overflow-auto px-5 py-10 md:hidden"
-            : "flex-grow flex flex-col items-center overflow-auto px-24 py-10 max-md:hidden") + (showWalkthrough ? ' blur-sm' : '')}
+            ? "flex-grow flex flex-col items-center overflow-auto px-5 py-12 md:hidden"
+            : "flex-grow flex flex-col items-center overflow-auto py-10 max-md:hidden") + (isMediumScreen ? ' px-16' : ' px-24') + (showWalkthrough ? ' blur-sm' : '')}
       >
         {subPage === "feed" ? (
           <>
             {isNarrowScreen ? (
-              <SmallSearchBar
-                user={currentUser}
-                signOut={signOut}
-                page={subPage}
-                onSearch={handleSearch}
-              />
+              <>
+                <img src={Logo} alt="Spread Goodness logo" className="p-4 z-0" /> 
+                <SmallSearchBar
+                  user={currentUser}
+                  signOut={signOut}
+                  page={subPage}
+                  onSearch={handleSearch}
+                />
+                </>
             ) : (
               <SearchBar onSearch={handleSearch} width="full" />
             )}
-            {isNarrowScreen ? (
+            {isMediumScreen ? (
               <div className="flex flex-col justify-center my-4 w-full">
                 <div className="flex flex-row justify-center gap-4 my-2 w-full">
                   <CardsButton

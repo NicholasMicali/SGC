@@ -6,7 +6,7 @@ import { doFetchUserProfile, doUpdateUserProfile, doDeleteUserProfile } from "..
 import { doPasswordReset, doDeleteUser } from "../firebase/auth.js";
 import { doUploadFile } from "../firebase/storage.js"
 import { useNavigate } from 'react-router-dom';
-
+import { Pencil } from "lucide-react";
 
 const AccountPage = () => {
   const { currentUser } = useAuth();
@@ -22,6 +22,7 @@ const AccountPage = () => {
   const [resetEmailSent, setResetEmailSent] = useState(false);
   const [file, setFile] = useState(null);
   const [image, setImage] = useState('');
+  const [toggleEdit, setToggleEdit] = useState(false);
   const navigate = useNavigate();
 
 
@@ -125,6 +126,7 @@ const AccountPage = () => {
   const handleFileChange = (e) => {
     setProfilePic(URL.createObjectURL(e.target.files[0]));
   };
+
 
   if (isSigningOut) {
     return <Navigate to={"/"} replace={true} />;
@@ -303,14 +305,16 @@ const AccountPage = () => {
     //     <LeftSidebar user={currentUser} signOut={signOut} page="Account Settings" />
     //   )}
       <div className="flex-grow flex flex-col items-center overflow-auto p-4">
+        <div className="font-bold text-[4rem] my-8">Account Settings</div>
+        <button onClick={() => setToggleEdit(!toggleEdit)} className={"self-start flex flex-row underline" + (isNarrowScreen ? ' ml-10' : ' ml-20')}>Edit Profile<Pencil className="w-3 ml-2"></Pencil></button>
         <div style={containerStyle}>
           {file ?
-            <img className="w-20 h-20 rounded-full mb-4"
+            <img className="w-20 h-20 rounded-full mb-6"
               src={URL.createObjectURL(file)}
               alt=""
             />
           :
-            <img className="w-20 h-20 rounded-full mb-4"
+            <img className="w-20 h-20 rounded-full mb-6"
               src={
                 userProfile?.image
                   ? userProfile.image
@@ -319,58 +323,78 @@ const AccountPage = () => {
               alt=""
             />
           }
-          <input
-            type="file"
-            id="file"
-            onChange={(e) => { setFile(e.target.files[0]) }}
-            className="mb-4"
-          />
+          {toggleEdit &&
+            <input
+              type="file"
+              id="file"
+              onChange={(e) => { setFile(e.target.files[0]) }}
+              className="mb-4"
+            />
+          }
           <img src={Line} style={lineSeparatorStyle} alt="Line" />
           <div style={inputFieldContainerStyle}>
             <div style={inputRowStyle}>
               <div style={inputFieldPairStyle}>
                 <label style={inputLabelStyle}>First Name</label>
-                <input
-                  type="text"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  style={inputFieldStyle}
-                />
+                {toggleEdit ?
+                  <input
+                    type="text"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    style={inputFieldStyle}
+                  />
+                :
+                  <div className="text-2xl">{firstName}</div>
+                }
               </div>
               <div style={inputFieldPairStyle}>
                 <label style={inputLabelStyle}>Last Name</label>
-                <input
-                  type="text"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                  style={inputFieldStyle}
-                />
+                {toggleEdit ?
+                  <input
+                    type="text"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    style={inputFieldStyle}
+                  />
+                :
+                  <div className="text-2xl">{lastName}</div>
+                }
               </div>
             </div>
             <div style={buttonRowStyle}>
               <div style={{ flex: 1 }}>
                 <label style={inputLabelStyle}>Email Address</label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  style={inputFieldStyle}
-                />
+                {toggleEdit ?
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    style={inputFieldStyle}
+                  />
+                :
+                  <div className="text-2xl">{email}</div>
+                }
               </div>
             </div>
             <div style={buttonRowStyle}>
               <div style={{ flex: 1 }}>
                 <label style={inputLabelStyle}>Location</label>
-                <input
-                  type="text"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  style={inputFieldStyle}
-                />
+                {toggleEdit ?
+                  <input
+                    type="text"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    style={inputFieldStyle}
+                  />
+                :
+                  <div className="text-2xl">{location}</div>
+                }
               </div>
             </div>
           </div>
-          <button style={greenButton} onClick={onSubmit}>Update Profile</button>
+          {toggleEdit &&
+            <button style={greenButton} onClick={onSubmit}>Update Profile</button>
+          }
           <button style={blueButton} onClick={onReset} disabled={resetEmailSent}>
             {resetEmailSent ? "Email Sent!" : "Reset Password"}
             </button>

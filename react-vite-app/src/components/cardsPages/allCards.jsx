@@ -66,19 +66,24 @@ const AllCards = ({back, user, select, isNarrowScreen, newCard}) => {
 
   return (
     <div className="flex flex-col justify-center items-center gap-8 w-full">
-      <div className = "flex flex-col items-start">
-        <img src={Logo} alt="Spread Goodness logo" className="p-4 z-0" />    
-      </div>
       <button onClick={back} className="self-start flex items-center">
         <ArrowLeft /> Go Back
       </button>
-      <div className="flex flex-row justify-between w-full px-5">
-        <div className="text-3xl mt-2 font-bold">
-          My Cards:
-        </div>
-      </div>
-      <div className="self-start w-full flex flex-row gap-6 items-center">
+      <div className="w-full flex flex-col items-center mt-4">
         {userProfile && <StudentInfo student={userProfile} isNarrowScreen={isNarrowScreen}/>}
+      </div>
+      <div className="text-3xl mt-2 font-bold self-start">
+        My Cards:
+      </div>
+      {cards.map((card, index) => (
+        <div className="w-full flex flex-row items-center">
+          <div className="w-full cursor-pointer" onClick={() => select(card, cids[index])}>
+            <CardInfo name={card.title} location="1" miles="250" people={card.posts ? card.posts.length : "0"} color={(card.cEmail === user.email)} isNarrowScreen={isNarrowScreen}/>
+          </div>
+          <button className="py-2 px-3 ml-4" onClick={() => removeCard(cids[index], index)}><Trash></Trash></button>
+        </div>
+      ))}
+      <div className="self-start">
         <CardsButton
           width="180px"
           height="51.75px"
@@ -90,14 +95,6 @@ const AllCards = ({back, user, select, isNarrowScreen, newCard}) => {
           onClick={newCard}
         ></CardsButton>
       </div>
-      {cards.map((card, index) => (
-        <div className="w-full flex flex-row items-center">
-          <div className="w-full cursor-pointer" onClick={() => select(card, cids[index])}>
-            <CardInfo name={card.title} location="1" miles="250" people={card.posts ? card.posts.length : "0"} color={(card.cEmail === user.email)} isNarrowScreen={isNarrowScreen}/>
-          </div>
-          <button className="py-2 px-3 ml-4" onClick={() => removeCard(cids[index], index)}><Trash></Trash></button>
-        </div>
-      ))}
     </div>
   );
 };
