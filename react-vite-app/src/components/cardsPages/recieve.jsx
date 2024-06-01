@@ -4,6 +4,7 @@ import { doCreatePost, doPostToCard, doFetchUserProfile, doFetchCardByCode, doCa
 import { doUploadFile } from "../../firebase/storage.js"
 import ThankYou from  "./thankYou.jsx"
 import StickerDrop from "./stickerDrop.jsx";
+import { ArrowLeft } from "lucide-react";
 
 // TO DO: If the user navigates from a new card on feed page to here, 
 // have this component take in the value of the card ID as a prop, the call onCodeEntered so they go right to the form.
@@ -146,8 +147,10 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
   if (isCodeFound) {
     return (
       <div className="flex flex-col justify-center items-center gap-4 w-full">
-        <button className="rounded-2xl border-[1px] py-2 px-3 border-black self-end" onClick={back}> Back</button>
-        <div className="self-start font-bold text-3xl">Post to card</div>
+        <button onClick={back} className="self-start flex items-center mt-4">
+          <ArrowLeft /> Go Back
+        </button>
+        <div className="font-bold text-3xl">Post to card</div>
         <form onSubmit={onSubmit} className="w-full flex flex-col gap-5 items-center">
           <div className="flex flex-col gap-1 w-full mt-3">
             <label htmlFor={'desc'} className="self-start">Description</label>
@@ -207,8 +210,10 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
 
   return(
     <div className="flex flex-col justify-center items-center gap-4 w-full">
-      <button className="rounded-2xl border-[1px] py-2 px-3 border-black self-end" onClick={back}> Back</button>
-      <div className="self-start font-bold text-3xl">Recieved a card?</div>
+      <button onClick={back} className="self-start flex items-center mt-4">
+        <ArrowLeft /> Go Back
+      </button>
+      <div className="font-bold text-3xl">Recieved a card?</div>
       <form onSubmit={onCodeEntered} className="w-full flex flex-col gap-5 items-center">
         <div className="flex flex-col gap-1 w-full mt-6">
             <label htmlFor={'code'} className="self-start">Code</label>

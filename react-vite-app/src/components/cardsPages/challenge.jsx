@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import backOfCard from "../../assets/backOfCard.jpg";
 import AllCardIcon from "../../assets/AllCardIcon.svg";
 import CardsButton from './cardsButton';
+import { ArrowLeft } from "lucide-react";
 
 const Challenge = ({back, code, cid, cards}) => {
 
@@ -21,8 +22,10 @@ const Challenge = ({back, code, cid, cards}) => {
   if (code == null || cid == null){
     return (
     <>
-      <button className="rounded-2xl border-[1px] py-2 px-3 border-black self-end" onClick={back}>Back</button>
-      <div className="font-semibold text-2xl mt-4">No card selected</div>
+      <button onClick={back} className="self-start flex items-center mt-4 mb-4">
+        <ArrowLeft /> Go Back
+      </button>
+      <div className="font-semibold text-3xl mt-4">No card selected</div>
       <img src={backOfCard} className="w-5/12 mb-4 mt-4"></img>
       <CardsButton
         width="180px"
@@ -42,10 +45,12 @@ const Challenge = ({back, code, cid, cards}) => {
 
   return (
     <div className="flex flex-col justify-center items-center gap-4 w-full">
-      <button className="rounded-2xl border-[1px] py-2 px-3 border-black self-end" onClick={back}>Back</button>
-      <h1 className="self-start font-bold text-3xl">Challenge someone!</h1>
-      <div className="font-semibold text-2xl mt-6">Your Code: {code}</div>
-      <img src={backOfCard} className="w-4/12 mb-4"></img>
+      <button onClick={back} className="self-start flex items-center mt-4 mb-4">
+        <ArrowLeft /> Go Back
+      </button>
+      <h1 className="font-bold text-3xl">Challenge someone!</h1>
+      <img src={backOfCard} className="w-4/12 mt-4 mb-4"></img>
+      <div className="font-semibold text-xl mt-3">Your Code: {code}</div>
       <div className="email-share-container w-full">
         <div className="flex flex-col gap-1 w-full mt-3">
           <label htmlFor="email">Recipient Email</label>

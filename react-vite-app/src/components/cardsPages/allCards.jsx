@@ -7,6 +7,8 @@ import NewCardIcon from "../../assets/NewCardIcon.svg";
 import StudentInfo from '../home/studentInfo.jsx';
 import Logo from "../../assets/logo.svg";
 import SmallProfile from "../home/smallProfile.jsx"
+import { ArrowLeft } from "lucide-react";
+import { Trash } from "lucide-react";
 
 
 const AllCards = ({back, user, select, isNarrowScreen, newCard}) => {
@@ -45,15 +47,18 @@ const AllCards = ({back, user, select, isNarrowScreen, newCard}) => {
   };
 
   const removeCard = async (cardId, rIndex) => {
-    try {
-      await doRemoveCardFromUserProfile(user.uid, cardId);
-      setCids((prevCids) => prevCids.filter((cid, index) => index !== rIndex));
-      setCards((prevCards) => prevCards.filter((card, index) => index !== rIndex));
-      console.log("Card Removed");
-    } catch (error) {
-      console.error("Failed to fetch cards:", error);
+    if (window.confirm("Are you sure you want to delete this card?")) {
+      try {
+        await doRemoveCardFromUserProfile(user.uid, cardId);
+        setCids((prevCids) => prevCids.filter((cid, index) => index !== rIndex));
+        setCards((prevCards) => prevCards.filter((card, index) => index !== rIndex));
+        console.log("Card Removed");
+      } catch (error) {
+        console.error("Failed to fetch cards:", error);
+      }
     }
   };
+
 
  if (userProfile == null){
   console.log("No user profile");
@@ -62,15 +67,15 @@ const AllCards = ({back, user, select, isNarrowScreen, newCard}) => {
   return (
     <div className="flex flex-col justify-center items-center gap-8 w-full">
       <div className = "flex flex-col items-start">
-      <img src={Logo} alt="Spread Goodness logo" className="p-4 z-0" />    
+        <img src={Logo} alt="Spread Goodness logo" className="p-4 z-0" />    
       </div>
+      <button onClick={back} className="self-start flex items-center">
+        <ArrowLeft /> Go Back
+      </button>
       <div className="flex flex-row justify-between w-full px-5">
         <div className="text-3xl mt-2 font-bold">
           My Cards:
         </div>
-        <button className="rounded-2xl border-[1px] py-2 px-3 border-black" onClick={back}>
-          Back
-        </button>
       </div>
       <div className="self-start w-full flex flex-row gap-6 items-center">
         {userProfile && <StudentInfo student={userProfile} isNarrowScreen={isNarrowScreen}/>}
@@ -90,7 +95,7 @@ const AllCards = ({back, user, select, isNarrowScreen, newCard}) => {
           <div className="w-full cursor-pointer" onClick={() => select(card, cids[index])}>
             <CardInfo name={card.title} location="1" miles="250" people={card.posts ? card.posts.length : "0"} color={(card.cEmail === user.email)} isNarrowScreen={isNarrowScreen}/>
           </div>
-          <button className="rounded-2xl border-[1px] h-12 py-2 px-3 ml-4 border-black" onClick={() => removeCard(cids[index], index)}>Delete</button>
+          <button className="py-2 px-3 ml-4" onClick={() => removeCard(cids[index], index)}><Trash></Trash></button>
         </div>
       ))}
     </div>

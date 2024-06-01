@@ -7,6 +7,7 @@ import SmallMenuSidebar from '../components/home/smallMenuSidebar.jsx';
 import ClassroomInfo from '../components/home/classroomInfo.jsx';
 import StudentInfo from '../components/home/studentInfo.jsx';
 import TeacherInfo from '../components/home/teacherInfo.jsx';
+import { Trash } from "lucide-react";
 import { doFetchUserProfile, doCreateClassroom, doJoinClassroom, doClassroomToProfile, doFetchClassByName, doFetchClassroom, doRemoveClassroomFromUserProfile, doRemoveStudentFromClassroom } from '../firebase/firestore.js';
 
 const Classroom = () => {
@@ -207,17 +208,17 @@ const Classroom = () => {
       //     <LeftSidebar user={currentUser} signOut={signOut} page="Classroom" />
       //   )}
         <div className="flex-grow flex flex-col items-center overflow-auto p-4 mt-10">
-          <div className="self-start text-3xl font-bold mb-4">Classrooms:</div>
+          <div className="text-3xl font-bold mb-4">Classrooms</div>
           {userProfile?.userType == 'Student' &&
             <div className="w-full">
               {classrooms.map((classroom, index) => (
                 <div className="w-full flex flex-col">
                   <div className="w-full flex flex-row items-center">
                     <ClassroomInfo classroom={classroom} isNarrowScreen={isNarrowScreen}/>
-                    <button onClick={() => leaveClassroom(userProfile.classrooms[index])} className="rounded-2xl border-[1px] h-12 py-2 px-3 border-black ml-4">Leave</button>
+                    <button onClick={() => leaveClassroom(userProfile.classrooms[index])} className="py-2 px-2 ml-2"><Trash></Trash></button>
                   </div>
-                  <div className="w-full flex flex-col pl-8 mb-4 mt-2">
-                    <div className="text-xl">Teacher:</div>
+                  <div className="w-full flex flex-col pl-12 mb-4 mt-2">
+                    <div className="text-xl">Teacher</div>
                     {teachers && teachers[index] && 
                       <TeacherInfo teacher={teachers[index]} isNarrowScreen={isNarrowScreen}/>
                     }
@@ -225,7 +226,7 @@ const Classroom = () => {
                 </div>
               ))}
               {!toggleJoin ?
-                <div className="w-full flex flex-col justify-center items-center bg-blue-500 bg-opacity-40 rounded-xl py-4 mt-6" onClick={() => setToggleJoin(true)}>
+                <div className="w-full flex flex-col justify-center items-center bg-green-500 bg-opacity-40 rounded-xl py-4 mt-6" onClick={() => setToggleJoin(true)}>
                   <div>+</div>
                   <div>Join Classroom</div>
                 </div>
@@ -256,10 +257,10 @@ const Classroom = () => {
                 <div className="w-full flex flex-col">
                   <div className="w-full flex flex-row items-center">
                     <ClassroomInfo classroom={classroom} isNarrowScreen={isNarrowScreen}/>
-                    <button onClick={() => removeClassroom(userProfile.classrooms[index])} className="rounded-2xl border-[1px] h-12 py-2 px-3 border-black ml-4">Delete</button>
+                    <button onClick={() => removeClassroom(userProfile.classrooms[index])} className="py-2 px-3 ml-4"><Trash></Trash></button>
                   </div>
-                  <div className="w-full flex flex-col pl-8 border-2 bg-opacity-30 rounded-xl py-6">
-                    <div className="text-xl">Students:</div>
+                  <div className="w-full flex flex-col pl-12 py-4">
+                    <div className="text-xl">Students</div>
                     {students[index] && 
                       <>
                         {students[index].map((student) => (
@@ -271,7 +272,7 @@ const Classroom = () => {
                 </div>
               ))}
               {!toggleCreate ?
-                <div className="w-full flex flex-col justify-center items-center bg-blue-500 bg-opacity-40 rounded-xl py-4 mt-6" onClick={() => setToggleCreate(true)}>
+                <div className="w-full flex flex-col justify-center items-center bg-green-500 bg-opacity-40 rounded-xl py-4 mt-6" onClick={() => setToggleCreate(true)}>
                   <div>+</div>
                   <div>Create Classroom</div>
                 </div>

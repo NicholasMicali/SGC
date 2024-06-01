@@ -4,6 +4,7 @@ import { doCreateCard, doCardToUserProfile, doFetchUserProfile, doCreatePost, do
 import { doUploadFile } from "../../firebase/storage.js"
 import ThankYou from  "./thankYou.jsx"
 import StickerDrop from "./stickerDrop.jsx";
+import { ArrowLeft } from "lucide-react";
 
 
 const NewCard = ({back, user, select, isNarrowScreen, selectChallenge}) => {
@@ -129,8 +130,10 @@ const NewCard = ({back, user, select, isNarrowScreen, selectChallenge}) => {
 
   return (
     <div className="flex flex-col justify-center items-center gap-4 w-full">
-      <button className="rounded-2xl border-[1px] py-2 px-3 border-black self-end" onClick={back}> Back</button>
-      <div className="self-start font-bold text-3xl">New Card</div>
+      <button onClick={back} className="self-start flex items-center mt-4">
+        <ArrowLeft /> Go Back
+      </button>
+      <div className="font-bold text-3xl">New Card</div>
       <form onSubmit={onSubmit} className="w-full flex flex-col gap-5 items-center">
         <CustomInput
           type="title"

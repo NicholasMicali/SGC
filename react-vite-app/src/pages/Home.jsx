@@ -130,8 +130,6 @@ const HomePage = () => {
             ) : (
               <SearchBar onSearch={handleSearch} width="full" />
             )}
-
-            <img src={Logo} alt="Spread Goodness logo" className="p-4" />
             {isNarrowScreen ? (
               <div className="flex flex-col justify-center my-4 w-full">
                 <div className="flex flex-row justify-center gap-4 my-2 w-full">

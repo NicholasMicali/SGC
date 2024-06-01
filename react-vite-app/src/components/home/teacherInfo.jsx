@@ -27,7 +27,7 @@ const TeacherInfo = ({teacher, isNarrowScreen}) => {
     );
   } else {
     return (
-      <div className="w-full pr-24">
+      <div className="w-full max-w-2xl">
         <div className="flex flex-row items-center justify-between bg-blue-500 rounded-xl px-20 py-4 w-full h-full bg-opacity-40">
               <div className="flex flex-row gap-2 justify-center items-center">
                 {teacher.image ? (
