@@ -43,11 +43,12 @@ const TextCard = ({ loc, date, title, description, name, first, image, stickers,
           </div>
           {image && <img className="w-20 h-20 ml-2" src={image}></img>}
         </div>
-        {/* see more button */}
+        {/* see more button
         <div className=" font-semibold cursor-pointer text-lg flex items-center">
           See More
           <ChevronsRight size={25} className="ml-2" />
         </div>
+        */}
 
         {/* bottom row: name and emojis */}
         <div className="flex justify-between ">

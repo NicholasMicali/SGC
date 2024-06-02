@@ -1,7 +1,7 @@
 import React from "react";
 
 
-const CustomInput = ({type, placeholder, value, onChange, id, labelName}) => {
+const CustomInput = ({type, placeholder, value, onChange, id, labelName, pattern}) => {
     return (
         <div className="flex flex-col gap-1 w-full mt-3">
             <label htmlFor={id} className="self-start">{labelName}</label>
@@ -12,6 +12,7 @@ const CustomInput = ({type, placeholder, value, onChange, id, labelName}) => {
             id={id}
             value={value}
             onChange={onChange}
+            pattern={pattern}
             required
             />
         </div>

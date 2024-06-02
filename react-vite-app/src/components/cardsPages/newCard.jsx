@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CustomInput from '../auth/customInput';
-import { doCreateCard, doCardToUserProfile, doFetchUserProfile, doCreatePost, doPostToCard, doFetchCard, doIncrementCard, doIncrementUserCards } from "../../firebase/firestore";
+import { doCreateCard, doCardToUserProfile, doFetchUserProfile, doCreatePost, doPostToCard, doFetchCard, doIncrementCard, doIncrementUserCards, doFetchCardByCode } from "../../firebase/firestore";
 import { doUploadFile } from "../../firebase/storage.js"
 import ThankYou from  "./thankYou.jsx"
 import StickerDrop from "./stickerDrop.jsx";
@@ -55,6 +55,12 @@ const NewCard = ({back, user, select, isNarrowScreen, selectChallenge}) => {
       if (!/^\d{2}[A-Za-z]{3}\d{3}$/.test(code)) {
         console.log("Invalid code format.");
         alert("Invalid Code Format");
+        return;
+      }
+      const already = await doFetchCardByCode(code);
+      if (already) {
+        console.log("Code already in use");
+        alert("Code already exists, try again");
         return;
       }
       setIsCreatingCard(true);

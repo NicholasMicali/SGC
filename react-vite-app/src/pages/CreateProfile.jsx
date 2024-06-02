@@ -162,6 +162,7 @@ const CreateProfilePage = () => {
                 value={age}
                 onChange={(e) => setAge(e.target.value)}
                 labelName="Age"
+                pattern="\d*"
               />
             </div>
             <div className="flex justify-center w-full mt-6">
