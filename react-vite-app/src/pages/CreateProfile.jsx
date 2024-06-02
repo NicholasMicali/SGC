@@ -6,6 +6,7 @@ import { doCreateUserProfile } from "../firebase/firestore";
 import CustomInput from "../components/auth/customInput.jsx";
 import CardsButton from "../components/cardsPages/cardsButton.jsx";
 import { doFetchUserProfile } from "../firebase/firestore";
+import { ArrowLeft } from "lucide-react";
 
 const CreateProfilePage = () => {
   const { currentUser } = useAuth();
@@ -50,6 +51,10 @@ const CreateProfilePage = () => {
     setStep(step + 1);
   };
 
+  const handleBack = () => {
+    setStep(step - 1);
+  }
+
   const handleFileChange = (e) => {
     setProfilePic(URL.createObjectURL(e.target.files[0]));
   };
@@ -81,9 +86,14 @@ const CreateProfilePage = () => {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-tr from-purple-500 to-pink-500">
       <form
         onSubmit={onSubmit}
-        className="w-3/4 lg:w-1/2 xl:w-1/3 max-sm:min-w-[600px] p-5 bg-white shadow rounded-lg flex flex-col gap-5"
+        className={"w-3/4 lg:w-1/2 max-sm:min-w-[600px] p-5 bg-white shadow rounded-lg flex flex-col gap-5" + ((step == 1) ? " xl:w-1/2" : " xl:w-1/3")}
       >
         <div className="flex justify-between">
+          {(step > 1) &&
+            <button onClick={handleBack} className="flex items-center">
+              <ArrowLeft /> Go Back
+            </button>
+          }
           <h2 className="text-xl font-bold">Profile Setup</h2>
           <span className="text-sm font-semibold">{`Step ${step} of 3`}</span>
         </div>
@@ -101,6 +111,7 @@ const CreateProfilePage = () => {
                   setUserRole("Teacher");
                   handleNext();
                 }}
+                staticStyle={true}
               />
               <CardsButton
                 text="Student"
@@ -111,6 +122,7 @@ const CreateProfilePage = () => {
                   setUserRole("Student");
                   handleNext();
                 }}
+                staticStyle={true}
               />
               <CardsButton
                 text="Visitor"
@@ -121,6 +133,7 @@ const CreateProfilePage = () => {
                   setUserRole("Visitor");
                   handleNext();
                 }}
+                staticStyle={true}
               />
             </div>
           </div>
@@ -142,7 +155,7 @@ const CreateProfilePage = () => {
               onChange={(e) => setLastName(e.target.value)}
               labelName="Last Name"
             />
-            <div className="w-3/12 self-start">
+            <div className="w-2/12 self-start">
               <CustomInput
                 type="text"
                 placeholder="Age"
@@ -158,6 +171,7 @@ const CreateProfilePage = () => {
                 textColor="#8DAB1C"
                 backgroundColor="#EAF4C0"
                 onClick={handleNext}
+                staticStyle={true}
               />
             </div>
           </div>
@@ -182,6 +196,7 @@ const CreateProfilePage = () => {
                 borderColor="#FD3B8A"
                 textColor="#FC086B"
                 backgroundColor="#FFD3E5"
+                staticStyle={true}
               />
             </div>
           </div>

@@ -10,8 +10,36 @@ const CardsButton = ({
   backgroundColor,
   onClick,
   icon,
+  staticStyle,
 }) => {
   const [isHovered, setHovered] = useState(false);
+
+  if (staticStyle) {
+    return (
+      <button
+        className="w-[180px] h-[51.75px] rounded-lg border-[2px] flex justify-center items-center px-4"
+        onClick={onClick}
+        style={{
+          height: height,
+          width: width,
+          borderColor: borderColor,
+          backgroundColor: backgroundColor,
+        }}
+      >
+        <span
+          style={{
+            color: textColor,
+            fontSize: "18px",
+            fontFamily: "sans-serif",
+            marginRight: icon ? "8px" : "0",
+          }}
+        >
+          {text}
+        </span>
+      </button>
+    );
+  }
+  
   return (
     <motion.button
       className="w-[180px] h-[51.75px] rounded-lg border-[2px] flex justify-center items-center px-4"

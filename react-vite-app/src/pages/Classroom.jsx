@@ -296,6 +296,9 @@ const Classroom = () => {
               }
             </>
           }
+          {userProfile?.userType == 'Visitor' &&
+            <div className="text-2xl mt-6">Your Account is not registed as a student or teacher {":("}</div>
+          }
         </div>
       //   {isNarrowScreen && (
       //     <SmallMenuSidebar 
