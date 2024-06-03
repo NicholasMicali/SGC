@@ -1,12 +1,40 @@
 import React, { useState, useEffect } from "react";
-import Select from "react-select";
 import { useAuth } from "../auth/index";
 import { Navigate } from "react-router-dom";
-import { doCreateUserProfile } from "../firebase/firestore";
+import { doCreateUserProfile, doFetchUserProfile } from "../firebase/firestore";
 import CustomInput from "../components/auth/customInput.jsx";
 import CardsButton from "../components/cardsPages/cardsButton.jsx";
-import { doFetchUserProfile } from "../firebase/firestore";
 import { ArrowLeft } from "lucide-react";
+import GoogleAutocompleteInput from "../components/location/googleAutocompleteInput.jsx";
+import { src as googleMapsAPISrc } from "../firebase/googleMapsAPIKey";
+
+const useLoadScript = (src) => {
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    const existingScript = document.querySelector(`script[src="${src}"]`);
+    
+    if (existingScript) {
+      if (existingScript.hasAttribute("data-loaded")) {
+        setLoaded(true);
+      } else {
+        existingScript.onload = () => setLoaded(true);
+      }
+    } else {
+      const script = document.createElement("script");
+      script.src = src;
+      script.async = true;
+      script.defer = true;
+      script.onload = () => {
+        setLoaded(true);
+        script.setAttribute("data-loaded", "true");
+      };
+      document.head.appendChild(script);
+    }
+  }, [src]);
+
+  return loaded;
+};
 
 const CreateProfilePage = () => {
   const { currentUser } = useAuth();
@@ -17,6 +45,8 @@ const CreateProfilePage = () => {
   const [age, setAge] = useState("");
   const [location, setLocation] = useState("");
   const [isProfileCreated, setIsProfileCreated] = useState(false);
+
+  const isScriptLoaded = useLoadScript(googleMapsAPISrc);
 
 
   useEffect(() => {
@@ -36,16 +66,6 @@ const CreateProfilePage = () => {
 
     fetchUserProfile();
   }, [currentUser]);
-
-  const locationOptions = [
-    { value: "New York", label: "New York" },
-    { value: "Los Angeles", label: "Los Angeles" },
-    { value: "Chicago", label: "Chicago" },
-    { value: "Houston", label: "Houston" },
-    { value: "Phoenix", label: "Phoenix" },
-    { value: "San Luis Obispo", label: "San Luis Obispo" },
-    // Add more locations as needed
-  ];
 
   const handleNext = () => {
     setStep(step + 1);
@@ -80,6 +100,10 @@ const CreateProfilePage = () => {
 
   if (isProfileCreated) {
     return <Navigate to="/home" replace />;
+  }
+
+  if (!isScriptLoaded) {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -181,14 +205,9 @@ const CreateProfilePage = () => {
         {step === 3 && (
           <div className="flex flex-col items-center gap-4">
             <h3 className="text-lg font-semibold">Please Provide a Location</h3>
-            <Select
-              options={locationOptions}
-              value={locationOptions.find(
-                (option) => option.value === location
-              )}
-              onChange={(option) => setLocation(option.value)}
-              className="w-full"
-              isSearchable
+            <GoogleAutocompleteInput
+              value={location}
+              onChange={setLocation}
             />
             <div className="flex justify-center w-full mt-6">
               <CardsButton
