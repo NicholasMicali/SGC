@@ -5,6 +5,8 @@ import { doUploadFile } from "../../firebase/storage.js"
 import ThankYou from  "./thankYou.jsx"
 import StickerDrop from "./stickerDrop.jsx";
 import { ArrowLeft } from "lucide-react";
+import { geocodeBaseURL } from "../../firebase/googleMapsAPIKey";
+import GoogleAutocompleteInput from "../location/googleAutocompleteInput.jsx";
 
 // TO DO: If the user navigates from a new card on feed page to here, 
 // have this component take in the value of the card ID as a prop, the call onCodeEntered so they go right to the form.
@@ -21,7 +23,35 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
   const [stickers, setStickers] = useState([]);
   const [userProfile, setUserProfile] = useState(null);
 
-  const [location, setLocation] = useState(null);
+  const [location, setLocation] = useState("Featching your location...");
+  const [manualLocation, setManualLocation] = useState('');
+
+  const formatAddress = (components) => {
+    let city = "";
+    let state = "";
+    let country = "";
+
+    components.forEach(component => {
+      if (component.types.includes("locality")) {
+        city = component.long_name;
+      }
+      if (component.types.includes("country")) {
+        country = component.long_name;
+      }
+    });
+
+    components.forEach(component => {
+      if (component.types.includes("administrative_area_level_1")) {
+        if (country === "United States") {
+          state = component.short_name;
+        } else {
+          state = component.long_name;
+        }
+      }
+    });
+
+    return `${city}${state ? ', ' + state : ''}, ${country}`;
+  };
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -57,21 +87,37 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
   }, [file]);
 
   useEffect(() => {
-    const fetchLocation = () => {
+    const fetchLocation = async () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
-          (position) => {
-            setLocation({
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            });
+          async (position) => {
+            const { latitude, longitude } = position.coords;
+            try {
+              const response = await fetch(
+                `${geocodeBaseURL}&latlng=${latitude},${longitude}`
+              );
+              const data = await response.json();
+              if (data.results && data.results.length > 0) {
+                const addressComponents = data.results[0].address_components;
+                const formattedAddress = formatAddress(addressComponents);
+                setLocation(formattedAddress);
+              } else {
+                console.error("No results found for the given coordinates.");
+                setLocation('No results found for the given coordinates.');
+              }
+            } catch (error) {
+              console.error("Error fetching location:", error);
+              setLocation('Error fetching location.');
+            }
           },
           (error) => {
             console.error("Error fetching location:", error);
+            setLocation('Error fetching location.');
           }
         );
       } else {
         console.error("Geolocation is not supported by this browser.");
+        setLocation('Geolocation is not supported by this browser.');
       }
     };
 
@@ -80,12 +126,15 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (!isCreatingPost){
+    if (!isCreatingPost) {
       setIsCreatingPost(true);
       try {
         //console.log(cid);
         //const url = await upload();
-        const post = await doCreatePost(cid, user.uid, userProfile.firstName, desc, userProfile.location, image, stickers);
+        // const distance = await calculateDistance(location, location);
+        // console.log(distance);
+        const postLocation = manualLocation ? manualLocation : location;
+        const post = await doCreatePost(cid, user.uid, userProfile.firstName, desc, postLocation, image, stickers);
         await doPostToCard(cid, post.id);
         setCurrentCard(prevCard => ({
           ...prevCard,
@@ -122,13 +171,19 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
     }
   }
 
-
   const selectSticker = (src) => {
     if (stickers.length < 3) {
       setStickers([...stickers, src])
     }
     //console.log(stickers);
   }
+
+  const calculateDistance = async (origin, destination) => {
+    const response = await fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${origin.lat},${origin.lng}&destinations=${destination.lat},${destination.lng}&key=${googleMapsAPIKey}`);
+    const data = await response.json();
+    const distance = data.rows[0].elements[0].distance.text;
+    return distance;
+  };
 
 
   if (isCreatingPost) {
@@ -188,15 +243,22 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
             </div>
           }
           <StickerDrop select={selectSticker}/>
+
           <div className="flex flex-col gap-1 w-full mt-3">
             <label htmlFor={'location'} className="self-start">Location</label>
             <input
               className="rounded-3xl border-[1px] p-2 md:p-3 border-gray-400"
-              placeholder="Fetching your location..."
               type='text'
               id='location'
-              value={location ? `Lat: ${location.lat}, Lng: ${location.lng}` : 'Fetching location...'}
+              value={location}
               readOnly
+            />
+            <div className="self-start mt-2">or</div>
+            <GoogleAutocompleteInput
+              value={manualLocation}
+              onChange={setManualLocation}
+              className="rounded-3xl border-[1px] p-2 md:p-3 border-gray-400"
+              placeholder="Enter a location (leave empty to use fetched location above)"
             />
           </div>
 

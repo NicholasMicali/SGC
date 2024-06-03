@@ -52,6 +52,7 @@ export const doCreateCard = async (uid, title, code, cEmail, classrooms) => {
     code,
     cEmail,
     classrooms,
+    cities:[],
   });
 };
 
