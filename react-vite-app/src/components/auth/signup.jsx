@@ -4,17 +4,24 @@ import CustomInput from "./customInput.jsx";
 import { Navigate } from "react-router-dom";
 import {motion} from "framer-motion";
 import AuthButton from "./authButton.jsx";
+import { useAuth } from "../../auth/index";
+import { doSignOut } from "../../firebase/auth";
+
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSigningUp, setIsSigningUp] = useState(false);
+  const { currentUser } = useAuth();
 
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!isSigningUp) {
       setIsSigningUp(true);
       try {
+        if (currentUser) {
+          await doSignOut();
+        }
         await doCreateUserWithEmailAndPassword(email, password);
       } catch (error) {
         // Handle errors here, such as displaying a message to the user

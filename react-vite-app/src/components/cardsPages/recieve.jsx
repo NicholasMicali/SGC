@@ -142,7 +142,7 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
         }));
         await doCardToUserProfile(user.uid, cid);
         if (currentCard?.classrooms) {
-          const classPromises = userProfile.classrooms.map(classId => doIncrementPost(classId));
+          const classPromises = currentCard.classrooms.map(classId => doIncrementPost(classId));
           await Promise.all(classPromises);
         }
         await doIncrementUserPosts(user.uid);
@@ -157,12 +157,17 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
   const onCodeEntered = async (e) => {
     e.preventDefault();
     if (!isCodeFound){
-      setIsCodeFound(true);
       try {
         console.log(code);
         const card = await doFetchCardByCode(code);
+        if (!card){
+          console.log("no card found with code: " + code);
+          alert("no card found with code: " + code);
+          return;
+        }
         setCid(card.id);
         setCurrentCard(card.data());
+        setIsCodeFound(true);
       } catch (error) {
         console.error("Card not Found", error);
         alert("Failed to find card: " + error.message);
