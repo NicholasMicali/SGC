@@ -208,6 +208,7 @@ const CreateProfilePage = () => {
             <GoogleAutocompleteInput
               value={location}
               onChange={setLocation}
+              placeholder="Enter your city"
             />
             <div className="flex justify-center w-full mt-6">
               <CardsButton

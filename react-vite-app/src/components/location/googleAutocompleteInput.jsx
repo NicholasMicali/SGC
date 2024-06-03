@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-const GoogleAutocompleteInput = ({ value, onChange }) => {
+const GoogleAutocompleteInput = ({ value, onChange, className, placeholder }) => {
   const autocompleteRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -21,10 +21,10 @@ const GoogleAutocompleteInput = ({ value, onChange }) => {
     <input
       ref={inputRef}
       type="text"
-      placeholder="Enter your city"
+      placeholder={placeholder || "Enter your city"}
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="border p-2 rounded w-full"
+      className={className || "border p-2 rounded w-full"}
     />
   );
 };

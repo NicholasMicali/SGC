@@ -6,6 +6,7 @@ import ThankYou from  "./thankYou.jsx"
 import StickerDrop from "./stickerDrop.jsx";
 import { ArrowLeft } from "lucide-react";
 import { geocodeBaseURL } from "../../firebase/googleMapsAPIKey";
+import GoogleAutocompleteInput from "../location/googleAutocompleteInput.jsx";
 
 // TO DO: If the user navigates from a new card on feed page to here, 
 // have this component take in the value of the card ID as a prop, the call onCodeEntered so they go right to the form.
@@ -22,7 +23,8 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
   const [stickers, setStickers] = useState([]);
   const [userProfile, setUserProfile] = useState(null);
 
-  const [location, setLocation] = useState(null);
+  const [location, setLocation] = useState("Featching your location...");
+  const [manualLocation, setManualLocation] = useState('');
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -96,14 +98,15 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (!isCreatingPost){
+    if (!isCreatingPost) {
       setIsCreatingPost(true);
       try {
         //console.log(cid);
         //const url = await upload();
         // const distance = await calculateDistance(location, location);
         // console.log(distance);
-        const post = await doCreatePost(cid, user.uid, userProfile.firstName, desc, userProfile.location, image, stickers);
+        const postLocation = manualLocation ? manualLocation : location;
+        const post = await doCreatePost(cid, user.uid, userProfile.firstName, desc, postLocation, image, stickers);
         await doPostToCard(cid, post.id);
         setCurrentCard(prevCard => ({
           ...prevCard,
@@ -139,7 +142,6 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
       }   
     }
   }
-
 
   const selectSticker = (src) => {
     if (stickers.length < 3) {
@@ -213,15 +215,22 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
             </div>
           }
           <StickerDrop select={selectSticker}/>
+
           <div className="flex flex-col gap-1 w-full mt-3">
             <label htmlFor={'location'} className="self-start">Location</label>
             <input
               className="rounded-3xl border-[1px] p-2 md:p-3 border-gray-400"
-              placeholder="Fetching your location..."
               type='text'
               id='location'
               value={location}
               readOnly
+            />
+            <div className="self-start mt-2">or</div>
+            <GoogleAutocompleteInput
+              value={manualLocation}
+              onChange={setManualLocation}
+              className="rounded-3xl border-[1px] p-2 md:p-3 border-gray-400"
+              placeholder="Enter a location (leave blank to use fetched location above)"
             />
           </div>
 
