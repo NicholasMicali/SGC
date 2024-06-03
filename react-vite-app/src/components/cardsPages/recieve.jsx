@@ -26,6 +26,26 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
   const [location, setLocation] = useState("Featching your location...");
   const [manualLocation, setManualLocation] = useState('');
 
+  const formatAddress = (components) => {
+    let city = "";
+    let state = "";
+    let country = "";
+
+    components.forEach(component => {
+      if (component.types.includes("locality")) {
+        city = component.long_name;
+      }
+      if (component.types.includes("administrative_area_level_1")) {
+        state = component.short_name;
+      }
+      if (component.types.includes("country")) {
+        country = component.long_name;
+      }
+    });
+
+    return `${city}${state ? ', ' + state : ''}, ${country}`;
+  };
+
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
@@ -71,8 +91,9 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
               );
               const data = await response.json();
               if (data.results && data.results.length > 0) {
-                const address = data.results[0].formatted_address;
-                setLocation(address);
+                const addressComponents = data.results[0].address_components;
+                const formattedAddress = formatAddress(addressComponents);
+                setLocation(formattedAddress);
               } else {
                 console.error("No results found for the given coordinates.");
                 setLocation('No results found for the given coordinates.');
@@ -230,7 +251,7 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
               value={manualLocation}
               onChange={setManualLocation}
               className="rounded-3xl border-[1px] p-2 md:p-3 border-gray-400"
-              placeholder="Enter a location (leave blank to use fetched location above)"
+              placeholder="Enter a location (leave empty to use fetched location above)"
             />
           </div>
 
