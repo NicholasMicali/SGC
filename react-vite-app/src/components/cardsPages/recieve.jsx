@@ -35,11 +35,18 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
       if (component.types.includes("locality")) {
         city = component.long_name;
       }
-      if (component.types.includes("administrative_area_level_1")) {
-        state = component.short_name;
-      }
       if (component.types.includes("country")) {
         country = component.long_name;
+      }
+    });
+
+    components.forEach(component => {
+      if (component.types.includes("administrative_area_level_1")) {
+        if (country === "United States") {
+          state = component.short_name;
+        } else {
+          state = component.long_name;
+        }
       }
     });
 

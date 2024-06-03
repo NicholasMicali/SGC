@@ -4,6 +4,33 @@ const GoogleAutocompleteInput = ({ value, onChange, className, placeholder }) =>
   const autocompleteRef = useRef(null);
   const inputRef = useRef(null);
 
+  const formatAddress = (components) => {
+    let city = "";
+    let state = "";
+    let country = "";
+
+    components.forEach(component => {
+      if (component.types.includes("locality")) {
+        city = component.long_name;
+      }
+      if (component.types.includes("country")) {
+        country = component.long_name;
+      }
+    });
+
+    components.forEach(component => {
+      if (component.types.includes("administrative_area_level_1")) {
+        if (country === "United States") {
+          state = component.short_name;
+        } else {
+          state = component.long_name;
+        }
+      }
+    });
+
+    return `${city}${state ? ', ' + state : ''}, ${country}`;
+  };
+
   useEffect(() => {
     if (window.google && window.google.maps) {
       autocompleteRef.current = new window.google.maps.places.Autocomplete(inputRef.current, {
@@ -12,7 +39,8 @@ const GoogleAutocompleteInput = ({ value, onChange, className, placeholder }) =>
 
       autocompleteRef.current.addListener("place_changed", () => {
         const place = autocompleteRef.current.getPlace();
-        onChange(place.formatted_address);
+        const formattedAddress = formatAddress(place.address_components);
+        onChange(formattedAddress);
       });
     }
   }, []);
