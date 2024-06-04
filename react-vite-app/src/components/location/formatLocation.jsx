@@ -1,3 +1,6 @@
+// Formats location from street address format to City, State, Country format
+// Used in fetchLocation in recieve.jsx and newCard.jsx
+
 export const formatLocation = (components) => {
     let city = "";
     let state = "";

@@ -159,14 +159,6 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
     //console.log(stickers);
   }
 
-  const calculateDistance = async (origin, destination) => {
-    const response = await fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${origin.lat},${origin.lng}&destinations=${destination.lat},${destination.lng}&key=${googleMapsAPIKey}`);
-    const data = await response.json();
-    const distance = data.rows[0].elements[0].distance.text;
-    return distance;
-  };
-
-
   if (isCreatingPost) {
     return (
       <>

@@ -101,7 +101,8 @@ export const doPostToCard = async (cid, postId, cityId) => {
   const cardDocRef = doc(db, "cards", cid);
   return updateDoc(cardDocRef, {
     posts: arrayUnion(postId),
-    cities: arrayUnion(cityId)
+    cities: arrayUnion(cityId),
+    lastLocation: cityId,
   }, { merge: true });
 };
 
