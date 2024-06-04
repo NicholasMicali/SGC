@@ -22,7 +22,6 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
   const [file, setFile] = useState("");
   const [stickers, setStickers] = useState([]);
   const [userProfile, setUserProfile] = useState(null);
-
   const [location, setLocation] = useState("Featching your location...");
   const [manualLocation, setManualLocation] = useState('');
 
@@ -248,7 +247,6 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
             </div>
           }
           <StickerDrop select={selectSticker}/>
-
           <div className="flex flex-col gap-1 w-full mt-3">
             <label htmlFor={'location'} className="self-start">Location</label>
             <input
@@ -266,7 +264,6 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
               placeholder="Enter a location (leave empty to use fetched location above)"
             />
           </div>
-
           <button type="submit" className="w-full flex items-center justify-center bg-gradient-to-tr from-gradient-start via-gradient-mid to-gradient-end rounded-3xl p-3 mt-4 bg-opacity-60 text-white font-sans text-xl">
             Post!
           </button>
