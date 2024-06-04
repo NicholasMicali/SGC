@@ -135,7 +135,7 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
         // console.log(distance);
         const postLocation = manualLocation ? manualLocation : location;
         const post = await doCreatePost(cid, user.uid, userProfile.firstName, desc, postLocation, image, stickers);
-        await doPostToCard(cid, post.id);
+        await doPostToCard(cid, post.id, postLocation);
         setCurrentCard(prevCard => ({
           ...prevCard,
           posts: [...prevCard.posts, post.id]

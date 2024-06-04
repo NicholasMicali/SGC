@@ -97,10 +97,11 @@ export const doCreatePost = async (cid, uid, uName, desc, location, image, stick
   });
 };
 
-export const doPostToCard = async (cid, postId) => {
+export const doPostToCard = async (cid, postId, cityId) => {
   const cardDocRef = doc(db, "cards", cid);
   return updateDoc(cardDocRef, {
-    posts: arrayUnion(postId)
+    posts: arrayUnion(postId),
+    cities: arrayUnion(cityId)
   }, { merge: true });
 };
 

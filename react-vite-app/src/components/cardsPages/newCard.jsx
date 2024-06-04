@@ -69,7 +69,7 @@ const NewCard = ({back, user, select, isNarrowScreen, selectChallenge}) => {
         const card = await doCreateCard(user.uid, title, code, userProfile.email, classrooms);
         await doCardToUserProfile(user.uid, card.id);
         const post = await doCreatePost(card.id, user.uid, userProfile.firstName, text, userProfile.location, image, stickers);
-        await doPostToCard(card.id, post.id);
+        await doPostToCard(card.id, post.id, userProfile.location);
         const cardObj = await doFetchCard(card.id);
         setCid(card.id);
         setCreatedCard(cardObj.data());
