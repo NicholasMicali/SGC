@@ -7,6 +7,7 @@ import StickerDrop from "./stickerDrop.jsx";
 import { ArrowLeft } from "lucide-react";
 import { geocodeBaseURL } from "../../firebase/googleMapsAPIKey";
 import GoogleAutocompleteInput from "../location/googleAutocompleteInput.jsx";
+import { formatLocation } from "../location/formatLocation.jsx"
 
 
 const NewCard = ({back, user, select, isNarrowScreen, selectChallenge}) => {
@@ -21,35 +22,8 @@ const NewCard = ({back, user, select, isNarrowScreen, selectChallenge}) => {
   const [image, setImage] = useState('');
   const [file, setFile] = useState("");
   const [stickers, setStickers] = useState([]);
-  const [location, setLocation] = useState("Featching your location...");
+  const [location, setLocation] = useState('');
   const [manualLocation, setManualLocation] = useState('');
-
-  const formatAddress = (components) => {
-    let city = "";
-    let state = "";
-    let country = "";
-
-    components.forEach(component => {
-      if (component.types.includes("locality")) {
-        city = component.long_name;
-      }
-      if (component.types.includes("country")) {
-        country = component.long_name;
-      }
-    });
-
-    components.forEach(component => {
-      if (component.types.includes("administrative_area_level_1")) {
-        if (country === "United States") {
-          state = component.short_name;
-        } else {
-          state = component.long_name;
-        }
-      }
-    });
-
-    return `${city}${state ? ', ' + state : ''}, ${country}`;
-  };
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -81,6 +55,9 @@ const NewCard = ({back, user, select, isNarrowScreen, selectChallenge}) => {
   }, [file]);
 
   useEffect(() => {
+    // SUGGESTION: Maybe centralize this into a components/location/fetchLocation.jsx file
+    // because it is used in both recieve and newCard and possibly will be used in
+    // CreateProfile at some point
     const fetchLocation = async () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -93,8 +70,8 @@ const NewCard = ({back, user, select, isNarrowScreen, selectChallenge}) => {
               const data = await response.json();
               if (data.results && data.results.length > 0) {
                 const addressComponents = data.results[0].address_components;
-                const formattedAddress = formatAddress(addressComponents);
-                setLocation(formattedAddress);
+                const formattedLocation = formatLocation(addressComponents);
+                setLocation(formattedLocation);
               } else {
                 console.error("No results found for the given coordinates.");
                 setLocation('No results found for the given coordinates.');
@@ -269,6 +246,7 @@ const NewCard = ({back, user, select, isNarrowScreen, selectChallenge}) => {
             <label htmlFor={'location'} className="self-start">Location</label>
             <input
               className="rounded-3xl border-[1px] p-2 md:p-3 border-gray-400"
+              placeholder="Fetching your location..."
               type='text'
               id='location'
               value={location}
