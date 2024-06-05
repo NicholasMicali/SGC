@@ -298,6 +298,7 @@ const HomePage = () => {
             initCode={currentCid}
             first={isFirstPost}
             select={selectCard}
+            isNarrowScreen={isNarrowScreen}
             selectChallenge={selectCardToChallenge}
           />
         )}

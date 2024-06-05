@@ -3,7 +3,7 @@ import heartIcon from "../../assets/heart.svg";
 import shareIcon from "../../assets/share.svg";
 import { Pin, ChevronsRight } from "lucide-react";
 
-const TextCard = ({ loc, date, title, description, name, first, image, stickers, isNarrowScreen }) => {
+const TextCard = ({ loc, date, description, name, first, image, stickers, isNarrowScreen }) => {
   const cardHeight = isNarrowScreen ? 'h-auto' : 'h-[10px]';
   if (!isNarrowScreen){
     return (
@@ -32,9 +32,6 @@ const TextCard = ({ loc, date, title, description, name, first, image, stickers,
         </div>
 
         {/* title */}
-        <div className=" font-bold text-lg">
-          {title}
-        </div>
         
         {/* description */}
         <div className="flex flex-row justify-between">
@@ -99,9 +96,6 @@ const TextCard = ({ loc, date, title, description, name, first, image, stickers,
         </div>
 
         {/* title */}
-        <div className=" font-bold text-md">
-          {title}
-        </div>
         
         {/* description */}
         <div className="flex flex-row justify-between">

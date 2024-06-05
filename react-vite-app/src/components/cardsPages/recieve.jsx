@@ -11,7 +11,7 @@ import { fetchLocation } from "../location/fetchLocation.jsx";
 // TO DO: If the user navigates from a new card on feed page to here, 
 // have this component take in the value of the card ID as a prop, the call onCodeEntered so they go right to the form.
 
-const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
+const Recieve = ({back, user, initCode, first, select, isNarrowScreen, selectChallenge}) => {
   const [isCreatingPost, setIsCreatingPost] = useState(false);
   const [isCodeFound, setIsCodeFound] = useState(false);
   const [code, setCode] = useState('');
@@ -147,6 +147,7 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
       <>
         <ThankYou
           onButtonClick={() => select(currentCard, cid)}
+          isNarrowScreen={isNarrowScreen}
           onChallenge={() => selectChallenge(currentCard, cid)}
           >
         </ThankYou>
