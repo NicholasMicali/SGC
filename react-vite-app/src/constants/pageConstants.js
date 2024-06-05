@@ -1,3 +1,13 @@
+import Gift from "../assets/Gift.jpg";
+import AOS from "../assets/ActOfService.jpg";
+import Time from "../assets/Time.jpg";
+import Earth from "../assets/Earth.jpg";
+import Heart from "../assets/Heart.jpg";
+import Compliment from "../assets/Compliment.png";
+import Cook from "../assets/Cook.png";
+import Surprise from "../assets/Surprise.png";
+import Donation from "../assets/Donation.png";
+
 export const promptsArr = {
     vibesUp: {
       className: "bg-[#ffe9f2] border-[#fc086b]",
@@ -133,4 +143,44 @@ export const inspirationChecklist = [
     { id: 98, label: "Share resources for addiction recovery", checked: false },
     { id: 99, label: "Volunteer at a community garden", checked: false },
     { id: 100, label: "Practice empathy and kindness in every interaction", checked: false }
-  ]
+]
+
+export const stickers = [
+  {
+    value: "sticker1",
+    label: "Gift",
+    imageSrc: Gift
+  },
+  { value: "sticker2",
+    label: "Act of Service",
+    imageSrc: AOS,
+  },
+  { value: "sticker3",
+    label: "Volunteer",
+    imageSrc: Heart,
+  },
+  { value: "sticker4",
+    label: "Time",
+    imageSrc: Time,
+  },
+  { value: "sticker5",
+    label: "Compliment",
+    imageSrc: Compliment,
+  },
+  { value: "sticker6",
+    label: "Cook",
+    imageSrc: Cook,
+  },
+  { value: "sticker7",
+    label: "Earth",
+    imageSrc: Earth,
+  },
+  { value: "sticker8",
+    label: "Surprise",
+    imageSrc: Surprise,
+  },
+  { value: "sticker9",
+  label: "Donation",
+  imageSrc: Donation,
+}
+];
