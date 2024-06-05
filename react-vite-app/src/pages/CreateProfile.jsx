@@ -125,7 +125,7 @@ const CreateProfilePage = () => {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-tr from-purple-500 to-pink-500">
       <form
         onSubmit={onSubmit}
-        className={"w-3/4 lg:w-1/2 max-sm:min-w-[600px] p-5 bg-white shadow rounded-lg flex flex-col gap-5" + ((step == 1) ? " xl:w-1/2" : " xl:w-1/3")}
+        className={"w-3/4 lg:w-1/2 max-sm:min-w-[320px] p-5 bg-white shadow rounded-lg flex flex-col gap-5" + ((step == 1) ? " xl:w-1/2" : " xl:w-1/3")}
       >
         <div className="flex justify-between">
           {(step > 1) &&
@@ -133,9 +133,9 @@ const CreateProfilePage = () => {
               <ArrowLeft /> Go Back
             </button>
           }
-          <h2 className="text-xl font-bold">Profile Setup</h2>
           <span className="text-sm font-semibold">{`Step ${step} of 3`}</span>
         </div>
+        <h2 className="text-xl font-bold self-center">Profile Setup</h2>
 
         {step === 1 && (
           <div className="flex flex-col items-center gap-4">
