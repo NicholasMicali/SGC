@@ -53,6 +53,7 @@ export const doCreateCard = async (uid, title, code, cEmail, classrooms) => {
     cEmail,
     classrooms,
     cities:[],
+    distance: 0,
   });
 };
 
@@ -97,12 +98,13 @@ export const doCreatePost = async (cid, uid, uName, desc, location, image, stick
   });
 };
 
-export const doPostToCard = async (cid, postId, cityId) => {
+export const doPostToCard = async (cid, postId, cityId, distance) => {
   const cardDocRef = doc(db, "cards", cid);
   return updateDoc(cardDocRef, {
     posts: arrayUnion(postId),
     cities: arrayUnion(cityId),
     lastLocation: cityId,
+    distance: increment(distance),
   }, { merge: true });
 };
 
@@ -252,7 +254,6 @@ export const doRemoveStudentFromClassroom = async (uid, classId) => {
     throw new Error("Failed to remove student from classroom");
   }
 };
-
 
 export const doIncrementCard = async (classId) => {
   const classDocRef = doc(db, "classrooms", classId);

@@ -8,6 +8,7 @@ import { ArrowLeft } from "lucide-react";
 import { geocodeBaseURL } from "../../firebase/googleMapsAPIKey";
 import GoogleAutocompleteInput from "../location/googleAutocompleteInput.jsx";
 import { formatLocation } from "../location/formatLocation.jsx"
+import { calculateDistance } from "../location/calculateDistance";
 
 // TO DO: If the user navigates from a new card on feed page to here, 
 // have this component take in the value of the card ID as a prop, the call onCodeEntered so they go right to the form.
@@ -107,11 +108,10 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
       try {
         //console.log(cid);
         //const url = await upload();
-        // const distance = await calculateDistance(location, location);
-        // console.log(distance);
         const postLocation = manualLocation ? manualLocation : location;
+        const distance = await calculateDistance(currentCard.lastLocation, postLocation);
         const post = await doCreatePost(cid, user.uid, userProfile.firstName, desc, postLocation, image, stickers);
-        await doPostToCard(cid, post.id, postLocation);
+        await doPostToCard(cid, post.id, postLocation, distance);
         setCurrentCard(prevCard => ({
           ...prevCard,
           posts: [...prevCard.posts, post.id]

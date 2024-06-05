@@ -116,7 +116,8 @@ const NewCard = ({back, user, select, isNarrowScreen, selectChallenge}) => {
         await doCardToUserProfile(user.uid, card.id);
         const postLocation = manualLocation ? manualLocation : location;
         const post = await doCreatePost(card.id, user.uid, userProfile.firstName, text, postLocation, image, stickers);
-        await doPostToCard(card.id, post.id, userProfile.location);
+        const distance = 0;
+        await doPostToCard(card.id, post.id, postLocation, distance);
         const cardObj = await doFetchCard(card.id);
         setCid(card.id);
         setCreatedCard(cardObj.data());
