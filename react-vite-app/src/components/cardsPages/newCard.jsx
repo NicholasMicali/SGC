@@ -5,9 +5,8 @@ import { doUploadFile } from "../../firebase/storage.js"
 import ThankYou from  "./thankYou.jsx"
 import StickerDrop from "./stickerDrop.jsx";
 import { ArrowLeft } from "lucide-react";
-import { geocodeBaseURL } from "../../firebase/googleMapsAPIKey";
 import GoogleAutocompleteInput from "../location/googleAutocompleteInput.jsx";
-import { formatLocation } from "../location/formatLocation.jsx"
+import { fetchLocation } from "../location/fetchLocation.jsx";
 
 
 const NewCard = ({back, user, select, isNarrowScreen, selectChallenge}) => {
@@ -24,6 +23,10 @@ const NewCard = ({back, user, select, isNarrowScreen, selectChallenge}) => {
   const [stickers, setStickers] = useState([]);
   const [location, setLocation] = useState('');
   const [manualLocation, setManualLocation] = useState('');
+  const monthNames = [
+    "January", "February", "March", "April", "May", "June",
+     "July", "August", "September", "October", "November", "December"
+  ];
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -55,45 +58,18 @@ const NewCard = ({back, user, select, isNarrowScreen, selectChallenge}) => {
   }, [file]);
 
   useEffect(() => {
-    // SUGGESTION: Maybe centralize this into a components/location/fetchLocation.jsx file
-    // because it is used in both recieve and newCard and possibly will be used in
-    // CreateProfile at some point
-    const fetchLocation = async () => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          async (position) => {
-            const { latitude, longitude } = position.coords;
-            try {
-              const response = await fetch(
-                `${geocodeBaseURL}&latlng=${latitude},${longitude}`
-              );
-              const data = await response.json();
-              if (data.results && data.results.length > 0) {
-                const addressComponents = data.results[0].address_components;
-                const formattedLocation = formatLocation(addressComponents);
-                setLocation(formattedLocation);
-              } else {
-                console.error("No results found for the given coordinates.");
-                setLocation('No results found for the given coordinates.');
-              }
-            } catch (error) {
-              console.error("Error fetching location:", error);
-              setLocation('Error fetching location.');
-            }
-          },
-          (error) => {
-            console.error("Error fetching location:", error);
-            setLocation('Error fetching location.');
-          }
-        );
-      } else {
-        console.error("Geolocation is not supported by this browser.");
-        setLocation('Geolocation is not supported by this browser.');
+    const fetchLoc = async () => {
+      const location = await fetchLocation();
+      if (location){
+        setLocation(location);
       }
-    };
+      else {
+        console.log("Failed to fetch location: " + location);
+      }
+    }
 
-    fetchLocation();
-  }, []);
+    fetchLoc();
+  }, [user.uid]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -115,7 +91,11 @@ const NewCard = ({back, user, select, isNarrowScreen, selectChallenge}) => {
         const card = await doCreateCard(user.uid, title, code, userProfile.email, classrooms);
         await doCardToUserProfile(user.uid, card.id);
         const postLocation = manualLocation ? manualLocation : location;
-        const post = await doCreatePost(card.id, user.uid, userProfile.firstName, text, postLocation, image, stickers);
+        const date = new Date();
+        const month = monthNames[date.getMonth()];
+        const day = date.getDate();
+        const postDate = month + " " + day;
+        const post = await doCreatePost(card.id, user.uid, userProfile.firstName, text, postLocation, postDate, image, stickers);
         const distance = 0;
         await doPostToCard(card.id, post.id, postLocation, distance);
         const cardObj = await doFetchCard(card.id);
