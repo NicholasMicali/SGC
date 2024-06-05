@@ -141,8 +141,11 @@ const InspirationPage = () => {
           .checkbox:checked::after {
             content: '✔';
             position: absolute;
-            top: 3px;
-            left: 7px;
+            // top: 3px;
+            // left: 7px;
+            top:50%;
+            left:50%;
+            transform: translate(-50%, -50%);
             font-size: 22px;
             color: #FD3B8A;
           }
