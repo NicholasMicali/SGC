@@ -58,7 +58,7 @@ const InspirationPage = () => {
             key={item.id}
             style={item.checked ? { textDecoration: "line-through" } : {}}
             className="flex mb-4"
-            {...animateQuickDownToUpWithDelay(index * 0.075)}
+            {...animateQuickDownToUpWithDelay(index * 0.025)}
           >
             <input
               type="checkbox"
