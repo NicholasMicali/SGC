@@ -8,6 +8,9 @@ const PromptList = ({
   buttonClassName,
   titleClassName,
   staggerIndex,
+  layoutId,
+  onClick,
+  disabled,
 }) => {
   return (
     <motion.div
@@ -15,18 +18,21 @@ const PromptList = ({
         " w-[32%] border-[2.5px] h-full flex flex-col justify-between p-5 rounded-2xl ",
         className
       )}
-      initial={{ opacity: 0, x: -100 }}
+      initial={{ opacity: 0, x: -50 }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.5, delay: staggerIndex * 0.2 }}
+      transition={{ duration: 0.5, delay: staggerIndex * 0.05 }}
+      layoutId = {layoutId}
     >
       <p className={twMerge("text-[2rem] font-semibold", titleClassName)}>
         {title}
       </p>
       <button
         className={twMerge(
-          " text-white self-center w-full p-2 rounded-3xl bg-white font-bold text-xl",
+          "self-center w-full p-2 rounded-3xl bg-white font-bold text-xl",
           buttonClassName
         )}
+        onClick={onClick}
+        disabled={disabled === 0 || disabled}
       >
         Check the list
       </button>
