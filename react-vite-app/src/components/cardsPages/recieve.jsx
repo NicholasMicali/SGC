@@ -7,6 +7,8 @@ import StickerDrop from "./stickerDrop.jsx";
 import { ArrowLeft } from "lucide-react";
 import { geocodeBaseURL } from "../../firebase/googleMapsAPIKey";
 import GoogleAutocompleteInput from "../location/googleAutocompleteInput.jsx";
+import { formatLocation } from "../location/formatLocation.jsx"
+import { calculateDistance } from "../location/calculateDistance";
 
 // TO DO: If the user navigates from a new card on feed page to here, 
 // have this component take in the value of the card ID as a prop, the call onCodeEntered so they go right to the form.
@@ -22,36 +24,8 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
   const [file, setFile] = useState("");
   const [stickers, setStickers] = useState([]);
   const [userProfile, setUserProfile] = useState(null);
-
-  const [location, setLocation] = useState("Featching your location...");
+  const [location, setLocation] = useState('');
   const [manualLocation, setManualLocation] = useState('');
-
-  const formatAddress = (components) => {
-    let city = "";
-    let state = "";
-    let country = "";
-
-    components.forEach(component => {
-      if (component.types.includes("locality")) {
-        city = component.long_name;
-      }
-      if (component.types.includes("country")) {
-        country = component.long_name;
-      }
-    });
-
-    components.forEach(component => {
-      if (component.types.includes("administrative_area_level_1")) {
-        if (country === "United States") {
-          state = component.short_name;
-        } else {
-          state = component.long_name;
-        }
-      }
-    });
-
-    return `${city}${state ? ', ' + state : ''}, ${country}`;
-  };
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -87,6 +61,9 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
   }, [file]);
 
   useEffect(() => {
+    // SUGGESTION: Maybe centralize this into a components/location/fetchLocation.jsx file
+    // because it is used in both recieve and newCard and possibly will be used in
+    // CreateProfile at some point
     const fetchLocation = async () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -99,8 +76,8 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
               const data = await response.json();
               if (data.results && data.results.length > 0) {
                 const addressComponents = data.results[0].address_components;
-                const formattedAddress = formatAddress(addressComponents);
-                setLocation(formattedAddress);
+                const formattedLocation = formatLocation(addressComponents);
+                setLocation(formattedLocation);
               } else {
                 console.error("No results found for the given coordinates.");
                 setLocation('No results found for the given coordinates.');
@@ -131,11 +108,10 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
       try {
         //console.log(cid);
         //const url = await upload();
-        // const distance = await calculateDistance(location, location);
-        // console.log(distance);
         const postLocation = manualLocation ? manualLocation : location;
+        const distance = await calculateDistance(currentCard.lastLocation, postLocation);
         const post = await doCreatePost(cid, user.uid, userProfile.firstName, desc, postLocation, image, stickers);
-        await doPostToCard(cid, post.id, postLocation);
+        await doPostToCard(cid, post.id, postLocation, distance);
         setCurrentCard(prevCard => ({
           ...prevCard,
           posts: [...prevCard.posts, post.id]
@@ -182,14 +158,6 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
     }
     //console.log(stickers);
   }
-
-  const calculateDistance = async (origin, destination) => {
-    const response = await fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${origin.lat},${origin.lng}&destinations=${destination.lat},${destination.lng}&key=${googleMapsAPIKey}`);
-    const data = await response.json();
-    const distance = data.rows[0].elements[0].distance.text;
-    return distance;
-  };
-
 
   if (isCreatingPost) {
     return (
@@ -248,11 +216,11 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
             </div>
           }
           <StickerDrop select={selectSticker}/>
-
           <div className="flex flex-col gap-1 w-full mt-3">
             <label htmlFor={'location'} className="self-start">Location</label>
             <input
               className="rounded-3xl border-[1px] p-2 md:p-3 border-gray-400"
+              placeholder="Fetching your location..."
               type='text'
               id='location'
               value={location}
@@ -266,7 +234,6 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
               placeholder="Enter a location (leave empty to use fetched location above)"
             />
           </div>
-
           <button type="submit" className="w-full flex items-center justify-center bg-gradient-to-tr from-gradient-start via-gradient-mid to-gradient-end rounded-3xl p-3 mt-4 bg-opacity-60 text-white font-sans text-xl">
             Post!
           </button>

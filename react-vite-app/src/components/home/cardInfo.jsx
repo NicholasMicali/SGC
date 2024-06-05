@@ -21,7 +21,7 @@ const CardInfo = ({name, location, miles, people, isSidebar, color, isNarrowScre
                  </div>
                  <div className="flex flex-col justify-center items-center">
                      <div className="font-bold text-xl">{people}</div>
-                     <div className="mt-2">People</div>
+                     <div className="mt-2">Posts</div>
                  </div>
              </div>
            </div>
