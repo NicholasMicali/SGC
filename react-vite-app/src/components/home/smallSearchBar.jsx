@@ -24,7 +24,7 @@ const SmallSearchBar = ({ user, signOut, page, onSearch, setPage }) => {
   };
 
   return (
-    <div className="w-screen absolute bottom-0">
+    <div className="w-screen absolute bottom-0 z-30">
       <motion.div
         variants={variants}
         initial="closed"

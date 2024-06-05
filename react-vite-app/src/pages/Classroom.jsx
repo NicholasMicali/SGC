@@ -9,6 +9,7 @@ import StudentInfo from '../components/home/studentInfo.jsx';
 import TeacherInfo from '../components/home/teacherInfo.jsx';
 import { Trash } from "lucide-react";
 import CardsButton from '../components/cardsPages/cardsButton.jsx';
+import Logo from "../assets/logo.svg";
 import { doFetchUserProfile, doCreateClassroom, doJoinClassroom, doClassroomToProfile, doFetchClassByName, doFetchClassroom, doRemoveClassroomFromUserProfile, doRemoveStudentFromClassroom } from '../firebase/firestore.js';
 
 const Classroom = () => {
@@ -213,6 +214,7 @@ const Classroom = () => {
       //     <LeftSidebar user={currentUser} signOut={signOut} page="Classroom" />
       //   )}
         <div className="flex-grow flex flex-col items-center overflow-auto p-4 mt-6">
+          <img src={Logo} alt="Spread Goodness logo" className="mb-6" /> 
           <div className="text-[4rem] self-start font-bold mb-4">Classrooms</div>
           {userProfile?.userType == 'Student' &&
             <div className="w-full">

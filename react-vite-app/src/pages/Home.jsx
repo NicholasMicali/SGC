@@ -143,7 +143,7 @@ const HomePage = () => {
             )}
             {isMediumScreen ? (
               <div className="flex flex-col justify-center my-4 w-full">
-                <div className="flex flex-row justify-center gap-4 my-2 w-full">
+                <div className="flex flex-row justify-center gap-2 my-2 w-full">
                   <motion.div {...animateButton(0)}> 
                     <CardsButton
                     width="180px"
@@ -170,7 +170,7 @@ const HomePage = () => {
                   />
                   </motion.div>
                 </div>
-                <div className="flex flex-row justify-center gap-4 my-2 w-full">
+                <div className="flex flex-row justify-center gap-2 my-2 w-full">
                 <motion.div {...animateButton(.2)}> 
                   <CardsButton
                     width="180px"

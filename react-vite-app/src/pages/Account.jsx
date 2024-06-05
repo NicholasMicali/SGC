@@ -7,6 +7,7 @@ import { doPasswordReset, doDeleteUser } from "../firebase/auth.js";
 import { doUploadFile } from "../firebase/storage.js"
 import { useNavigate } from 'react-router-dom';
 import { Pencil } from "lucide-react";
+import Logo from "../assets/logo.svg";
 
 const AccountPage = () => {
   const { currentUser } = useAuth();
@@ -305,6 +306,7 @@ const AccountPage = () => {
     //     <LeftSidebar user={currentUser} signOut={signOut} page="Account Settings" />
     //   )}
       <div className="flex-grow flex flex-col items-center overflow-auto p-4">
+        <img src={Logo} alt="Spread Goodness logo" className="" /> 
         <div className="font-bold text-[4rem] my-10">Account</div>
         <button onClick={() => setToggleEdit(!toggleEdit)} className={"self-start flex flex-row underline" + (isNarrowScreen ? ' ml-10' : ' ml-20')}>Edit Profile<Pencil className="w-3 ml-2"></Pencil></button>
         <div style={containerStyle}>
