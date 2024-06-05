@@ -8,6 +8,7 @@ import ClassroomInfo from '../components/home/classroomInfo.jsx';
 import StudentInfo from '../components/home/studentInfo.jsx';
 import TeacherInfo from '../components/home/teacherInfo.jsx';
 import { Trash } from "lucide-react";
+import CardsButton from '../components/cardsPages/cardsButton.jsx';
 import { doFetchUserProfile, doCreateClassroom, doJoinClassroom, doClassroomToProfile, doFetchClassByName, doFetchClassroom, doRemoveClassroomFromUserProfile, doRemoveStudentFromClassroom } from '../firebase/firestore.js';
 
 const Classroom = () => {
@@ -201,6 +202,10 @@ const Classroom = () => {
   
     //<div className="ml-4">Student: {student.firstName} | cards: {student.card} | posts: {student.post}</div>
 
+/*<div className="self-center max-w-sm flex flex-col justify-center items-center bg-green-500 bg-opacity-40 rounded-xl py-4 mt-10" onClick={() => setToggleJoin(true)}>
+<div>+ Join Classroom</div>
+</div>
+*/
 
     return (
       // <div className="flex h-screen">
@@ -226,9 +231,16 @@ const Classroom = () => {
                 </div>
               ))}
               {!toggleJoin ?
-                <div className="self-center max-w-sm flex flex-col justify-center items-center bg-green-500 bg-opacity-40 rounded-xl py-4 mt-10" onClick={() => setToggleJoin(true)}>
-                  <div>+ Join Classroom</div>
-                </div>
+                <CardsButton
+                  width="200px"
+                  height="51.75px"
+                  text="Join Classroom"
+                  borderColor="#BEDF3D"
+                  textColor="#8DAB1C"
+                  backgroundColor="#EAF4C0"
+                  staticStyle={true}
+                  onClick={() => setToggleJoin(true)}
+                />
               :
                 <>
                   <div className="flex flex-col gap-1 w-full mt-6">
@@ -271,10 +283,16 @@ const Classroom = () => {
                 </div>
               ))}
               {!toggleCreate ?
-                <div className="w-full flex flex-col justify-center items-center bg-green-500 bg-opacity-40 rounded-xl py-4 mt-6" onClick={() => setToggleCreate(true)}>
-                  <div>+</div>
-                  <div>Create Classroom</div>
-                </div>
+                <CardsButton
+                  width="200px"
+                  height="51.75px"
+                  text="Join Classroom"
+                  borderColor="#BEDF3D"
+                  textColor="#8DAB1C"
+                  backgroundColor="#EAF4C0"
+                  staticStyle={true}
+                  onClick={() => setToggleCreate(true)}
+                />
               :
                 <>
                   <div className="flex flex-col gap-1 w-full mt-6">

@@ -67,6 +67,21 @@ const CreateProfilePage = () => {
     fetchUserProfile();
   }, [currentUser]);
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        handleNext();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [currentStep]);
+
   const handleNext = () => {
     setStep(step + 1);
   };
