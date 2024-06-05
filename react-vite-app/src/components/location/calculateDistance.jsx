@@ -1,18 +1,32 @@
-import { distanceMatrixBaseURL } from "../../firebase/googleMapsAPIKey";
 
 export const calculateDistance = async (origin, destination) => {
-    try {
-        // const response = await fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&key=AIzaSyD_PjWNi5kbBmIJ5yShDrqtMT_6mbYxSeY&origins=1600%20Amphitheatre%20Parkway,%20Mountain%20View,%20CA&destinations=1%20Infinite%20Loop,%20Cupertino,%20CA`)
-        const response = await fetch(`${distanceMatrixBaseURL}&origins=1600%20Amphitheatre%20Parkway,%20Mountain%20View,%20CA&destinations=1%20Infinite%20Loop,%20Cupertino,%20CA`);
-        const data = await response.json();
-        if (data.results && data.results.length > 0) {
-            const distance = data.rows[0].elements[0].distance.text;
-            console.log(distance);
-        } else {
-            console.error("No results found for the given coordinates.");
-        }
-        return distance;
-    } catch (error) {
-        console.log("Google Maps Error:" + error);
-    }
+    return new Promise((resolve, reject) => {
+        const service = new window.google.maps.DistanceMatrixService();
+        service.getDistanceMatrix(
+            {
+                origins: [origin],
+                destinations: [destination],
+                travelMode: 'DRIVING',
+                unitSystem: window.google.maps.UnitSystem.IMPERIAL,
+                avoidHighways: false,
+                avoidTolls: false,
+            },
+            (response, status) => {
+                if (status !== 'OK') {
+                console.error('Error was:', status);
+                reject(new Error('Error fetching distance'));
+                return;
+                }
+
+                const distance = response.rows[0].elements[0].distance.text;
+                console.log('Distance:', distance);
+                const cleanedStr = distance.replace(/,/g, '').replace(/[^\d.]/g, '');
+                const distanceFloat = parseFloat(cleanedStr);
+                if (isNaN(distanceFloat)) {
+                    reject(new Error("Distance must be a valid number"));
+                }
+                resolve(Math.round(distanceFloat));
+            }
+        );
+    });
 };

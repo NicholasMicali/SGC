@@ -80,7 +80,7 @@ const CreateProfilePage = () => {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [currentStep]);
+  }, [step]);
 
   const handleNext = () => {
     setStep(step + 1);

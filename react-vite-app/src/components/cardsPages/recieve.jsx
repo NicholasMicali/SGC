@@ -110,6 +110,9 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
         //const url = await upload();
         const postLocation = manualLocation ? manualLocation : location;
         const distance = await calculateDistance(currentCard.lastLocation, postLocation);
+        if (!distance) {
+          console.log("Distance is null: " + distance);
+        }
         const post = await doCreatePost(cid, user.uid, userProfile.firstName, desc, postLocation, image, stickers);
         await doPostToCard(cid, post.id, postLocation, distance);
         setCurrentCard(prevCard => ({

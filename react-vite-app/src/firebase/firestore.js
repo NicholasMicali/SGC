@@ -99,6 +99,10 @@ export const doCreatePost = async (cid, uid, uName, desc, location, image, stick
 };
 
 export const doPostToCard = async (cid, postId, cityId, distance) => {
+  if (isNaN(distance)) {
+    console.log("distance is not a number: " + distance);
+    throw new Error("Distance must be a valid number");
+  }
   const cardDocRef = doc(db, "cards", cid);
   return updateDoc(cardDocRef, {
     posts: arrayUnion(postId),

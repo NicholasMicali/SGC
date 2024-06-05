@@ -50,7 +50,7 @@ const CardFeed = ({user, card, setSubPage, firstPost, isNarrowScreen, handleOpen
       <div className="self-start">
           Card Info:
       </div>
-      <CardInfo name={card.title} location={card.cities == null ? 0 : card.cities.length} miles="250" people={card.posts == null ? 0 : card.posts.length} color={(card.cEmail === user.email)} isNarrowScreen={isNarrowScreen}/>
+      <CardInfo name={card.title} location={card.cities == null ? 0 : card.cities.length} miles={card.distance} people={card.posts == null ? 0 : card.posts.length} color={(card.cEmail === user.email)} isNarrowScreen={isNarrowScreen}/>
       {card.posts == null ? 
         <>
           <NoPosts 
