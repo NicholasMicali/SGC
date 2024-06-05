@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-
+import {animateSideFadeIn} from "../../constants/anim";
 const SearchBar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -15,7 +15,8 @@ const SearchBar = ({ onSearch }) => {
 
   return (
     <form onSubmit={handleSubmit} className="flex rounded-full w-full mx-auto my-4 space-x-4 bg-transparent">
-  <input
+  <motion.input
+    {...animateSideFadeIn(true)}
     type="text"
     placeholder="Search for code"
     value={searchTerm}
@@ -26,7 +27,8 @@ const SearchBar = ({ onSearch }) => {
     type="submit"
     className="ml-1 px-4 bg-blue-500 text-white rounded-full "
     whileTap = {{ scale: 0.8 }}
-     whileHover={{scale: 1.1, backgroundColor: "#2563EB"}}
+    whileHover={{scale: 1.1, backgroundColor: "#2563EB"}}
+    {...animateSideFadeIn(false)}
   >
     ✓
   </motion.button>

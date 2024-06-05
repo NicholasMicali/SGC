@@ -15,8 +15,11 @@ import ReceiveIcon from "../assets/ReceiveIcon.svg";
 import ChallengeIcon from "../assets/ChallengeIcon.svg";
 import SmallSearchBar from "../components/home/smallSearchBar.jsx";
 import Logo from "../assets/logo.svg";
-import SmallProfile from "../components/home/smallProfile.jsx"
 import WalkthroughModal from "../components/home/walkthroughModal.jsx";
+import { motion } from "framer-motion";
+import { animateButton } from "../constants/anim.js";
+
+
 
 const HomePage = () => {
   const { currentUser } = useAuth();
@@ -25,6 +28,7 @@ const HomePage = () => {
   const [currentCard, setCurrentCard] = useState(null);
   const [currentCid, setCurrentCid] = useState(null);
   const [isFirstPost, setIsFirstPost] = useState(false);
+  
   const [isNarrowScreen, setIsNarrowScreen] = useState(
     window.innerWidth <= 840
   );
@@ -140,7 +144,8 @@ const HomePage = () => {
             {isMediumScreen ? (
               <div className="flex flex-col justify-center my-4 w-full">
                 <div className="flex flex-row justify-center gap-4 my-2 w-full">
-                  <CardsButton
+                  <motion.div {...animateButton(0)}> 
+                    <CardsButton
                     width="180px"
                     height="51.75px"
                     text="All cards"
@@ -150,6 +155,9 @@ const HomePage = () => {
                     icon={AllCardIcon}
                     onClick={() => setSubPage("all")}
                   />
+                  </motion.div>
+
+                  <motion.div {...animateButton(.1)}> 
                   <CardsButton
                     width="180px"
                     height="51.75px"
@@ -160,8 +168,10 @@ const HomePage = () => {
                     icon={NewCardIcon}
                     onClick={() => setSubPage("new")}
                   />
+                  </motion.div>
                 </div>
                 <div className="flex flex-row justify-center gap-4 my-2 w-full">
+                <motion.div {...animateButton(.2)}> 
                   <CardsButton
                     width="180px"
                     height="51.75px"
@@ -172,7 +182,10 @@ const HomePage = () => {
                     icon={ReceiveIcon}
                     onClick={() => setSubPage("receive")}
                   />
+                  </motion.div>
+                  <motion.div {...animateButton(.3)}>
                   <CardsButton
+                  {...animateButton(.3)}
                     width="180px"
                     height="51.75px"
                     text="Challenge"
@@ -182,21 +195,26 @@ const HomePage = () => {
                     icon={ChallengeIcon}
                     onClick={() => setSubPage("challenge")}
                   />
+                  </motion.div>
                 </div>
               </div>
             ) : (
               <div className="flex flex-row justify-between gap-4 my-4 w-full">
+                <motion.div {...animateButton(0)}> 
+                    <CardsButton
+                    width="180px"
+                    height="51.75px"
+                    text="All cards"
+                    borderColor="#BEDF3D"
+                    textColor="#8DAB1C"
+                    backgroundColor="#EAF4C0"
+                    icon={AllCardIcon}
+                    onClick={() => setSubPage("all")}
+                  />
+                  </motion.div>
+                <motion.div {...animateButton(.1)}>
                 <CardsButton
-                  width="180px"
-                  height="51.75px"
-                  text="All cards"
-                  borderColor="#BEDF3D"
-                  textColor="#8DAB1C"
-                  backgroundColor="#EAF4C0"
-                  icon={AllCardIcon}
-                  onClick={() => setSubPage("all")}
-                />
-                <CardsButton
+                {...animateButton(.1)}
                   width="180px"
                   height="51.75px"
                   text="New Card"
@@ -206,7 +224,10 @@ const HomePage = () => {
                   icon={NewCardIcon}
                   onClick={() => setSubPage("new")}
                 />
+                </motion.div>
+                <motion.div {...animateButton(.2)}>
                 <CardsButton
+                {...animateButton(.2)}
                   width="180px"
                   height="51.75px"
                   text="Receive"
@@ -216,7 +237,10 @@ const HomePage = () => {
                   icon={ReceiveIcon}
                   onClick={() => setSubPage("receive")}
                 />
+                </motion.div>
+                <motion.div {...animateButton(.3)}>
                 <CardsButton
+                {...animateButton(.3)}
                   width="180px"
                   height="51.75px"
                   text="Challenge"
@@ -226,6 +250,7 @@ const HomePage = () => {
                   icon={ChallengeIcon}
                   onClick={() => setSubPage("challenge")}
                 />
+                </motion.div>
               </div>
             )}
             <CardFeed
