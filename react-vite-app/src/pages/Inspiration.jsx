@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { inspirationChecklist } from "../constants/pageConstants";
 import { motion } from "framer-motion";
 import {animateQuickDownToUpWithDelay} from "../constants/anim";
+import Logo from "../assets/logo.svg";
+
+
 const InspirationPage = () => {
   // Define your list of items here, each with a checked state
   const [items, setItems] = useState(inspirationChecklist);
@@ -19,6 +22,7 @@ const InspirationPage = () => {
 
   return (
     <div className="flex-grow flex flex-col items-center overflow-auto p-4">
+      <img src={Logo} alt="Spread Goodness logo" className="p-4 z-0" /> 
       <div className="self-start text-[4rem] font-bold">Inspiration Page</div>
       <hr className="w-full border-t-2 border-idle-pink my-4" />
       <style>

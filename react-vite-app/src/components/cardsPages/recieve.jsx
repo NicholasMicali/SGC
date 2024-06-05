@@ -26,6 +26,10 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
   const [userProfile, setUserProfile] = useState(null);
   const [location, setLocation] = useState('');
   const [manualLocation, setManualLocation] = useState('');
+  const monthNames = [
+    "January", "February", "March", "April", "May", "June",
+     "July", "August", "September", "October", "November", "December"
+  ];
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -113,7 +117,11 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
         if (!distance) {
           console.log("Distance is null: " + distance);
         }
-        const post = await doCreatePost(cid, user.uid, userProfile.firstName, desc, postLocation, image, stickers);
+        const date = new Date();
+        const month = monthNames[date.getMonth()];
+        const day = date.getDate();
+        const postDate = month + " " + day;
+        const post = await doCreatePost(cid, user.uid, userProfile.firstName, desc, postLocation, postDate, image, stickers);
         await doPostToCard(cid, post.id, postLocation, distance);
         setCurrentCard(prevCard => ({
           ...prevCard,
@@ -165,7 +173,6 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
   if (isCreatingPost) {
     return (
       <>
-        <div>{userProfile.name} posted an act of kindness!</div>
         <ThankYou
           onButtonClick={() => select(currentCard, cid)}
           onChallenge={() => selectChallenge(currentCard, cid)}

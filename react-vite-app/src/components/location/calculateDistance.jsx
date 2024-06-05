@@ -1,6 +1,9 @@
 
 export const calculateDistance = async (origin, destination) => {
     return new Promise((resolve, reject) => {
+        if (!window.google){
+            return 0;
+        }
         const service = new window.google.maps.DistanceMatrixService();
         service.getDistanceMatrix(
             {

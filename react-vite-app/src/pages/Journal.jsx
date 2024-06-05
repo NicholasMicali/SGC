@@ -4,12 +4,16 @@ import { useState } from "react";
 import { AnimatePresence} from "framer-motion";
 import ExpandedList from "../components/journal/ExpandedList";
 import { promptsArr } from "../constants/pageConstants";
+import Logo from "../assets/logo.svg";
+
+
 const JournalPage = () => {
   const { currentUser } = useAuth();
   const [selectedPrompt, setSelectedPrompt] = useState(null);
 
   return (
     <div className="flex-grow flex flex-col items-center overflow-auto p-4">
+      <img src={Logo} alt="Spread Goodness logo" className="p-4 z-0" /> 
       <div className="self-start text-[4rem] font-bold">Journal Prompt</div>
       <hr className="w-full border-t-2 border-idle-pink my-4" />
 
