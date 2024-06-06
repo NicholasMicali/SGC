@@ -4,6 +4,11 @@ import NavMenu from "./navMenu";
 import ProfilePic from "./profilePic";
 import { doFetchUserProfile } from "../../firebase/firestore";
 import { LogOut } from "lucide-react";
+import {motion} from "framer-motion";
+import { animateSideFadeIn, animateVerticalFadeIn } from "../../constants/anim";
+
+
+
 
 const LeftSidebar = ({ user, signOut, page, back, setPage }) => {
   const [userData, setUserData] = useState(null);
@@ -33,7 +38,7 @@ const LeftSidebar = ({ user, signOut, page, back, setPage }) => {
         className={`w-64 h-full bg-light-pink overflow-auto p-4 flex flex-col items-center max-md:hidden`}
       >
         <>
-          <img src={Logo} alt="Spread Goodness logo" className="p-4 mb-4" />
+          <motion.img src={Logo} alt="Spread Goodness logo" className="p-4 mb-4" {...animateVerticalFadeIn(0, false)} />
           <div className="flex flex-row mb-8 justify-center items-center">
             {userData.image ? (
               <img
@@ -44,7 +49,7 @@ const LeftSidebar = ({ user, signOut, page, back, setPage }) => {
             ) : (
               <ProfilePic username={userData.firstName} />
             )}
-            <div>{userData.firstName + " " + userData.lastName}</div>
+            <motion.div {...animateSideFadeIn(false)}>{userData.firstName + " " + userData.lastName}</motion.div>
           </div>
           <NavMenu page={page} setPage={setPage} />
           <div className="flex flex-col justify-end h-full w-full">

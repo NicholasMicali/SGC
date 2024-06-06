@@ -17,6 +17,8 @@ import StickerDrop from "./stickerDrop.jsx";
 import { ArrowLeft } from "lucide-react";
 import GoogleAutocompleteInput from "../location/googleAutocompleteInput.jsx";
 import { fetchLocation } from "../location/fetchLocation.jsx";
+import { motion } from "framer-motion";
+import { animateQuickDownToUpWithDelay } from "../../constants/anim";
 
 const NewCard = ({ back, user, select, isNarrowScreen, selectChallenge }) => {
   const [isCreatingCard, setIsCreatingCard] = useState(false);
@@ -164,7 +166,7 @@ const NewCard = ({ back, user, select, isNarrowScreen, selectChallenge }) => {
         onSubmit={onSubmit}
         className="w-full flex flex-col gap-5 items-center"
       >
-        <AnimCustomInput
+        <CustomInput
           {...animateQuickDownToUpWithDelay(0.1)}
           initial={{ opacity: 0, y: 250 }}
           type="title"
@@ -255,7 +257,7 @@ const NewCard = ({ back, user, select, isNarrowScreen, selectChallenge }) => {
               </button>
             </motion.div>
           )}
-          <AnimStickerDrop {...animateQuickDownToUpWithDelay(0.5)} select={selectSticker} />
+          <StickerDrop {...animateQuickDownToUpWithDelay(0.5)} select={selectSticker} />
         </div>
         <motion.div className="flex flex-col gap-1 w-full mt-3" {...animateQuickDownToUpWithDelay(0.7)}>
           <label htmlFor={"location"} className="self-start">

@@ -1,9 +1,9 @@
 import React from "react";
 
 
-const CustomInput = React.forwardRef(({type, placeholder, value, onChange, id, labelName, pattern},ref) => {
+const CustomInput = ({type, placeholder, value, onChange, id, labelName, pattern}) => {
     return (
-        <div className="flex flex-col gap-1 w-full mt-3" ref={ref}>
+        <div className="flex flex-col gap-1 w-full mt-3">
             <label htmlFor={id} className="self-start">{labelName}</label>
             <input
             className="rounded-3xl border-[1px] p-2 md:p-3 border-gray-400"
@@ -18,6 +18,6 @@ const CustomInput = React.forwardRef(({type, placeholder, value, onChange, id, l
         </div>
         
     );
-})
+}
 
 export default CustomInput;

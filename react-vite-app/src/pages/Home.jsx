@@ -17,7 +17,7 @@ import SmallSearchBar from "../components/home/smallSearchBar.jsx";
 import Logo from "../assets/logo.svg";
 import WalkthroughModal from "../components/home/walkthroughModal.jsx";
 import { motion } from "framer-motion";
-import { animateButton } from "../constants/anim.js";
+import {  animateVerticalFadeIn } from "../constants/anim.js";
 
 
 
@@ -144,7 +144,7 @@ const HomePage = () => {
             {isMediumScreen ? (
               <div className="flex flex-col justify-center my-4 w-full">
                 <div className="flex flex-row justify-center gap-2 my-2 w-full">
-                  <motion.div {...animateButton(0)}> 
+                  <motion.div {...animateVerticalFadeIn(0)}> 
                     <CardsButton
                     width="180px"
                     height="51.75px"
@@ -157,7 +157,7 @@ const HomePage = () => {
                   />
                   </motion.div>
 
-                  <motion.div {...animateButton(.1)}> 
+                  <motion.div {...animateVerticalFadeIn(.1)}> 
                   <CardsButton
                     width="180px"
                     height="51.75px"
@@ -171,7 +171,7 @@ const HomePage = () => {
                   </motion.div>
                 </div>
                 <div className="flex flex-row justify-center gap-2 my-2 w-full">
-                <motion.div {...animateButton(.2)}> 
+                <motion.div {...animateVerticalFadeIn(.2)}> 
                   <CardsButton
                     width="180px"
                     height="51.75px"
@@ -183,9 +183,9 @@ const HomePage = () => {
                     onClick={() => setSubPage("receive")}
                   />
                   </motion.div>
-                  <motion.div {...animateButton(.3)}>
+                  <motion.div {...animateVerticalFadeIn(.3)}>
                   <CardsButton
-                  {...animateButton(.3)}
+                  {...animateVerticalFadeIn(.3)}
                     width="180px"
                     height="51.75px"
                     text="Challenge"
@@ -200,7 +200,7 @@ const HomePage = () => {
               </div>
             ) : (
               <div className="flex flex-row justify-between gap-4 my-4 w-full">
-                <motion.div {...animateButton(0)}> 
+                <motion.div {...animateVerticalFadeIn(0)}> 
                     <CardsButton
                     width="180px"
                     height="51.75px"
@@ -212,9 +212,9 @@ const HomePage = () => {
                     onClick={() => setSubPage("all")}
                   />
                   </motion.div>
-                <motion.div {...animateButton(.1)}>
+                <motion.div {...animateVerticalFadeIn(.1)}>
                 <CardsButton
-                {...animateButton(.1)}
+                {...animateVerticalFadeIn(.1)}
                   width="180px"
                   height="51.75px"
                   text="New Card"
@@ -225,9 +225,9 @@ const HomePage = () => {
                   onClick={() => setSubPage("new")}
                 />
                 </motion.div>
-                <motion.div {...animateButton(.2)}>
+                <motion.div {...animateVerticalFadeIn(.2)}>
                 <CardsButton
-                {...animateButton(.2)}
+                {...animateVerticalFadeIn(.2)}
                   width="180px"
                   height="51.75px"
                   text="Receive"
@@ -238,9 +238,9 @@ const HomePage = () => {
                   onClick={() => setSubPage("receive")}
                 />
                 </motion.div>
-                <motion.div {...animateButton(.3)}>
+                <motion.div {...animateVerticalFadeIn(.3)}>
                 <CardsButton
-                {...animateButton(.3)}
+                {...animateVerticalFadeIn(.3)}
                   width="180px"
                   height="51.75px"
                   text="Challenge"
