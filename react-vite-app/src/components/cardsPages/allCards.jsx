@@ -60,9 +60,6 @@ const AllCards = ({back, user, select, isNarrowScreen, newCard}) => {
   };
 
 
- if (userProfile == null){
-  console.log("No user profile");
- }
 
   return (
     <div className="flex flex-col justify-center items-center gap-8 w-full">

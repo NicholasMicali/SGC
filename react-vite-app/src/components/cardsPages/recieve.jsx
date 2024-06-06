@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from "react";
-import CustomInput from '../auth/customInput';
 import { doCreatePost, doPostToCard, doFetchUserProfile, doFetchCardByCode, doCardToUserProfile, doIncrementUserPosts, doIncrementPost } from "../../firebase/firestore";
 import { doUploadFile } from "../../firebase/storage.js"
 import ThankYou from  "./thankYou.jsx"
 import StickerDrop from "./stickerDrop.jsx";
 import { ArrowLeft } from "lucide-react";
-import { geocodeBaseURL } from "../../firebase/googleMapsAPIKey";
 import GoogleAutocompleteInput from "../location/googleAutocompleteInput.jsx";
-import { formatLocation } from "../location/formatLocation.jsx"
 import { calculateDistance } from "../location/calculateDistance";
+import { fetchLocation } from "../location/fetchLocation.jsx";
 
 // TO DO: If the user navigates from a new card on feed page to here, 
 // have this component take in the value of the card ID as a prop, the call onCodeEntered so they go right to the form.
 
-const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
+const Recieve = ({back, user, initCode, first, select, isNarrowScreen, selectChallenge}) => {
   const [isCreatingPost, setIsCreatingPost] = useState(false);
   const [isCodeFound, setIsCodeFound] = useState(false);
   const [code, setCode] = useState('');
@@ -65,50 +63,22 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
   }, [file]);
 
   useEffect(() => {
-    // SUGGESTION: Maybe centralize this into a components/location/fetchLocation.jsx file
-    // because it is used in both recieve and newCard and possibly will be used in
-    // CreateProfile at some point
-    const fetchLocation = async () => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          async (position) => {
-            const { latitude, longitude } = position.coords;
-            try {
-              const response = await fetch(
-                `${geocodeBaseURL}&latlng=${latitude},${longitude}`
-              );
-              const data = await response.json();
-              if (data.results && data.results.length > 0) {
-                const addressComponents = data.results[0].address_components;
-                const formattedLocation = formatLocation(addressComponents);
-                setLocation(formattedLocation);
-              } else {
-                console.error("No results found for the given coordinates.");
-                setLocation('No results found for the given coordinates.');
-              }
-            } catch (error) {
-              console.error("Error fetching location:", error);
-              setLocation('Error fetching location.');
-            }
-          },
-          (error) => {
-            console.error("Error fetching location:", error);
-            setLocation('Error fetching location.');
-          }
-        );
-      } else {
-        console.error("Geolocation is not supported by this browser.");
-        setLocation('Geolocation is not supported by this browser.');
+    const fetchLoc = async () => {
+      const location = await fetchLocation();
+      if (location){
+        setLocation(location);
       }
-    };
+      else {
+        console.log("Failed to fetch location: " + location);
+      }
+    }
 
-    fetchLocation();
-  }, []);
+    fetchLoc();
+  }, [user.uid]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!isCreatingPost) {
-      setIsCreatingPost(true);
       try {
         //console.log(cid);
         //const url = await upload();
@@ -133,11 +103,13 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
           await Promise.all(classPromises);
         }
         await doIncrementUserPosts(user.uid);
+        console.log("Post created: " + post);
       } catch (error) {
         console.error("Create post failed:", error);
         alert("Failed to post to card: " + error.message);
         return;
-      }   
+      }
+      setIsCreatingPost(true);   
     }
   };
 
@@ -175,6 +147,7 @@ const Recieve = ({back, user, initCode, first, select, selectChallenge}) => {
       <>
         <ThankYou
           onButtonClick={() => select(currentCard, cid)}
+          isNarrowScreen={isNarrowScreen}
           onChallenge={() => selectChallenge(currentCard, cid)}
           >
         </ThankYou>
