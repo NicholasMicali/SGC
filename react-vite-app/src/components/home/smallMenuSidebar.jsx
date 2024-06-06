@@ -59,12 +59,16 @@ const SmallMenuSidebar = ({ user, signOut, page, setPage }) => {
               );
             })}
             <div className="w-full h-[1px] bg-gray-300"></div>
-            <motion.div
+            <motion.a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSew72rWdPKoISCttPq9xHj05BxyJpI4jv57i0jZrW4K2-rSMg/viewform?usp=sf_link"
+              target="_blank"
+              rel="noopener noreferrer"
               {...animateSideFadeIn(true,0.1)}
-              className="bg-gradient-to-r from-gradient-start via-gradient-mid to-gradient-end inline-block text-transparent bg-clip-text cursor-pointer"
             >
-              Give us Feedback
-            </motion.div>
+              <div className="bg-gradient-to-r from-gradient-start via-gradient-mid to-gradient-end inline-block text-transparent bg-clip-text cursor-pointer">
+                Give us Feedback
+              </div>
+            </motion.a>
             <div className="w-full h-[1px] bg-gray-300"></div>
             <NavItem
               icon={SignoutIcon}
