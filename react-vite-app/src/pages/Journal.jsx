@@ -17,7 +17,7 @@ const JournalPage = () => {
       <div className="self-start text-[4rem] font-bold">Journal Prompt</div>
       <hr className="w-full border-t-2 border-idle-pink my-4" />
 
-      <div className="flex w-full h-full justify-between">
+      <div className="flex max-md:flex-col w-full h-full justify-between">
         {currentUser &&
           Object.keys(promptsArr).map((key, index) => {
             return (

@@ -15,7 +15,7 @@ const PromptList = ({
   return (
     <motion.div
       className={twMerge(
-        " w-[32%] border-[2.5px] h-full flex flex-col justify-between p-5 rounded-2xl ",
+        " w-[32%] border-[2.5px] h-full flex flex-col justify-between p-5 rounded-2xl max-md:w-full max-md:h-[30%]",
         className
       )}
       initial={{ opacity: 0, x: -50 }}
