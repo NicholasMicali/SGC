@@ -31,8 +31,9 @@ const GoogleAutocompleteInput = ({ value, onChange, className, placeholder, requ
     return `${city}${state ? ', ' + state : ''}, ${country}`;
   };
 
-  useEffect(() => {
+  const initializeAutocomplete = () => {
     if (window.google && window.google.maps) {
+      console.log("Initializing Autocomplete");
       autocompleteRef.current = new window.google.maps.places.Autocomplete(inputRef.current, {
         types: ["(cities)"],
       });
@@ -40,9 +41,23 @@ const GoogleAutocompleteInput = ({ value, onChange, className, placeholder, requ
       autocompleteRef.current.addListener("place_changed", () => {
         const place = autocompleteRef.current.getPlace();
         const formattedAddress = formatAddress(place.address_components);
+        console.log("Place changed:", place, formattedAddress);
         onChange(formattedAddress);
       });
+    } else {
+      console.error("Google Maps API not available");
     }
+  };
+
+  useEffect(() => {
+    initializeAutocomplete();
+
+    return () => {
+      if (autocompleteRef.current) {
+        console.log("Cleaning up Autocomplete");
+        window.google.maps.event.clearInstanceListeners(autocompleteRef.current);
+      }
+    };
   }, []);
 
   return (
