@@ -24,6 +24,7 @@ const Recieve = ({back, user, initCode, first, select, isNarrowScreen, selectCha
   const [userProfile, setUserProfile] = useState(null);
   const [location, setLocation] = useState('');
   const [manualLocation, setManualLocation] = useState('');
+  const [toggleManual, setToggleManual] = useState(false);
   const monthNames = [
     "January", "February", "March", "April", "May", "June",
      "July", "August", "September", "October", "November", "December"
@@ -213,12 +214,20 @@ const Recieve = ({back, user, initCode, first, select, isNarrowScreen, selectCha
               readOnly
             />
             <div className="self-start mt-2">or</div>
-            <GoogleAutocompleteInput
-              value={manualLocation}
-              onChange={setManualLocation}
-              className="rounded-3xl border-[1px] p-2 md:p-3 border-gray-400"
-              placeholder="Enter a location (leave empty to use fetched location above)"
-            />
+            {toggleManual ? 
+              <>
+                <button type="button" className="rounded-2xl border-[1px] w-[70px] py-2 px-3 border-black" onClick={()=> setToggleManual(true)}>Close</button>
+                <GoogleAutocompleteInput
+                  value={manualLocation}
+                  onChange={setManualLocation}
+                  className="rounded-3xl border-[1px] p-2 md:p-3 border-gray-400"
+                  placeholder="Enter a location (leave empty to use fetched location above)"
+                  required
+                />
+              </>
+            :
+             <button type="button" className="rounded-2xl border-[1px] py-2 px-3 border-black" onClick={()=> setToggleManual(true)}>Enter Location</button>
+            }
           </div>
           <button type="submit" className="w-full flex items-center justify-center bg-gradient-to-tr from-gradient-start via-gradient-mid to-gradient-end rounded-3xl p-3 mt-4 bg-opacity-60 text-white font-sans text-xl">
             Post!
