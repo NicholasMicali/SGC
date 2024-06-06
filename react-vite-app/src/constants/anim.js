@@ -20,7 +20,7 @@ export const animateQuickDownToUpWithDelay = (delay) => ({
     },
     transition: {
       delay: delay,
-      duration: 0.15,
+      duration: 0.2,
     },
     initial: {
       opacity: 0,
@@ -28,13 +28,14 @@ export const animateQuickDownToUpWithDelay = (delay) => ({
     }
 })
 
-export const animateSideFadeIn = (left) => ({
+export const animateSideFadeIn = (left,delay = 0) => ({
     animate: {
       opacity: 1,
       x: 0,
     },
     transition: {
       duration: 0.5,
+      delay: delay,
     },
     initial: {
       opacity: 0,
