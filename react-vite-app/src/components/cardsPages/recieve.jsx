@@ -7,9 +7,38 @@ import { ArrowLeft } from "lucide-react";
 import GoogleAutocompleteInput from "../location/googleAutocompleteInput.jsx";
 import { calculateDistance } from "../location/calculateDistance";
 import { fetchLocation } from "../location/fetchLocation.jsx";
+import { src as googleMapsAPISrc } from "../../firebase/googleMapsAPIKey.js";
 
 // TO DO: If the user navigates from a new card on feed page to here, 
 // have this component take in the value of the card ID as a prop, the call onCodeEntered so they go right to the form.
+
+const useLoadScript = (src) => {
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    const existingScript = document.querySelector(`script[src="${src}"]`);
+    
+    if (existingScript) {
+      if (existingScript.hasAttribute("data-loaded")) {
+        setLoaded(true);
+      } else {
+        existingScript.onload = () => setLoaded(true);
+      }
+    } else {
+      const script = document.createElement("script");
+      script.src = src;
+      script.async = true;
+      script.defer = true;
+      script.onload = () => {
+        setLoaded(true);
+        script.setAttribute("data-loaded", "true");
+      };
+      document.head.appendChild(script);
+    }
+  }, [src]);
+
+  return loaded;
+};
 
 const Recieve = ({back, user, initCode, first, select, isNarrowScreen, selectChallenge}) => {
   const [isCreatingPost, setIsCreatingPost] = useState(false);
@@ -28,6 +57,7 @@ const Recieve = ({back, user, initCode, first, select, isNarrowScreen, selectCha
     "January", "February", "March", "April", "May", "June",
      "July", "August", "September", "October", "November", "December"
   ];
+  const isScriptLoaded = useLoadScript(googleMapsAPISrc);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -144,6 +174,10 @@ const Recieve = ({back, user, initCode, first, select, isNarrowScreen, selectCha
     }
     //console.log(stickers);
   }
+
+/*   if (!isScriptLoaded) {
+    return <div>Loading...</div>;
+  } */
 
   if (isCreatingPost) {
     return (
