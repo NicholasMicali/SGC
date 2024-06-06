@@ -1,4 +1,4 @@
-export const animateButton = (delay) => ({
+export const animateVerticalFadeIn = (delay, goDown = true) => ({
     animate: {
       opacity: 1,
       y: 0,
@@ -9,9 +9,18 @@ export const animateButton = (delay) => ({
     },
     initial: {
       opacity: 0,
-      y: 50,
+      y: goDown ? 50 : -50,
     }
 })
+
+export const hoverScaleUp = {
+    whileHover: {
+      scale: 1.1,
+    },
+    whileTap: {
+      scale: 0.9,
+    },
+}
 
 export const animateQuickDownToUpWithDelay = (delay) => ({
     animate: {

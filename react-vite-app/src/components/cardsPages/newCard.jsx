@@ -31,10 +31,8 @@ const NewCard = ({ back, user, select, isNarrowScreen, selectChallenge }) => {
   const [image, setImage] = useState("");
   const [file, setFile] = useState("");
   const [stickers, setStickers] = useState([]);
-  const [location, setLocation] = useState("");
-  const [manualLocation, setManualLocation] = useState("");
-  const AnimCustomInput = motion(CustomInput);
-  const AnimStickerDrop = motion(StickerDrop);
+  const [location, setLocation] = useState('');
+  const [manualLocation, setManualLocation] = useState('');
   const monthNames = [
     "January", "February", "March", "April", "May", "June",
      "July", "August", "September", "October", "November", "December"
@@ -168,7 +166,7 @@ const NewCard = ({ back, user, select, isNarrowScreen, selectChallenge }) => {
         onSubmit={onSubmit}
         className="w-full flex flex-col gap-5 items-center"
       >
-        <AnimCustomInput
+        <CustomInput
           {...animateQuickDownToUpWithDelay(0.1)}
           initial={{ opacity: 0, y: 250 }}
           type="title"
@@ -259,7 +257,7 @@ const NewCard = ({ back, user, select, isNarrowScreen, selectChallenge }) => {
               </button>
             </motion.div>
           )}
-          <AnimStickerDrop {...animateQuickDownToUpWithDelay(0.5)} select={selectSticker} />
+          <StickerDrop {...animateQuickDownToUpWithDelay(0.5)} select={selectSticker} />
         </div>
         <motion.div className="flex flex-col gap-1 w-full mt-3" {...animateQuickDownToUpWithDelay(0.7)}>
           <label htmlFor={"location"} className="self-start">

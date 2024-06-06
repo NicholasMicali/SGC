@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { stickers } from "../../constants/pageConstants";
 
 
-const StickerDrop = React.forwardRef(({select}, ref) => {
+const StickerDrop = ({select}) => {
   const [isOpen, setIsOpen] = useState(false);
   
   return (
-    <div className="flex flex-col gap-1 w-full" ref={ref}>
+    <div className="flex flex-col gap-1 w-full">
       <button
         type="button"
         onClick={(e) => {e.preventDefault; setIsOpen((prev) => !prev);}}
@@ -32,6 +32,6 @@ const StickerDrop = React.forwardRef(({select}, ref) => {
       )}
     </div>
   );
-})
+}
 
 export default StickerDrop;
