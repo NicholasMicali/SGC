@@ -84,7 +84,7 @@ export const doRemoveCardFromUserProfile = async (uid, cardId) => {
 };
 
 
-export const doCreatePost = async (cid, uid, uName, desc, location, postDate, image, stickers) => {
+export const doCreatePost = async (cid, uid, uName, desc, location, postDate, postType, image, stickers) => {
   const postsCollectionRef = collection(db, "posts");
   console.log(image);
   return addDoc(postsCollectionRef, {
@@ -94,6 +94,7 @@ export const doCreatePost = async (cid, uid, uName, desc, location, postDate, im
     desc,
     location,
     postDate,
+    postType,
     image,
     stickers,
   });

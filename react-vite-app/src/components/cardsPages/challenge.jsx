@@ -1,16 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import backOfCard from "../../assets/backOfCard.jpg";
 import AllCardIcon from "../../assets/AllCardIcon.svg";
 import CardsButton from './cardsButton';
 import { ArrowLeft } from "lucide-react";
+import { doFetchUserProfile } from '../../firebase/firestore';
 
-const Challenge = ({back, code, cid, cards}) => {
+const Challenge = ({back, user, code, cid, cards}) => {
 
   const [email, setEmail] = useState('');
   const [text, setText] = useState('');
+  const [userProfile, setUserProfile] = useState(null);
 
   const subject = "You have been challenged!"
-  const body = "Welcome to the Spread Goodness Challenge!\n\nJohn Smith has challenged you to spread kindness in the world, and write about it.\nHere is a message from them:\n\n" + text + "\n\nTo spread goodness, enter this code at spreadgoodness.com:\n\n " + code;
+  const body = "Welcome to the Spread Goodness Challenge!\n\n" + userProfile?.firstName + " " + userProfile?.lastName + " has challenged you to spread kindness in the world, and write about it.\nHere is a message from them:\n\n" + text + "\n\nTo spread goodness, enter the code below at spreadgoodness-72ac1.web.app\n\n " + code;
+
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const profile = await doFetchUserProfile(user.uid);
+        setUserProfile(profile.data());
+      } catch (error) {
+        console.error("Failed to fetch user profile:", error);
+      }
+    };
+
+    fetchUserProfile();
+  }, [user.uid]);
+
 
   const handleShare = () => {
     const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;

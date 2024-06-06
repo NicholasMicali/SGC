@@ -19,6 +19,36 @@ import GoogleAutocompleteInput from "../location/googleAutocompleteInput.jsx";
 import { animateQuickDownToUpWithDelay } from "../../constants/anim";
 import { motion } from "framer-motion";
 import { fetchLocation } from "../location/fetchLocation.jsx";
+import { src as googleMapsAPISrc } from "../../firebase/googleMapsAPIKey.js";
+
+
+const useLoadScript = (src) => {
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    const existingScript = document.querySelector(`script[src="${src}"]`);
+    
+    if (existingScript) {
+      if (existingScript.hasAttribute("data-loaded")) {
+        setLoaded(true);
+      } else {
+        existingScript.onload = () => setLoaded(true);
+      }
+    } else {
+      const script = document.createElement("script");
+      script.src = src;
+      script.async = true;
+      script.defer = true;
+      script.onload = () => {
+        setLoaded(true);
+        script.setAttribute("data-loaded", "true");
+      };
+      document.head.appendChild(script);
+    }
+  }, [src]);
+
+  return loaded;
+};
 
 const NewCard = ({ back, user, select, isNarrowScreen, selectChallenge }) => {
   const [isCreatingCard, setIsCreatingCard] = useState(false);
@@ -33,10 +63,12 @@ const NewCard = ({ back, user, select, isNarrowScreen, selectChallenge }) => {
   const [stickers, setStickers] = useState([]);
   const [location, setLocation] = useState('');
   const [manualLocation, setManualLocation] = useState('');
+  const [toggleManual, setToggleManual] = useState(false);
   const monthNames = [
     "January", "February", "March", "April", "May", "June",
      "July", "August", "September", "October", "November", "December"
   ];
+  const isScriptLoaded = useLoadScript(googleMapsAPISrc);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -71,10 +103,13 @@ const NewCard = ({ back, user, select, isNarrowScreen, selectChallenge }) => {
     const fetchLoc = async () => {
       const location = await fetchLocation();
       if (location){
-        setLocation(location);
+        //This is a temporary fix for when the fetch location does not work: (fix later)
+        const postLocation = (location == "Error") ? userProfile?.location : location;
+        setLocation(postLocation);
       }
       else {
         console.log("Failed to fetch location: " + location);
+        setLocation(userProfile?.location);
       }
     }
 
@@ -106,12 +141,13 @@ const NewCard = ({ back, user, select, isNarrowScreen, selectChallenge }) => {
           classrooms
         );
         await doCardToUserProfile(user.uid, card.id);
-        const postLocation = manualLocation ? manualLocation : location;
+        const userLocation = manualLocation ? manualLocation : location;
+        const postLocation = userLocation ? userLocation : userProfile?.location;
         const date = new Date();
         const month = monthNames[date.getMonth()];
         const day = date.getDate();
         const postDate = month + " " + day;
-        const post = await doCreatePost(card.id, user.uid, userProfile.firstName, text, postLocation, postDate, image, stickers);
+        const post = await doCreatePost(card.id, user.uid, userProfile.firstName, text, postLocation, postDate, userProfile.userType, image, stickers);
         const distance = 0;
         await doPostToCard(card.id, post.id, postLocation, distance);
         const cardObj = await doFetchCard(card.id);
@@ -272,12 +308,20 @@ const NewCard = ({ back, user, select, isNarrowScreen, selectChallenge }) => {
             readOnly
           />
           <div className="self-start mt-2">or</div>
-          <GoogleAutocompleteInput
-            value={manualLocation}
-            onChange={setManualLocation}
-            className="rounded-3xl border-[1px] p-2 md:p-3 border-gray-400"
-            placeholder="Enter a location (leave empty to use fetched location above)"
-          />
+          {toggleManual ? 
+              <>
+                <button type="button" className="rounded-2xl border-[1px] w-[70px] py-2 px-3 border-black" onClick={()=> setToggleManual(false)}>Close</button>
+                <GoogleAutocompleteInput
+                  value={manualLocation}
+                  onChange={setManualLocation}
+                  className="rounded-3xl border-[1px] p-2 md:p-3 border-gray-400"
+                  placeholder="Enter a location (leave empty to use fetched location above)"
+                  required
+                />
+              </>
+            :
+             <button type="button" className="rounded-2xl border-[1px] py-2 px-3 border-black" onClick={()=> setToggleManual(true)}>Enter Location</button>
+            }
         </motion.div>
         <motion.button
         {...animateQuickDownToUpWithDelay(0.8)}

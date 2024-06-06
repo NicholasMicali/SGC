@@ -3,7 +3,7 @@ import heartIcon from "../../assets/heart.svg";
 import shareIcon from "../../assets/share.svg";
 import { Pin, ChevronsRight } from "lucide-react";
 
-const TextCard = ({ loc, date, description, name, first, image, stickers, isNarrowScreen }) => {
+const TextCard = ({ loc, date, description, name, type, first, image, stickers, isNarrowScreen }) => {
   const cardHeight = isNarrowScreen ? 'h-auto' : 'h-[10px]';
   if (!isNarrowScreen){
     return (
@@ -35,10 +35,10 @@ const TextCard = ({ loc, date, description, name, first, image, stickers, isNarr
         
         {/* description */}
         <div className="flex flex-row justify-between">
-          <div className="">
+          <div className="mt-2">
             {description}
           </div>
-          {image && <img className="w-20 h-20 ml-2" src={image}></img>}
+          {image && <img className="w-24 h-24 ml-2" src={image}></img>}
         </div>
         {/* see more button
         <div className=" font-semibold cursor-pointer text-lg flex items-center">
@@ -55,7 +55,7 @@ const TextCard = ({ loc, date, description, name, first, image, stickers, isNarr
             | 
             &nbsp;
             <div className=" text-sm font-semibold bg-blue-200 pl-[5px] pr-[5px] rounded-md">
-              Student
+              {type}
             </div>
           </div>
           {stickers &&
@@ -89,17 +89,19 @@ const TextCard = ({ loc, date, description, name, first, image, stickers, isNarr
             &nbsp;
             <span className=" text-sm">{date}</span>
           </div>
+          {/*
           <div className="flex gap-3">
             <img src={shareIcon} width={20} height={20} />
             <img src={heartIcon} width={20} height={20} />
           </div>
+          */}
         </div>
 
         {/* title */}
         
         {/* description */}
         <div className="flex flex-row justify-between">
-          <div className="">
+          <div className="mt-2">
             {description}
           </div>
           {image && <img className="w-20 h-20 ml-2" src={image}></img>}
@@ -114,7 +116,7 @@ const TextCard = ({ loc, date, description, name, first, image, stickers, isNarr
             | 
             &nbsp;
             <div className=" text-xs font-semibold bg-blue-200 pl-[5px] pr-[5px] rounded-md">
-              Student
+              {type}
             </div>
           </div>
           {stickers &&

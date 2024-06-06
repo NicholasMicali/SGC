@@ -114,7 +114,8 @@ const Recieve = ({back, user, initCode, first, select, isNarrowScreen, selectCha
       try {
         //console.log(cid);
         //const url = await upload();
-        const postLocation = manualLocation ? manualLocation : location;
+        const userLocation = manualLocation ? manualLocation : location;
+        const postLocation = userLocation ? userLocation : userProfile?.location;
         const distance = await calculateDistance(currentCard.lastLocation, postLocation);
         if (!distance) {
           console.log("Distance is null: " + distance);
@@ -123,7 +124,7 @@ const Recieve = ({back, user, initCode, first, select, isNarrowScreen, selectCha
         const month = monthNames[date.getMonth()];
         const day = date.getDate();
         const postDate = month + " " + day;
-        const post = await doCreatePost(cid, user.uid, userProfile.firstName, desc, postLocation, postDate, image, stickers);
+        const post = await doCreatePost(cid, user.uid, userProfile.firstName, desc, postLocation, postDate, userProfile.userType, image, stickers);
         await doPostToCard(cid, post.id, postLocation, distance);
         setCurrentCard(prevCard => ({
           ...prevCard,
