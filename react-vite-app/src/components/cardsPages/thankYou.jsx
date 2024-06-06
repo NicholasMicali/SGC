@@ -12,10 +12,10 @@ const ThankYou = ({ onButtonClick, isNarrowScreen, onChallenge }) => {
   if (!isNarrowScreen)
     return (
       <div className="flex flex-col items-center justify-center">
-        <img src={Logo} alt="Spread Goodness logo" className="p-4 mt-6" /> 
+        <img src={Logo} alt="Spread Goodness logo" className="w-128 h-128 p-4 mt-6" /> 
         <p className="font-sans text-black pb-3 text-base sm:text-2xl md:text-2xl lg:text-3xl">Thank you for spreading goodness!</p>
         <img src={ThankYouSVG} alt="Thank You" className="w-2/5" />
-        <div className="text-2xl my-4">Challenge someone else!</div>
+        <div className="text-2xl my-4">Challenge someone else:</div>
         <CardsButton
           width="180px"
           height="51.75px"
@@ -41,8 +41,8 @@ const ThankYou = ({ onButtonClick, isNarrowScreen, onChallenge }) => {
     return (
       <div className="flex flex-col items-center justify-center">
         <p className="text-2xl font-sans text-black mt-20 pb-3">Thank you for spreading goodness!</p>
-        <img src={ThankYouSVG} alt="Thank You" className="w-128 h-128" />
-        <div className="text-2xl my-4">Challenge someone else!</div>
+        <img src={ThankYouSVG} alt="Thank You" className="w-2/5" />
+        <div className="text-2xl my-4">Challenge someone else:</div>
         <CardsButton
           width="180px"
           height="51.75px"
@@ -59,7 +59,7 @@ const ThankYou = ({ onButtonClick, isNarrowScreen, onChallenge }) => {
           height="50px"
           onClick={onButtonClick}
           text="Go back to Homepage"
-          className="w-45 h-13 bg-gray-100 border border-gray-300 rounded-lg text-sm font-sans"
+          className="w-30 h-13 bg-gray-100 border border-gray-300 rounded-lg text-sm font-sans"
         >
         </GradientButton>
       </div>

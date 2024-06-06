@@ -186,7 +186,7 @@ const Recieve = ({back, user, initCode, first, select, isNarrowScreen, selectCha
           onButtonClick={() => select(currentCard, cid)}
           isNarrowScreen={isNarrowScreen}
           onChallenge={() => selectChallenge(currentCard, cid)}
-          >
+        >
         </ThankYou>
       </>
     );

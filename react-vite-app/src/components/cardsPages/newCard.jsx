@@ -182,7 +182,8 @@ const NewCard = ({ back, user, select, isNarrowScreen, selectChallenge }) => {
           onButtonClick={() => select(createdCard, cid)}
           isNarrowScreen={isNarrowScreen}
           onChallenge={() => selectChallenge(createdCard, cid)}
-        ></ThankYou>
+        >
+        </ThankYou>
       </>
     );
   }
