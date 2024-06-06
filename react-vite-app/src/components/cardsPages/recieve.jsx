@@ -9,8 +9,6 @@ import { calculateDistance } from "../location/calculateDistance";
 import { fetchLocation } from "../location/fetchLocation.jsx";
 import { src as googleMapsAPISrc } from "../../firebase/googleMapsAPIKey.js";
 
-// TO DO: If the user navigates from a new card on feed page to here, 
-// have this component take in the value of the card ID as a prop, the call onCodeEntered so they go right to the form.
 
 const useLoadScript = (src) => {
   const [loaded, setLoaded] = useState(false);
@@ -250,7 +248,7 @@ const Recieve = ({back, user, initCode, first, select, isNarrowScreen, selectCha
             <div className="self-start mt-2">or</div>
             {toggleManual ? 
               <>
-                <button type="button" className="rounded-2xl border-[1px] w-[70px] py-2 px-3 border-black" onClick={()=> setToggleManual(true)}>Close</button>
+                <button type="button" className="rounded-2xl border-[1px] w-[70px] py-2 px-3 border-black" onClick={()=> setToggleManual(false)}>Close</button>
                 <GoogleAutocompleteInput
                   value={manualLocation}
                   onChange={setManualLocation}
