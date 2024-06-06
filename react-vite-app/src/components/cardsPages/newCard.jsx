@@ -16,9 +16,9 @@ import ThankYou from "./thankYou.jsx";
 import StickerDrop from "./stickerDrop.jsx";
 import { ArrowLeft } from "lucide-react";
 import GoogleAutocompleteInput from "../location/googleAutocompleteInput.jsx";
-import { fetchLocation } from "../location/fetchLocation.jsx";
-import { motion } from "framer-motion";
 import { animateQuickDownToUpWithDelay } from "../../constants/anim";
+import { motion } from "framer-motion";
+import { fetchLocation } from "../location/fetchLocation.jsx";
 
 const NewCard = ({ back, user, select, isNarrowScreen, selectChallenge }) => {
   const [isCreatingCard, setIsCreatingCard] = useState(false);
