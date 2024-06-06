@@ -19,24 +19,24 @@ export const fetchLocation = async () => {
             } else {
               console.error("No results found for the given coordinates.");
               //resolve('No results found for the given coordinates.');
-              resolve("No location found, enter one below");
+              resolve("Error");
             }
           } catch (error) {
             console.error("Error fetching location:", error);
             //resolve('Error fetching location.');
-            resolve("No location found, enter one below");
+            resolve("Error");
           }
         },
         (error) => {
           console.error("Error fetching location:", error);
           //setLocation('Error fetching location.');
-          resolve("No location found, enter one below");
+          resolve("Error");
         }
       );
     } else {
       console.error("Geolocation is not supported by this browser.");
       //setLocation('Geolocation is not supported by this browser.');
-      resolve("No location found, enter one below");
+      resolve("Error");
     }
   });
 };

@@ -64,9 +64,12 @@ const Recieve = ({back, user, initCode, first, select, isNarrowScreen, selectCha
 
   useEffect(() => {
     const fetchLoc = async () => {
+      console.log("fetching location!");
       const location = await fetchLocation();
       if (location){
-        setLocation(location);
+        //This is a temporary fix for when the fetch location does not work: (fix later)
+        const postLocation = (location == "Error") ? userProfile?.location : location;
+        setLocation(postLocation);
       }
       else {
         console.log("Failed to fetch location: " + location);
@@ -74,7 +77,7 @@ const Recieve = ({back, user, initCode, first, select, isNarrowScreen, selectCha
     }
 
     fetchLoc();
-  }, [user.uid]);
+  }, []);
 
   const onSubmit = async (e) => {
     e.preventDefault();
