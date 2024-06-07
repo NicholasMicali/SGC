@@ -17,7 +17,7 @@ const JournalPage = () => {
       <div className="self-start text-[4rem] font-bold">Journal Prompt</div>
       <hr className="w-full border-t-2 border-idle-pink my-4" />
 
-      <div className="flex max-md:flex-col w-full h-full justify-between">
+      <div className="flex max-md:flex-col w-full h-full justify-between relative">
         {currentUser &&
           Object.keys(promptsArr).map((key, index) => {
             return (
@@ -35,12 +35,13 @@ const JournalPage = () => {
                 disabled={selectedPrompt}
               />
             );
-          })}
+        })}
 
         <AnimatePresence>
           {selectedPrompt && (
             <ExpandedList
               layoutId={selectedPrompt}
+              title={promptsArr[selectedPrompt].title}
               onClick={() => {
                 setSelectedPrompt(0);
                 setTimeout(() => {
@@ -50,6 +51,7 @@ const JournalPage = () => {
               divClassName={promptsArr[selectedPrompt].className}
               buttonClassName={promptsArr[selectedPrompt].buttonClassName}
               prompts={promptsArr[selectedPrompt].prompts}
+              titleClassName={promptsArr[selectedPrompt].titleClassName}
             />
           )}
         </AnimatePresence>
