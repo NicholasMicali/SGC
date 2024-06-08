@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import GradientButton from '../cardsPages/gradientButton';
 import { ArrowLeft } from "lucide-react";
 import MenuXWhite from "../../assets/MenuXWhite.svg";
@@ -11,13 +11,15 @@ import ChallengeIcon from "../../assets/ChallengeIcon.svg";
 import InspirationIcon from "../../assets/InspirationIcon.svg";
 import JournalIcon from "../../assets/JournalIcon.svg";
 import classroomIcon from "../../assets/classroom.svg";
+import { doFetchUserProfile } from '../../firebase/firestore.js';
+import { useAuth } from '../../auth/index.jsx';
+
 
 /*** 
  * These 'texts' can be swapped with an array of components if you want to make each card separtely 
  * add more elemenst to the array to make it more steps!
  * customize the buttons to make them fit the style of the app
  * ***/
-
 const texts = [
   <div className="flex flex-col justify-center items-center text-center">
     <div className="font-bold mb-8 text-2xl">What is the Spread Goodness Challenge?</div>
@@ -28,7 +30,7 @@ const texts = [
     <div className="flex flex-row items-center gap-2 text-xl"><img src={classroomIcon} alt="Classroom Icon" /> Classroom</div>
   </div>,
   <div className="flex flex-col justify-center items-center text-center">
-    <div className="mb-4 text-xl mt-6 mb-4 w-4/5">If you were challenged by someone, use this button:</div>
+    <div className="mb-4 text-xl mt-6  w-4/5">If you were challenged by someone, use this button:</div>
     <CardsButton
       width="180px"
       height="51.75px"
@@ -87,32 +89,38 @@ const texts = [
   </div>
 ];
 
-const WalkthroughModal = ({ onClose }) => {
+const WalkthroughModal = ({onClose }) => {
   const [currentStep, setCurrentStep] = useState(0);
+  const [userData, setUserData] = useState(null);
+  const { currentUser:user } = useAuth();
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const profile = await doFetchUserProfile(user.uid);
+        setUserData(profile.data());
+      } catch (error) {
+        console.error("Failed to fetch user profile:", error);
+      }
+    };
+
+    fetchUserProfile();
+  }, [user]);
 
   const nextStep = () => {
     if (currentStep < texts.length - 1) {
-      setCurrentStep(currentStep + 1);
+      setCurrentStep(userData.userType === "Visitor" && currentStep == 0 ? currentStep + 2 : currentStep + 1);
     }
   };
 
   const prevStep = () => {
     if (currentStep > 0) {
-      setCurrentStep(currentStep - 1);
+      setCurrentStep(userData.userType === "Visitor" && currentStep == 2 ? currentStep - 2: currentStep - 1);
     }
   };
 
-  /*
-<button 
-          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-          onClick={onClose}
-        >
-          &times;
-        </button>
-  */
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    (userData && <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white p-6 rounded-lg shadow-lg w-[400px] h-3/5 p-4 relative flex flex-col justify-center items-center">
         <div className="">
           <img
@@ -128,7 +136,7 @@ const WalkthroughModal = ({ onClose }) => {
          </button>
         </div>
         <div className="text-center">
-          <p className="mb-4">{texts[currentStep]}</p>
+          <div className="mb-4">{texts[currentStep]}</div>
           <div className="">
             {currentStep > 0 && (
               <button
@@ -163,7 +171,7 @@ const WalkthroughModal = ({ onClose }) => {
           </div>
         </div>
       </div>
-    </div>
+    </div>)
   );
 };
 

@@ -118,14 +118,6 @@ export const doPostToCard = async (cid, postId, cityId, distance) => {
 export const doFetchUserProfile = async (uid) => {
   const userDocRef = doc(db, "user_profiles", uid);
   return getDoc(userDocRef);
-  //const docSnap = await getDoc(userDocRef);
-  /*
-  if (docSnap.exists()) {
-    return docSnap.data(); // Returns the document's data if available
-  } else {
-    throw new Error("No profile found for this user.");
-  }
-  */
 }
 
 export const doFetchCard = async (cid) => {
