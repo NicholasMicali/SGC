@@ -23,7 +23,7 @@ const ExpandedList = ({
       </p>
       <div className="flex flex-col gap-4 justify-start h-full">
         {prompts.map((prompt, index) => (
-          <div key={index} className="text-lg">
+          <div key={index} className="text-lg whitespace-pre-line">
             <span className="font-semibold">{index + 1})</span> {prompt}
           </div>
         ))}
