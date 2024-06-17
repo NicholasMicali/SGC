@@ -288,7 +288,7 @@ const Classroom = () => {
                 <CardsButton
                   width="200px"
                   height="51.75px"
-                  text="Join Classroom"
+                  text="Create Classroom"
                   borderColor="#BEDF3D"
                   textColor="#8DAB1C"
                   backgroundColor="#EAF4C0"
