@@ -55,7 +55,6 @@ const CreateProfilePage = () => {
         try {
           const profile = await doFetchUserProfile(currentUser.uid);
           if (profile.data() !== undefined) {
-            console.log(profile.data())
             setIsProfileCreated(true);
           }
         } catch (error) {

@@ -10,11 +10,8 @@ import { animateSideFadeIn, animateVerticalFadeIn } from "../../constants/anim";
 
 
 
-const LeftSidebar = ({ user, signOut, page, back, setPage }) => {
+const LeftSidebar = ({ user, signOut, back, setPage }) => {
   const [userData, setUserData] = useState(null);
-
-  const subPagesChangeIcon = ["all", "new", "recieve", "challenge"];
-
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
@@ -51,7 +48,7 @@ const LeftSidebar = ({ user, signOut, page, back, setPage }) => {
             )}
             <motion.div {...animateSideFadeIn(false)}>{userData.firstName + " " + userData.lastName}</motion.div>
           </div>
-          <NavMenu page={page} setPage={setPage} />
+          <NavMenu />
           <div className="flex flex-col justify-end h-full w-full">
             <button className=" flex items-center self-start m-4 font-bold gap-2" onClick={signOut}>
                 <LogOut size={24} />

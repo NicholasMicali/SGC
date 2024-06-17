@@ -6,12 +6,11 @@ import { motion } from "framer-motion";
 import { animateVerticalFadeIn } from "../../constants/anim";
 
 
-const NavMenu = ({ page, setPage }) => {
+const NavMenu = () => {
   const navigate = useNavigate(); // Hook for navigation
 
   const onClick = (path) => {
-    setPage(path[1]); // Sets the page state to the path
-    navigate(path[0]); // Navigates to the given path
+    navigate(path); // Navigates to the given path
   };
 
   return (
@@ -20,11 +19,12 @@ const NavMenu = ({ page, setPage }) => {
         {navItemArr.map((item, index) => {
           return (
             <NavItem
+              path={item[0]}
               key={index}
-              icon={page === item[1] ? item[2] : item[3]}
+              unselectedIcon={item[3]}
+              selectedIcon={item[2]}
               text={item[1]}
-              page={page}
-              onClick={() => onClick(item.slice(0, 2))}
+              onClick={() => onClick(item[0])}
               index={index}
             />
           );

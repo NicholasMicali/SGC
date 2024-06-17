@@ -6,7 +6,7 @@ import { useState} from "react";
 import { useNavigate } from "react-router-dom";
 const MainLayout = ({ children }) => {
   const { currentUser } = useAuth();
-  const [page, setPage] = useState("Feed");
+  // const [page, setPage] = useState("Feed");
   const navigate = useNavigate(); // Hook for navigation
 
   const signOut = async (e) => {
@@ -24,13 +24,11 @@ const MainLayout = ({ children }) => {
   };
   return (
     <div className="flex h-screen">
-      <LeftSidebar user={currentUser} signOut={signOut} page={page} setPage={setPage} />
+      <LeftSidebar user={currentUser} signOut={signOut}/>
       {children}
       <SmallMenuSidebar
         user={currentUser}
         signOut={signOut}
-        page={page}
-        setPage={setPage}
       />
     </div>
   );
