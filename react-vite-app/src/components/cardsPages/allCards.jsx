@@ -75,7 +75,7 @@ const AllCards = ({back, user, select, isNarrowScreen, newCard}) => {
       {cards.map((card, index) => (
         <div className="w-full flex flex-row items-center">
           <div className="w-full cursor-pointer" onClick={() => select(card, cids[index])}>
-            <CardInfo name={card.title} location={card.cities == null ? 0 : card.cities.length} miles={card.distance} people={card.posts ? card.posts.length : "0"} color={(card.cEmail === user.email)} isNarrowScreen={isNarrowScreen}/>
+            <CardInfo name={card.title} location={card.cities ? card.cities.length : "0"} miles={card.distance} people={card.posts ? card.posts.length : "0"} color={(card.cEmail === user.email)} isNarrowScreen={isNarrowScreen}/>
           </div>
           <button className="py-2 px-3 ml-4" onClick={() => removeCard(cids[index], index)}><Trash></Trash></button>
         </div>
