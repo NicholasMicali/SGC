@@ -101,20 +101,28 @@ const NewCard = ({ back, user, select, isNarrowScreen, selectChallenge }) => {
 
   useEffect(() => {
     const fetchLoc = async () => {
-      const location = await fetchLocation();
-      if (location){
-        //This is a temporary fix for when the fetch location does not work: (fix later)
-        const postLocation = (location == "Error") ? userProfile?.location : location;
+      console.log('Initial location:', userProfile?.location);
+      let location = userProfile?.location;
+      if (location == "") {
+        console.log('Fetching location because it is null');
+        location = await fetchLocation();
+      }
+  
+      if (location) {
+        // This is a temporary fix for when the fetch location does not work: (fix later)
+        const postLocation = (location === "Error") ? '' : location;
         setLocation(postLocation);
+        console.log('Location set to:', postLocation);
+      } else {
+        console.log('Failed to fetch location:', location);
+        setLocation(userProfile?.location || '');
       }
-      else {
-        console.log("Failed to fetch location: " + location);
-        setLocation(userProfile?.location);
-      }
+    };
+  
+    if (userProfile) {
+      fetchLoc();
     }
-
-    fetchLoc();
-  }, [user.uid]);
+  }, [user?.uid, userProfile]);
 
   const onSubmit = async (e) => {
     e.preventDefault();

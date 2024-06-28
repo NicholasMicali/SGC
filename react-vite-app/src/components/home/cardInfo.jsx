@@ -2,6 +2,7 @@ import React from "react";
 import personIcon from '../../assets/person_icon.svg';
 
 const CardInfo = ({name, location, miles, people, isSidebar, color, isNarrowScreen}) => {
+    console.log('CardInfo Props:', { name, location, miles, people });
 
     if (!isNarrowScreen){
         return (
