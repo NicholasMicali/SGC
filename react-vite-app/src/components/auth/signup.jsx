@@ -8,7 +8,7 @@ import { useAuth } from "../../auth/index";
 import { doSignOut } from "../../firebase/auth";
 
 
-const SignUp = () => {
+const SignUp = ({setErrMsg}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSigningUp, setIsSigningUp] = useState(false);
@@ -25,8 +25,7 @@ const SignUp = () => {
         await doCreateUserWithEmailAndPassword(email, password);
       } catch (error) {
         // Handle errors here, such as displaying a message to the user
-        console.error("Sign up failed:", error);
-        alert("Failed to sign up: " + error.message);
+        setErrMsg(error.message);
         return;
       }
       setIsSigningUp(true);

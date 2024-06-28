@@ -51,3 +51,25 @@ export const animateSideFadeIn = (left,delay = 0) => ({
       x: left ? -50 : 50,
     }
 })
+
+export const animateTopDownOnTrigger = (trigger) => ({
+    transition: {
+      duration: 0.5,
+    },
+    initial: {
+      opacity: 0,
+      y: -50,
+      x: "50%"
+    },
+    variants: {
+      hidden: {
+        opacity: 0,
+        y: -50,
+      },
+      visible: {
+        opacity: 1,
+        y: 0,
+      },
+    },
+    animate: trigger ? "visible" : "hidden",
+})
