@@ -22,10 +22,10 @@ const Login = ({setErrMsg}) => {
         // console.error("Login failed:", error);
         // alert("Failed to log in: " + error.message);
         if(error.message == "Firebase: Error (auth/invalid-credential)."){
-          setErrMsg("Invalid email or password. Please try again.");
+          setErrMsg("Invalid email or password.");
         }
         else{
-          setErrMsg("Unkown error occurred. Please try again later.");
+          setErrMsg("Unkown error occurred. ");
         }
         return;
       }

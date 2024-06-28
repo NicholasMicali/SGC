@@ -53,28 +53,36 @@ const LoginPage = () => {
   }
 
   return (
-    <div className="flex max-w-full max-h-screen relative">
+    <div className="flex max-w-full max-h-screen justify-center">
       {
         <motion.div
           {...animateTopDownOnTrigger(errMessage)}
           role="alert"
-          className="alert absolute min-w-fit max-w-[500px] mt-5"
+          className="alert absolute flex w-[400px] max-sm:w-[300px] justify-between mt-5 max-h-[75px]"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            className="stroke-info h-6 w-6 shrink-0"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            ></path>
-          </svg>
-          <span>{errMessage}</span>
-          <Check size={20} onClick={() => {setErrMessage("")}} className=" cursor-pointer"/>
+          <div className="flex gap-5">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              className="stroke-info h-6 w-6 shrink-0"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>{errMessage}</span>
+          </div>
+          <Check
+            size={20}
+            onClick={() => {
+              setErrMessage("");
+            }}
+            className=" cursor-pointer"
+          />
         </motion.div>
       }
       <div className=" xl:block hidden min-w-[50%] max-h-screen p-0">
