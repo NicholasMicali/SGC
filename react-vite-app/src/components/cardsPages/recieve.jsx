@@ -134,10 +134,16 @@ const Recieve = ({back, user, initCode, first, select, isNarrowScreen, selectCha
         const postDate = month + " " + day;
         const post = await doCreatePost(cid, user.uid, userProfile.firstName, desc, postLocation, postDate, userProfile.userType, image, stickers);
         await doPostToCard(cid, post.id, postLocation, distance);
-        setCurrentCard(prevCard => ({
-          ...prevCard,
-          posts: [...prevCard.posts, post.id]
-        }));
+        setCurrentCard(prevCard => {
+          const updatedCitiesSet = new Set(prevCard.cities ? [...prevCard.cities, postLocation] : [postLocation]);
+          let updatedCities = [...updatedCitiesSet];
+          return {
+            ...prevCard,
+            posts: [...prevCard.posts, post.id],
+            cities: updatedCities,
+            distance: (prevCard.distance || 0) + distance
+          };
+        });
         await doCardToUserProfile(user.uid, cid);
         if (currentCard?.classrooms) {
           const classPromises = currentCard.classrooms.map(classId => doIncrementPost(classId));
