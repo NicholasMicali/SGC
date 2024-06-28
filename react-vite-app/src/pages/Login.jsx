@@ -8,9 +8,10 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "../auth/index";
 import { doSignInWithGoogle } from "../firebase/auth.js";
 import Logo from "../assets/logo.svg";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Check } from "lucide-react";
 import AuthSplash from "../assets/AuthSplash.jpg";
-
+import { animateTopDownOnTrigger } from "../constants/anim.js";
+import { motion } from "framer-motion";
 const LoginPage = () => {
   const { userLoggedIn } = useAuth();
   const [current, setCurrent] = useState("Log In");
@@ -19,12 +20,23 @@ const LoginPage = () => {
 
   const onGoogleSignIn = async (e) => {
     e.preventDefault();
-    const user = await doSignInWithGoogle().catch((err) => {
-      setErrMessage(err);
-      console.error("Login with google failed:", err);
-      alert("Failed to login with google:", err.message);
-    });
-    setIsSigningIn(true);
+    try {
+      await doSignInWithGoogle();
+      // Handle user if needed, for now you can ignore it
+      setIsSigningIn(true);
+    } catch (err) {
+      //the follow 2 error msgs comes up when the user closes the popup
+      // Firebase: Error (auth/cancelled-popup-request).
+      // Firebase: Error (auth/popup-closed-by-user).
+      if (
+        err.message !== "Firebase: Error (auth/cancelled-popup-request)." &&
+        err.message !== "Firebase: Error (auth/popup-closed-by-user)."
+      ) {
+        {
+          setErrMessage(err.message);
+        }
+      }
+    }
   };
 
   const handleToggle = () => {
@@ -41,7 +53,30 @@ const LoginPage = () => {
   }
 
   return (
-    <div className="flex max-w-full max-h-screen">
+    <div className="flex max-w-full max-h-screen relative">
+      {
+        <motion.div
+          {...animateTopDownOnTrigger(errMessage)}
+          role="alert"
+          className="alert absolute min-w-fit max-w-[500px] mt-5"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            className="stroke-info h-6 w-6 shrink-0"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            ></path>
+          </svg>
+          <span>{errMessage}</span>
+          <Check size={20} onClick={() => {setErrMessage("")}} className=" cursor-pointer"/>
+        </motion.div>
+      }
       <div className=" xl:block hidden min-w-[50%] max-h-screen p-0">
         <img
           src={AuthSplash}
@@ -100,13 +135,14 @@ const LoginPage = () => {
                 <div className="text-gray-500 ml-5 mr-5">OR</div>
                 <hr className="w-full border-black md:border-[1.5px]" />
               </div>
-              <Login />
+              <Login setErrMsg={setErrMessage} />
             </>
           ) : (
             <SignUp />
           )}
         </div>
-        <div>{errMessage ? errMessage : ""}</div>
+        {/*this following div is needed for the spacing to look right on the auth pages*/}
+        <div></div>
       </div>
     </div>
   );

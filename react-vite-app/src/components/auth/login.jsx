@@ -4,7 +4,7 @@ import CustomInput from "./customInput.jsx";
 import { Navigate } from "react-router-dom";
 import AuthButton from "./authButton.jsx";
 
-const Login = () => {
+const Login = ({setErrMsg}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSigningIn, setIsSigningIn] = useState(false);
@@ -19,8 +19,14 @@ const Login = () => {
         console.log("User signed in: " + user);
       } catch (error) {
         // Handle errors here, such as displaying a message to the user
-        console.error("Login failed:", error);
-        alert("Failed to log in: " + error.message);
+        // console.error("Login failed:", error);
+        // alert("Failed to log in: " + error.message);
+        if(error.message == "Firebase: Error (auth/invalid-credential)."){
+          setErrMsg("Invalid email or password. Please try again.");
+        }
+        else{
+          setErrMsg("Unkown error occurred. Please try again later.");
+        }
         return;
       }
       setIsSigningIn(true);

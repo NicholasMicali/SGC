@@ -25,6 +25,6 @@ export default {
       }
     },
   },
-  plugins: [require("tailwindcss-inner-border"),],
+  plugins: [require("tailwindcss-inner-border"),require("daisyui")],
 }
 
