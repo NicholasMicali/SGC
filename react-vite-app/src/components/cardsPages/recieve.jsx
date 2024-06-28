@@ -93,20 +93,28 @@ const Recieve = ({back, user, initCode, first, select, isNarrowScreen, selectCha
 
   useEffect(() => {
     const fetchLoc = async () => {
-      console.log("fetching location!");
-      const location = await fetchLocation();
-      if (location){
-        //This is a temporary fix for when the fetch location does not work: (fix later)
-        const postLocation = (location == "Error") ? userProfile?.location : location;
+      console.log('Initial location:', userProfile?.location);
+      let location = userProfile?.location;
+      if (location == "") {
+        console.log('Fetching location because it is null');
+        location = await fetchLocation();
+      }
+  
+      if (location) {
+        // This is a temporary fix for when the fetch location does not work: (fix later)
+        const postLocation = (location === "Error") ? '' : location;
         setLocation(postLocation);
+        console.log('Location set to:', postLocation);
+      } else {
+        console.log('Failed to fetch location:', location);
+        setLocation(userProfile?.location || '');
       }
-      else {
-        console.log("Failed to fetch location: " + location);
-      }
+    };
+  
+    if (userProfile) {
+      fetchLoc();
     }
-
-    fetchLoc();
-  }, []);
+  }, [userProfile]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
