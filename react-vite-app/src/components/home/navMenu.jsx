@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { animateVerticalFadeIn } from "../../constants/anim";
 
 
-const NavMenu = () => {
+const NavMenu = ({user}) => {
   const navigate = useNavigate(); // Hook for navigation
 
   const onClick = (path) => {
@@ -17,6 +17,7 @@ const NavMenu = () => {
     <>
       <div className="flex flex-col w-full items-start p-2 mxy-8 gap-4">
         {navItemArr.map((item, index) => {
+          if (user.userType === "Visitor" && index === 4) return;
           return (
             <NavItem
               path={item[0]}

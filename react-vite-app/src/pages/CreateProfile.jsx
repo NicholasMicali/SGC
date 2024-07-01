@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../auth/index";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { doCreateUserProfile, doFetchUserProfile } from "../firebase/firestore";
 import CustomInput from "../components/auth/customInput.jsx";
 import CardsButton from "../components/cardsPages/cardsButton.jsx";
@@ -15,10 +15,14 @@ const useLoadScript = (src) => {
     const existingScript = document.querySelector(`script[src="${src}"]`);
     
     if (existingScript) {
-      if (existingScript.hasAttribute("data-loaded")) {
+      if (existingScript.readyState === 'complete' || existingScript.hasAttribute("data-loaded")) {
         setLoaded(true);
       } else {
-        existingScript.onload = () => setLoaded(true);
+        // If the script is present but not loaded, attach onload handler
+        existingScript.onload = () => {
+          setLoaded(true);
+          existingScript.setAttribute("data-loaded", "true");
+        };
       }
     } else {
       const script = document.createElement("script");
@@ -44,7 +48,7 @@ const CreateProfilePage = () => {
   const [lastName, setLastName] = useState("");
   const [age, setAge] = useState("");
   const [location, setLocation] = useState("");
-  const [isProfileCreated, setIsProfileCreated] = useState(false);
+  const navigate = useNavigate();
 
   const isScriptLoaded = useLoadScript(googleMapsAPISrc);
 
@@ -55,7 +59,7 @@ const CreateProfilePage = () => {
         try {
           const profile = await doFetchUserProfile(currentUser.uid);
           if (profile.data() !== undefined) {
-            setIsProfileCreated(true);
+            navigate("/home");
           }
         } catch (error) {
           console.error("First Time User: " + error);
@@ -105,16 +109,13 @@ const CreateProfilePage = () => {
         location,
         age
       );
-      setIsProfileCreated(true);
+      navigate("/home");
     } catch (error) {
       console.error("Profile Creation failed:", error);
       alert("Failed to create profile: " + error.message);
     }
   };
-
-  if (isProfileCreated) {
-    return <Navigate to="/home" replace />;
-  }
+  console.log("isScriptLoaded: ", isScriptLoaded)
 
   if (!isScriptLoaded) {
     return <div>Loading...</div>;
