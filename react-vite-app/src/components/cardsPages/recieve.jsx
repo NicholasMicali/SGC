@@ -136,7 +136,7 @@ const Recieve = ({back, user, initCode, first, select, isNarrowScreen, selectCha
         await doPostToCard(cid, post.id, postLocation, distance);
         setCurrentCard(prevCard => {
           const updatedCitiesSet = new Set(prevCard.cities ? [...prevCard.cities, postLocation] : [postLocation]);
-          let updatedCities = [...updatedCitiesSet];
+          const updatedCities = [...updatedCitiesSet];
           return {
             ...prevCard,
             posts: [...prevCard.posts, post.id],
@@ -301,7 +301,7 @@ const Recieve = ({back, user, initCode, first, select, isNarrowScreen, selectCha
               type='text'
               id='code'
               value={code}
-              onChange={(e) => setCode(e.target.value)}
+              onChange={(e) => setCode(e.target.value ? e.target.value.toLowerCase() : '')}
               required
             />
         </div>
