@@ -11,6 +11,7 @@ const CardsButton = ({
   onClick,
   icon,
   staticStyle,
+  type
 }) => {
   const [isHovered, setHovered] = useState(false);
 
@@ -19,6 +20,7 @@ const CardsButton = ({
       <button
         className="w-[180px] h-[51.75px] rounded-lg border-[2px] flex justify-center items-center px-4"
         onClick={onClick}
+        type={type ? type : "button"}
         style={{
           height: height,
           width: width,
