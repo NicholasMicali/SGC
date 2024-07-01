@@ -236,7 +236,7 @@ const NewCard = ({ back, user, select, isNarrowScreen, selectChallenge }) => {
             type="text"
             id="code"
             value={code}
-            onChange={(e) => setCode(e.target.value)}
+            onChange={(e) => setCode(e.target.value ? e.target.value.toLowerCase() : '')}
             required
           />
         </motion.div>
