@@ -146,7 +146,7 @@ const LoginPage = () => {
               <Login setErrMsg={setErrMessage} />
             </>
           ) : (
-            <SignUp />
+            <SignUp setErrMsg={setErrMessage} />
           )}
         </div>
         {/*this following div is needed for the spacing to look right on the auth pages*/}

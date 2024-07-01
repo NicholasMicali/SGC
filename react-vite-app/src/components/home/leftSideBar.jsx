@@ -48,7 +48,7 @@ const LeftSidebar = ({ user, signOut, back, setPage }) => {
             )}
             <motion.div {...animateSideFadeIn(false)}>{userData.firstName + " " + userData.lastName}</motion.div>
           </div>
-          <NavMenu />
+          <NavMenu user={userData} />
           <div className="flex flex-col justify-end h-full w-full">
             <button className=" flex items-center self-start m-4 font-bold gap-2" onClick={signOut}>
                 <LogOut size={24} />
