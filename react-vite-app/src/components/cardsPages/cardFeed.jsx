@@ -6,7 +6,7 @@ import { doFetchPost } from '../../firebase/firestore.js';
 import NoPosts from '../home/noPosts.jsx';
 import NewCardIcon from "../../assets/NewCardIcon.svg"
 
-const CardFeed = ({user, card, setSubPage, firstPost, isNarrowScreen, handleOpen}) => {
+const CardFeed = ({user, card, setSubPage, firstPost, isNarrowScreen, handleOpen, infoType}) => {
   const [cardExists, setCardExists] = useState(false);
   const [posts, setPosts] = useState([]);
 
@@ -50,7 +50,7 @@ const CardFeed = ({user, card, setSubPage, firstPost, isNarrowScreen, handleOpen
       <div className="self-start">
           Card Info:
       </div>
-      <CardInfo name={card.title} location={card.cities == null ? 0 : card.cities.length} miles={card.distance} people={card.posts == null ? 0 : card.posts.length} color={(card.cEmail === user.email)} isNarrowScreen={isNarrowScreen}/>
+      <CardInfo name ={card.code} infoType = "cardName" location={card.cities == null ? 0 : card.cities.length} miles={card.distance} people={card.posts == null ? 0 : card.posts.length} color={(card.cEmail === user.email)} isNarrowScreen={isNarrowScreen}/>
       {card.posts == null ? 
         <>
           <NoPosts 
