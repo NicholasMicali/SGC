@@ -20,74 +20,78 @@ import { useAuth } from '../../auth/index.jsx';
  * add more elemenst to the array to make it more steps!
  * customize the buttons to make them fit the style of the app
  * ***/
-const texts = [
-  <div className="flex flex-col justify-center items-center text-center">
-    <div className="font-bold mb-8 text-2xl">What is the Spread Goodness Challenge?</div>
-    <div className="text-xl w-4/5">Do something kind and unexpected for someone you don't know!</div>
-  </div>,
-  <div className="flex flex-col justify-center items-center text-center">
-    <div className="font-bold mb-8 text-2xl">If you are a student, first join your classroom at this page:</div>
-    <div className="flex flex-row items-center gap-2 text-xl"><img src={classroomIcon} alt="Classroom Icon" /> Classroom</div>
-  </div>,
-  <div className="flex flex-col justify-center items-center text-center">
-    <div className="mb-4 text-xl mt-6  w-4/5">If you were challenged by someone, use this button:</div>
-    <CardsButton
-      width="180px"
-      height="51.75px"
-      text="Receive"
-      borderColor="#F2DD69"
-      textColor="#EDD134"
-      backgroundColor="#FCF7DA"
-      icon={ReceiveIcon}
-      staticStyle={true}
-    />
-    <div className="mb-4 text-xl mt-4 w-4/5">If you want to start your own challenge, use this button:</div>
-    <CardsButton
-      width="180px"
-      height="51.75px"
-      text="New Card"
-      borderColor="#48B8E6"
-      textColor="#1D9FD5"
-      backgroundColor="#D1EDF9"
-      icon={NewCardIcon}
-      staticStyle={true}
-    />
-  </div>,
-  <div className="flex flex-col justify-center items-center text-center">
-    <div className="font-bold mb-6 mt-4 text-2xl ">Fill out the form and post!</div>
-    <div className="text-xl mb-4 w-4/5">Feel stuck on how to spread goodness? Visit these pages:</div>
-    <div className="flex flex-row items-center gap-2 text-xl"><img src={InspirationIcon} alt="Inspiration Icon" /> Inspiration </div>
-    <div className="flex flex-row items-center gap-2 text-xl"><img src={JournalIcon} alt="Journal Icon" /> Journal </div>
-  </div>,
-  <div className="flex flex-col justify-center items-center text-center">
-    <div className="text-xl w-4/5 mt-2 mb-4">After you post, challenge someone else here:</div>
-    <CardsButton
-      width="180px"
-      height="51.75px"
-      text="Challenge"
-      borderColor="#FD3B8A"
-      textColor="#FC086B"
-      backgroundColor="#FFD3E5"
-      icon={ChallengeIcon}
-      staticStyle={true}
-    />
-    <div className="text-xl mt-4 mb-4 w-4/5">The cards you create and post to will show up here:</div>
-    <CardsButton
-      width="180px"
-      height="51.75px"
-      text="All cards"
-      borderColor="#BEDF3D"
-      textColor="#8DAB1C"
-      backgroundColor="#EAF4C0"
-      icon={AllCardIcon}
-      staticStyle={true}
-    />
-  </div>,
-  <div className="flex flex-col justify-center items-center text-center">
-    <div className="font-bold mb-8 text-2xl">You are ready to spread goodness!</div>
-    <div className="text-xl">Click 'Get Started' to begin</div>
-  </div>
-];
+const getTexts = (userType) => {
+  const texts = [
+    <div className="flex flex-col justify-center items-center text-center">
+      <div className="font-bold mb-8 text-2xl">What is the Spread Goodness Challenge?</div>
+      <div className="text-xl w-4/5">Do something kind and unexpected for someone you don't know!</div>
+    </div>,
+    userType === "student" && <div className="flex flex-col justify-center items-center text-center">
+      <div className="font-bold mb-8 text-2xl">If you are a student, first join your classroom at this page:</div>
+      <div className="flex flex-row items-center gap-2 text-xl"><img src={classroomIcon} alt="Classroom Icon" /> Classroom</div>
+    </div>,
+    <div className="flex flex-col justify-center items-center text-center">
+      <div className="mb-4 text-xl mt-6  w-4/5">If you were challenged by someone, use this button:</div>
+      <CardsButton
+        width="180px"
+        height="51.75px"
+        text="Receive"
+        borderColor="#F2DD69"
+        textColor="#EDD134"
+        backgroundColor="#FCF7DA"
+        icon={ReceiveIcon}
+        staticStyle={true}
+      />
+      <div className="mb-4 text-xl mt-4 w-4/5">If you want to start your own challenge, use this button:</div>
+      <CardsButton
+        width="180px"
+        height="51.75px"
+        text="New Card"
+        borderColor="#48B8E6"
+        textColor="#1D9FD5"
+        backgroundColor="#D1EDF9"
+        icon={NewCardIcon}
+        staticStyle={true}
+      />
+    </div>,
+    <div className="flex flex-col justify-center items-center text-center">
+      <div className="font-bold mb-6 mt-4 text-2xl ">Fill out the form and post!</div>
+      <div className="text-xl mb-4 w-4/5">Feel stuck on how to spread goodness? Visit these pages:</div>
+      <div className="flex flex-row items-center gap-2 text-xl"><img src={InspirationIcon} alt="Inspiration Icon" /> Inspiration </div>
+      <div className="flex flex-row items-center gap-2 text-xl"><img src={JournalIcon} alt="Journal Icon" /> Journal </div>
+    </div>,
+    <div className="flex flex-col justify-center items-center text-center">
+      <div className="text-xl w-4/5 mt-2 mb-4">After you post, challenge someone else here:</div>
+      <CardsButton
+        width="180px"
+        height="51.75px"
+        text="Challenge"
+        borderColor="#FD3B8A"
+        textColor="#FC086B"
+        backgroundColor="#FFD3E5"
+        icon={ChallengeIcon}
+        staticStyle={true}
+      />
+      <div className="text-xl mt-4 mb-4 w-4/5">The cards you create and post to will show up here:</div>
+      <CardsButton
+        width="180px"
+        height="51.75px"
+        text="All cards"
+        borderColor="#BEDF3D"
+        textColor="#8DAB1C"
+        backgroundColor="#EAF4C0"
+        icon={AllCardIcon}
+        staticStyle={true}
+      />
+    </div>,
+    <div className="flex flex-col justify-center items-center text-center">
+      <div className="font-bold mb-8 text-2xl">You are ready to spread goodness!</div>
+      <div className="text-xl">Click 'Get Started' to begin</div>
+    </div>
+  ];
+  return texts.filter(Boolean);
+
+}
 
 const WalkthroughModal = ({onClose }) => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -119,9 +123,11 @@ const WalkthroughModal = ({onClose }) => {
     }
   };
 
+  const texts = getTexts(userData?.userType);
+
   return (
     (userData && <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-[400px] h-3/5 p-4 relative flex flex-col justify-center items-center">
+      <div className="bg-white rounded-lg shadow-lg w-[400px] h-3/5 p-4 relative flex flex-col justify-center items-center">
         <div className="">
           <img
             src={MenuBackgroundPNG}
