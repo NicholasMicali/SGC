@@ -22,7 +22,6 @@ const AllCards = ({back, user, select, isNarrowScreen, newCard}) => {
       try {
         const profile = await doFetchUserProfile(user.uid);
         setUserProfile(profile.data());
-        //console.log(profile.data());
         if (profile && profile.data().cards) {
           fetchCards(profile.data().cards);
         }
