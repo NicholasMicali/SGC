@@ -113,13 +113,13 @@ const WalkthroughModal = ({onClose }) => {
 
   const nextStep = () => {
     if (currentStep < texts.length - 1) {
-      setCurrentStep(userData.userType === "Visitor" && currentStep == 0 ? currentStep + 2 : currentStep + 1);
+      setCurrentStep(currentStep + 1);
     }
   };
 
   const prevStep = () => {
     if (currentStep > 0) {
-      setCurrentStep(userData.userType === "Visitor" && currentStep == 2 ? currentStep - 2: currentStep - 1);
+      setCurrentStep(currentStep - 1);
     }
   };
 
