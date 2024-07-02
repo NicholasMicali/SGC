@@ -1,17 +1,21 @@
-import React from "react";
+import React, {useState} from "react";
 import GradientButton from "./gradientButton.jsx"
 import ThankYouSVG from "../../assets/ThankYou.svg"
 import ChallengeIcon from "../../assets/ChallengeIcon.svg"
 import CardsButton from "./cardsButton.jsx";
 import Logo from "../../assets/logo.svg";
 
+import Confetti from 'react-confetti';
 //uses the gradientButton component. Hard coded the thank you for spreading goodness message,
 //also hard coded in the button text
 // ThankYou component takes in the button 
 const ThankYou = ({ onButtonClick, isNarrowScreen, onChallenge }) => {
+  const [confetti, setConfetti] = useState(200);
+  setTimeout(() => {setConfetti(0)}, 2000);
   if (!isNarrowScreen)
     return (
       <div className="flex flex-col items-center justify-center">
+        <Confetti numberOfPieces={confetti} />
         <img src={Logo} alt="Spread Goodness logo" className="w-128 h-128 p-4 mt-6" /> 
         <p className="font-sans text-black pb-3 text-base sm:text-2xl md:text-2xl lg:text-3xl">Thank you for spreading goodness!</p>
         <img src={ThankYouSVG} alt="Thank You" className="w-2/5" />
