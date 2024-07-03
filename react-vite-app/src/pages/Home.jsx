@@ -18,6 +18,8 @@ import Logo from "../assets/logo.svg";
 import WalkthroughModal from "../components/home/walkthroughModal.jsx";
 import { motion } from "framer-motion";
 import {  animateVerticalFadeIn } from "../constants/anim.js";
+import Confetti from 'react-confetti';
+import CongratsCard from "../components/cardsPages/congratsCard.jsx";
 
 
 
@@ -28,6 +30,8 @@ const HomePage = () => {
   const [currentCard, setCurrentCard] = useState(null);
   const [currentCid, setCurrentCid] = useState(null);
   const [isFirstPost, setIsFirstPost] = useState(false);
+  const [showCongrats, setShowCongrats] = useState(false);
+  const [confettiPieces, setConfettiPieces] = useState(0);
   
   const [isNarrowScreen, setIsNarrowScreen] = useState(
     window.innerWidth <= 840
@@ -37,6 +41,9 @@ const HomePage = () => {
   );
   const [showWalkthrough, setShowWalkthrough] = useState(false);
 
+  setTimeout(() => {
+    setConfettiPieces(0);
+  }, 2000)
 
   useEffect(() => {
     const handleResize = () => {
@@ -116,10 +123,13 @@ const HomePage = () => {
   if (isSigningOut) {
     return <Navigate to={"/"} replace={true} />;
   }
+
   const renderContent = () => {
     return (
     <>
       {showWalkthrough && <WalkthroughModal onClose={handleWalkthroughClose} />}
+      {showCongrats && <CongratsCard onClick={() => setShowCongrats(false)} />}
+      <div className="z-20"><Confetti numberOfPieces={confettiPieces} /></div>
       <div
         className={
           (isNarrowScreen
@@ -286,6 +296,8 @@ const HomePage = () => {
           <NewCard
             back={returnToFeed}
             user={currentUser}
+            setShowCongrats={setShowCongrats}
+            setConfettiPieces={setConfettiPieces}
             select={selectCard}
             isNarrowScreen={isNarrowScreen}
             selectChallenge={selectCardToChallenge}

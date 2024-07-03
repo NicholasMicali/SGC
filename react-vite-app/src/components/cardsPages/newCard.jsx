@@ -50,7 +50,7 @@ const useLoadScript = (src) => {
   return loaded;
 };
 
-const NewCard = ({ back, user, select, isNarrowScreen, selectChallenge }) => {
+const NewCard = ({ back, user, select, isNarrowScreen, selectChallenge, setShowCongrats, setConfettiPieces }) => {
   const [isCreatingCard, setIsCreatingCard] = useState(false);
   const [title, setTitle] = useState("");
   const [code, setCode] = useState("");
@@ -169,6 +169,8 @@ const NewCard = ({ back, user, select, isNarrowScreen, selectChallenge }) => {
           await Promise.all(classPromises);
         }
         await doIncrementUserCards(user.uid);
+
+        // return post;
       } catch (error) {
         console.error("Create card failed:", error);
         alert("Failed to create card: " + error.message);
@@ -184,16 +186,9 @@ const NewCard = ({ back, user, select, isNarrowScreen, selectChallenge }) => {
   };
 
   if (isCreatingCard && createdCard) {
-    return (
-      <>
-        <ThankYou
-          onButtonClick={() => select(createdCard, cid)}
-          isNarrowScreen={isNarrowScreen}
-          onChallenge={() => selectChallenge(createdCard, cid)}
-        >
-        </ThankYou>
-      </>
-    );
+    setShowCongrats(true);
+    setConfettiPieces(200);
+    select(createdCard, cid)
   }
 
   return (
