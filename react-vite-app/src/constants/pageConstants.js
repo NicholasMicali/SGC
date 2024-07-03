@@ -375,3 +375,21 @@ export const mediaArr = [
   ["", FacebookIcon, "Facebook Icon"],
   ,
 ];
+
+export const positiveMessages = [
+  "Fantastic! Your kindness is truly inspiring! Keep up the great work and continue spreading joy and positivity!",
+  "Wonderful job! You've just brightened someone's day. Keep making a difference with more acts of kindness!",
+  "Awesome! Your good deed is making the world a better place. Let's keep the momentum going with even more kindness!",
+  "Great work! You've taken a step towards a kinder world. Keep spreading love and positivity wherever you go!",
+  "Bravo! Your act of kindness is a beacon of hope. Continue to share your goodness and inspire others to do the same!",
+  "Amazing effort! Your kindness shines bright. Keep up the great work and continue making a positive impact!",
+  "You're doing great! Every act of kindness counts. Keep spreading good vibes and making the world a happier place!",
+  "Fantastic job! Your good deeds are making a real difference. Keep it up and continue to spread kindness every day!",
+  "Incredible work! Your actions are inspiring others. Keep showing kindness and making the world a better place!",
+  "Excellent job! Your kindness is contagious. Keep up the good work and continue to make a positive impact!",
+  "Wonderful! Your efforts are truly appreciated. Keep spreading kindness and making the world a brighter place!",
+  "Great job! Your kind actions are making a big difference. Keep up the good work and continue to inspire others!",
+  "Amazing! Your kindness is a powerful force. Keep spreading positivity and making the world a better place!",
+  "Fantastic! Your good deeds are changing lives. Keep up the amazing work and continue spreading kindness!",
+  "Outstanding! Your kindness is truly making a difference. Keep it up and continue to spread goodness wherever you go!"
+];

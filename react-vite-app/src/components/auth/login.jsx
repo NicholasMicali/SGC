@@ -30,7 +30,7 @@ const Login = ({setErrMsg}) => {
         return;
       }
       setIsSigningIn(true);
-      //console.log("User signed in: " + user);
+
     }
   };
 

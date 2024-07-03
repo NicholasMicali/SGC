@@ -23,6 +23,7 @@ const AllCards = ({back, user, select, isNarrowScreen, newCard, infoType}) => {
         const profile = await doFetchUserProfile(user.uid);
         setUserProfile(profile.data());
         if (profile && profile.data().cards) {
+          console.log("cards: " + profile.data().cards);
           fetchCards(profile.data().cards);
         }
       } catch (error) {
@@ -38,6 +39,7 @@ const AllCards = ({back, user, select, isNarrowScreen, newCard, infoType}) => {
       setCids(cardIds);
       const cardPromises = cardIds.map(cardId => doFetchCard(cardId));
       const cardObjects = await Promise.all(cardPromises);
+      console.log(cardObjects.map(cardObj => cardObj.data()));
       setCards(cardObjects.map(cardObj => cardObj.data()));
       //console.log(cards[0])
     } catch (error) {
