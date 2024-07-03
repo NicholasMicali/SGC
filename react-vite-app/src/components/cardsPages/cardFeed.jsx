@@ -70,9 +70,11 @@ const CardFeed = ({user, card, setSubPage, firstPost, isNarrowScreen, handleOpen
       : 
         <>
           <div className="font-semibold text-2xl self-start mt-8">Goodness Posts:</div>
+
           {[...posts].reverse().map((post, index) => (
             <TextCard key={index} loc={post.location} date={post.postDate} description={post.desc} name={post.uName} type={post.postType} first={index === posts.length - 1} image={post.image ? post.image : null} stickers={post?.stickers} isNarrowScreen={isNarrowScreen}/>
           ))}
+
         </>
       }
     </div>

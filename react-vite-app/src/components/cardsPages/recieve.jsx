@@ -38,7 +38,7 @@ const useLoadScript = (src) => {
   return loaded;
 };
 
-const Recieve = ({back, user, initCode, first, select, isNarrowScreen, selectChallenge}) => {
+const Recieve = ({back, user, initCode, first, select, isNarrowScreen, selectChallenge, setConfettiPieces, setShowCongrats}) => {
   const [isCreatingPost, setIsCreatingPost] = useState(false);
   const [isCodeFound, setIsCodeFound] = useState(false);
   const [code, setCode] = useState('');
@@ -193,17 +193,10 @@ const Recieve = ({back, user, initCode, first, select, isNarrowScreen, selectCha
     return <div>Loading...</div>;
   } */
 
-  if (isCreatingPost) {
-    return (
-      <>
-        <ThankYou
-          onButtonClick={() => select(currentCard, cid)}
-          isNarrowScreen={isNarrowScreen}
-          onChallenge={() => selectChallenge(currentCard, cid)}
-        >
-        </ThankYou>
-      </>
-    );
+  if (isCreatingPost && currentCard) {
+    setShowCongrats(true);
+    setConfettiPieces(200);
+    select(currentCard, cid)
   }
 
   if (isCodeFound) {

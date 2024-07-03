@@ -133,8 +133,8 @@ const HomePage = () => {
       <div
         className={
           (isNarrowScreen
-            ? "flex-grow flex flex-col items-center overflow-auto px-5 py-12 md:hidden"
-            : "flex-grow flex flex-col items-center overflow-auto py-10 max-md:hidden") + (isMediumScreen ? ' px-16' : ' px-24') + (showWalkthrough ? ' blur-sm' : '')}
+            ? "flex-grow flex flex-col items-center px-5 py-12 md:hidden"
+            : "flex-grow flex flex-col items-center py-10 max-md:hidden") + (isMediumScreen ? ' px-16' : ' px-24') + (showWalkthrough ? ' blur-sm' : '')}
       >
         {subPage === "feed" ? (
           <>
@@ -312,6 +312,8 @@ const HomePage = () => {
             select={selectCard}
             isNarrowScreen={isNarrowScreen}
             selectChallenge={selectCardToChallenge}
+            setShowCongrats={setShowCongrats}
+            setConfettiPieces={setConfettiPieces}
           />
         )}
         {subPage === "challenge" && (
