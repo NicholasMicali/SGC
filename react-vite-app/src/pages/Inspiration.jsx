@@ -48,7 +48,7 @@ const InspirationPage = () => {
             position: absolute;
             // top: 3px;
             // left: 7px;
-            top:50%;
+            top:38%;
             left:50%;
             transform: translate(-50%, -50%);
             font-size: 22px;
