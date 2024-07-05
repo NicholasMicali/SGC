@@ -275,10 +275,24 @@ export const doIncrementUserCards = async (uid) => {
   });
 };
 
+export const doDecrementUserCards = async (uid) => {
+  const userDocRef = doc(db, "user_profiles", uid);
+  return updateDoc(userDocRef, {
+    card: increment(-1)
+  });
+};
+
 export const doIncrementUserPosts = async (uid) => {
   const userDocRef = doc(db, "user_profiles", uid);
   return updateDoc(userDocRef, {
     post: increment(1)
+  });
+};
+
+export const doDecrementUserPosts = async (uid) => {
+  const userDocRef = doc(db, "user_profiles", uid);
+  return updateDoc(userDocRef, {
+    post: increment(-1)
   });
 };
 

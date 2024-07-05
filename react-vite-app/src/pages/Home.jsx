@@ -290,6 +290,8 @@ const HomePage = () => {
             select={selectCard}
             isNarrowScreen={isNarrowScreen}
             newCard={toNewCard}
+            currentCid={currentCid}
+            setCurrentCard={setCurrentCard}
           />
         )}
         {subPage === "new" && (
