@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { doFetchCard } from "../../firebase/firestore";
+import { doDecrementUserCards, doFetchCard } from "../../firebase/firestore";
 import { doFetchUserProfile, doRemoveCardFromUserProfile } from "../../firebase/firestore";
 import CardInfo from '../home/cardInfo';
 import CardsButton from "./cardsButton.jsx";
@@ -11,7 +11,7 @@ import { ArrowLeft } from "lucide-react";
 import { Trash } from "lucide-react";
 
 
-const AllCards = ({back, user, select, isNarrowScreen, newCard, infoType}) => {
+const AllCards = ({back, user, select, isNarrowScreen, newCard, infoType, currentCid, setCurrentCard}) => {
 
   const [userProfile, setUserProfile] = useState(null);
   const [cards, setCards] = useState([]);
@@ -51,6 +51,10 @@ const AllCards = ({back, user, select, isNarrowScreen, newCard, infoType}) => {
     if (window.confirm("Are you sure you want to delete this card?")) {
       try {
         await doRemoveCardFromUserProfile(user.uid, cardId);
+        await doDecrementUserCards(user.uid);
+        if (currentCid === cardId) {
+          setCurrentCard(null);
+        }
         setCids((prevCids) => prevCids.filter((cid, index) => index !== rIndex));
         setCards((prevCards) => prevCards.filter((card, index) => index !== rIndex));
         console.log("Card Removed");
