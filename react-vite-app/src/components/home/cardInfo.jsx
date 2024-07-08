@@ -62,5 +62,3 @@ return (
 };
 
 export default CardInfo;
-
-
