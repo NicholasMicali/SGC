@@ -26,7 +26,7 @@ const getTexts = (userType) => {
       <div className="font-bold mb-8 text-2xl">What is the Spread Goodness Challenge?</div>
       <div className="text-xl w-4/5">Do something kind and unexpected for someone you don't know!</div>
     </div>,
-    userType === "student" && <div className="flex flex-col justify-center items-center text-center">
+    userType === "Student" && <div className="flex flex-col justify-center items-center text-center">
       <div className="font-bold mb-8 text-2xl">If you are a student, first join your classroom at this page:</div>
       <div className="flex flex-row items-center gap-2 text-xl"><img src={classroomIcon} alt="Classroom Icon" /> Classroom</div>
     </div>,
