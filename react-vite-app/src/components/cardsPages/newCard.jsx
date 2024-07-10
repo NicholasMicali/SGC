@@ -50,6 +50,26 @@ const useLoadScript = (src) => {
   return loaded;
 };
 
+const generateCode = () => {
+  const digits = "0123456789";
+  const letters = "abcdefghijklmnopqrstuvwxyz";
+  const randomDigit = () => digits[Math.floor(Math.random() * digits.length)];
+  const randomLetter = () => letters[Math.floor(Math.random() * letters.length)];
+  return `${randomDigit()}${randomDigit()}${randomLetter()}${randomLetter()}${randomLetter()}${randomDigit()}${randomDigit()}${randomDigit()}`;
+};
+
+// Generate 5 random card codes, check if any of them was unique, return the first one that is
+const generateUniqueCode = async (attempts = 5) => {
+  const codes = Array.from({ length: attempts }, generateCode);
+  for (const code of codes) {
+    const exists = await doFetchCardByCode(code);
+    if (!exists) {
+      return code;
+    }
+  }
+  return generateUniqueCode(attempts); // Recur if no unique code was found
+};
+
 const NewCard = ({ back, user, select, isNarrowScreen, selectChallenge, setShowCongrats, setConfettiPieces }) => {
   const [isCreatingCard, setIsCreatingCard] = useState(false);
   const [title, setTitle] = useState("");
@@ -123,6 +143,14 @@ const NewCard = ({ back, user, select, isNarrowScreen, selectChallenge, setShowC
       fetchLoc();
     }
   }, [user?.uid, userProfile]);
+
+  useEffect(() => {
+    const setInitialCode = async () => {
+      const uniqueCode = await generateUniqueCode();
+      setCode(uniqueCode);
+    };
+    setInitialCode();
+  }, []);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -221,7 +249,7 @@ const NewCard = ({ back, user, select, isNarrowScreen, selectChallenge, setShowC
           className="flex flex-col gap-1 w-full mt-3"
         >
           <label htmlFor={"code"} className="self-start">
-            Code
+            Code (You can change this if you want!)
           </label>
           <input
             className="rounded-3xl border-[1px] p-2 md:p-3 border-gray-400"
@@ -257,7 +285,7 @@ const NewCard = ({ back, user, select, isNarrowScreen, selectChallenge, setShowC
             {...animateQuickDownToUpWithDelay(0.4)}
             className="self-start mt-6"
           >
-            Add a photo:
+            Add a photo
           </motion.div>
           <motion.img
             {...animateQuickDownToUpWithDelay(0.4)}
