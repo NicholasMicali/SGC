@@ -84,6 +84,9 @@ const NewCard = ({ back, user, select, isNarrowScreen, selectChallenge, setShowC
   const [location, setLocation] = useState('');
   const [manualLocation, setManualLocation] = useState('');
   const [toggleManual, setToggleManual] = useState(false);
+  const [codeValid, setCodeValid] = useState(false);
+  const [codeUnique, setCodeUnique] = useState(false);
+  const [codeTouched, setCodeTouched] = useState(false);
   const monthNames = [
     "January", "February", "March", "April", "May", "June",
      "July", "August", "September", "October", "November", "December"
@@ -151,6 +154,32 @@ const NewCard = ({ back, user, select, isNarrowScreen, selectChallenge, setShowC
     };
     setInitialCode();
   }, []);
+
+
+  const validateCodeFormat = (code) => {
+    return /^\d{2}[A-Za-z]{3}\d{3}$/.test(code);
+  };
+
+  const checkCodeUniqueness = async (code) => {
+    const already = await doFetchCardByCode(code);
+    return !already;
+  };
+
+  const handleCodeChange = async (e) => {
+    const newCode = e.target.value ? e.target.value.toLowerCase() : '';
+    setCode(newCode);
+    setCodeTouched(true);
+  
+    const isValidFormat = validateCodeFormat(newCode);
+    setCodeValid(isValidFormat);
+  
+    if (isValidFormat) {
+      const isUnique = await checkCodeUniqueness(newCode);
+      setCodeUnique(isUnique);
+    } else {
+      setCodeUnique(false);
+    }
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -259,9 +288,28 @@ const NewCard = ({ back, user, select, isNarrowScreen, selectChallenge, setShowC
             type="text"
             id="code"
             value={code}
-            onChange={(e) => setCode(e.target.value ? e.target.value.toLowerCase() : '')}
+            onChange={handleCodeChange}
             required
           />
+          {codeTouched && (
+            <div>
+              {!codeValid && (
+                <div style={{ color: 'red' }}>
+                  Invalid code format. Code must be in the format 12abc345.
+                </div>
+              )}
+              {codeValid && !codeUnique && (
+                <div style={{ color: 'red' }}>
+                  Code is already taken. Please choose another one.
+                </div>
+              )}
+              {codeValid && codeUnique && (
+                <div style={{ color: 'green' }}>
+                  Code is valid and unique.
+                </div>
+              )}
+            </div>
+          )}
         </motion.div>
         <div className="flex flex-col gap-1 w-full mt-3">
           <motion.label
