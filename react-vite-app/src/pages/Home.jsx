@@ -47,7 +47,7 @@ const HomePage = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsNarrowScreen(window.innerWidth <= 840);
+      setIsNarrowScreen(window.innerWidth <= 768);
       setIsMediumScreen(window.innerWidth <= 1050);
     };
 

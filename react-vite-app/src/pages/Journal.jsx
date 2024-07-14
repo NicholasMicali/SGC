@@ -12,7 +12,7 @@ const JournalPage = () => {
   const [selectedPrompt, setSelectedPrompt] = useState(null);
 
   return (
-    <div className="flex-grow flex flex-col items-center overflow-auto p-4">
+    <div className="flex-grow flex flex-col items-center overflow-auto p-4 h-full">
       <img src={Logo} alt="Spread Goodness logo" className="p-4 z-0" /> 
       <div className="self-start text-[4rem] font-bold">Journal Prompt</div>
       <hr className="w-full border-t-2 border-idle-pink my-4" />
