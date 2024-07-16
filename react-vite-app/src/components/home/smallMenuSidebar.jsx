@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MenuIcon from "../../assets/MenuIcon.svg";
-import SignoutIcon from "../../assets/SignoutIcon.svg";
+import { LogOut } from "lucide-react";
 import MenuXIcon from "../../assets/MenuXIcon.svg";
 import NavItem from "./navItem";
 import MenuBackgroundPNG from "../../assets/MenuBackground.png";
@@ -15,8 +15,7 @@ const SmallMenuSidebar = ({ user, signOut, page, setPage }) => {
   const navigate = useNavigate(); // Hook for navigation
 
   const onClick = (path) => {
-    setPage(path[1]); // Sets the page state to the path
-    navigate(path[0]); // Navigates to the given path
+    navigate(path); // Navigates to the given path
   };
 
   return (
@@ -47,13 +46,15 @@ const SmallMenuSidebar = ({ user, signOut, page, setPage }) => {
           </button>
           <div className="relative flex flex-col w-full items-start p-2 mxy-8 gap-2 z-10">
             {navItemArr.map((item, index) => {
+              if (user.userType === "Visitor" && index === 4) return;
               return (
                 <NavItem
+                  path={item[0]}
                   key={index}
-                  icon={page === item[1] ? item[2] : item[3]}
+                  unselectedIcon={item[3]}
+                  selectedIcon={item[2]}
                   text={item[1]}
-                  page={page}
-                  onClick={() => onClick(item.slice(0, 2))}
+                  onClick={() => onClick(item[0])}
                   index={index}
                 />
               );
@@ -63,19 +64,22 @@ const SmallMenuSidebar = ({ user, signOut, page, setPage }) => {
               href="https://docs.google.com/forms/d/e/1FAIpQLSew72rWdPKoISCttPq9xHj05BxyJpI4jv57i0jZrW4K2-rSMg/viewform?usp=sf_link"
               target="_blank"
               rel="noopener noreferrer"
-              {...animateSideFadeIn(true,0.1)}
+              {...animateSideFadeIn(true, 0.1)}
             >
               <div className="bg-gradient-to-r from-gradient-start via-gradient-mid to-gradient-end inline-block text-transparent bg-clip-text cursor-pointer">
                 Give us Feedback
               </div>
             </motion.a>
             <div className="w-full h-[1px] bg-gray-300"></div>
-            <NavItem
-              icon={SignoutIcon}
-              text="Sign Out"
-              page={page}
-              onClick={signOut}
-            />
+            <div className="flex flex-col justify-end h-full w-full">
+              <button
+                className=" flex items-center self-start m-1 font-bold gap-2"
+                onClick={signOut}
+              >
+                <LogOut size={20} />
+                Sign Out
+              </button>
+            </div>
             <div className="w-full h-[1px] bg-gray-300"></div>
             <div className="fixed bottom-0 right-0 z-50 flex items-center justify-between p-4">
               <motion.div {...animateVerticalFadeIn(0.2)} className="mr-5">

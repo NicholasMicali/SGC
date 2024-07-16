@@ -368,11 +368,11 @@ export const mediaArr = [
   ["https://twitter.com/goodnessdotlove", TwitterIcon, "Twitter Icon"],
   ["https://www.youtube.com/@spreadgoodnesstv", YoutubeIcon, "Youtube Icon"],
   [
-    "https://www.instagram.com/spreadgoodnesstv?igsh=MzRlODBiNWFlZA==",
+    "https://www.instagram.com/spreadgoodness.love/",
     InstagramIcon,
     "Instagram Icon",
   ],
-  ["", FacebookIcon, "Facebook Icon"],
+  ["www.facebook.com/spreadgoodness.love", FacebookIcon, "Facebook Icon"],
   ,
 ];
 

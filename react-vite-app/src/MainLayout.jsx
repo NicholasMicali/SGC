@@ -3,6 +3,7 @@ import { doSignOut } from "./firebase/auth";
 import { useAuth } from "./auth/index";
 import SmallMenuSidebar from "./components/home/smallMenuSidebar";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 const MainLayout = ({ children }) => {
   const { currentUser } = useAuth();
   const navigate = useNavigate(); // Hook for navigation
@@ -19,6 +20,12 @@ const MainLayout = ({ children }) => {
     }
     navigate("/");
   };
+
+  useEffect(() => {
+    if (!currentUser) {
+      navigate("/");
+    }
+  }, [])
   return (
     <div className="flex h-screen">
       <LeftSidebar user={currentUser} signOut={signOut}/>
