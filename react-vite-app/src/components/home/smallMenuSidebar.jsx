@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import MenuIcon from "../../assets/MenuIcon.svg";
 import { LogOut } from "lucide-react";
@@ -11,12 +11,28 @@ import { animateVerticalFadeIn, animateSideFadeIn } from "../../constants/anim";
 
 const SmallMenuSidebar = ({ user, signOut, page, setPage }) => {
   const [isSmallMenu, setSmallMenu] = useState(false);
+  const sidebarRef = useRef(null); // Step 1: Create a ref for the sidebar
+
 
   const navigate = useNavigate(); // Hook for navigation
 
   const onClick = (path) => {
     navigate(path); // Navigates to the given path
   };
+
+  //basically allows user to click outside of sidebar to close it
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isSmallMenu && sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setSmallMenu(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isSmallMenu]); 
 
   return (
     <>
@@ -37,7 +53,7 @@ const SmallMenuSidebar = ({ user, signOut, page, setPage }) => {
       )}
 
       {isSmallMenu && (
-        <div className="fixed top-0 right-0 w-64 h-full bg-white z-40 shadow-lg p-4">
+        <div ref={sidebarRef} className="fixed top-0 right-0 w-64 h-full bg-white z-40 shadow-lg p-4">
           <button
             className="z-30 p-1 absolute top-2 right-1"
             onClick={() => setSmallMenu(!isSmallMenu)}
