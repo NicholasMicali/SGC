@@ -5,8 +5,6 @@ import CardInfo from '../home/cardInfo';
 import CardsButton from "./cardsButton.jsx";
 import NewCardIcon from "../../assets/NewCardIcon.svg";
 import StudentInfo from '../home/studentInfo.jsx';
-import Logo from "../../assets/logo.svg";
-import SmallProfile from "../home/smallProfile.jsx"
 import { ArrowLeft } from "lucide-react";
 import { Trash } from "lucide-react";
 
@@ -82,7 +80,7 @@ const AllCards = ({back, user, select, isNarrowScreen, newCard, infoType, curren
           <div className="w-full cursor-pointer" onClick={() => select(card, cids[index])}>
             <CardInfo name={card.title} infoType="cardCode" location={card.cities ? card.cities.length : "0"} miles={card.distance} people={card.posts ? card.posts.length : "0"} color={(card.cEmail === user.email)} isNarrowScreen={isNarrowScreen}/>
           </div>
-          <button className="py-2 px-3 ml-4" onClick={() => removeCard(cids[index], index)}><Trash></Trash></button>
+          {/* <button className="py-2 px-3 ml-4" onClick={() => removeCard(cids[index], index)}><Trash></Trash></button> */}
         </div>
       ))}
       <div className="self-start">
