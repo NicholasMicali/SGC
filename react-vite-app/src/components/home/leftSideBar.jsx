@@ -25,14 +25,14 @@ const LeftSidebar = ({ user, signOut, back, setPage }) => {
     fetchUserProfile();
   }, [user]);
 
-  if (userData == null) {
-    return <>Not Signed In...</>;
-  }
+  // if (userData == null) {
+  //   return <>Not Signed In...</>;
+  // }
 
   return (
     userData && (
       <aside
-        className="min-w-64 h-full bg-light-pink overflow-auto p-4 flex flex-col items-center max-md:hidden fixed z-10"
+        className="min-w-64 h-full bg-light-pink p-4 flex flex-col items-center max-md:hidden fixed z-10"
       >
         <>
           <motion.img src={Logo} alt="Spread Goodness logo" className="p-4 mb-4" {...animateVerticalFadeIn(0, false)} />
