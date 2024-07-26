@@ -1,6 +1,5 @@
 import React from "react";
 
-
 const CustomInput = ({type, placeholder, value, onChange, id, labelName, pattern}) => {
     return (
         <div className="flex flex-col gap-1 w-full mt-3">
