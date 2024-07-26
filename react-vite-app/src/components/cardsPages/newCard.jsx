@@ -387,7 +387,7 @@ const NewCard = ({ back, user, select, isNarrowScreen, selectChallenge, setShowC
             value={location}
             readOnly
           />
-          <div className="self-start mt-2">or</div>
+          <div className="self-start mt-2">or if you want to use a different location, enter one below</div>
           {toggleManual ? 
               <>
                 <button type="button" className="rounded-2xl border-[1px] w-[70px] py-2 px-3 border-black" onClick={()=> setToggleManual(false)}>Close</button>
@@ -395,7 +395,7 @@ const NewCard = ({ back, user, select, isNarrowScreen, selectChallenge, setShowC
                   value={manualLocation}
                   onChange={setManualLocation}
                   className="rounded-3xl border-[1px] p-2 md:p-3 border-gray-400"
-                  placeholder="Enter a location (leave empty to use fetched location above)"
+                  placeholder="Enter a location"
                   required
                 />
               </>

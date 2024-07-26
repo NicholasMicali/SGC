@@ -3,6 +3,7 @@ import { useAuth } from "../auth/index";
 import { useNavigate } from "react-router-dom";
 import { doCreateUserProfile, doFetchUserProfile } from "../firebase/firestore";
 import CustomInput from "../components/auth/customInput.jsx";
+import CustomSelect from "../components/auth/customSelect.jsx";
 import CardsButton from "../components/cardsPages/cardsButton.jsx";
 import { ArrowLeft } from "lucide-react";
 import GoogleAutocompleteInput from "../components/location/googleAutocompleteInput.jsx";
@@ -46,7 +47,7 @@ const CreateProfilePage = () => {
   const [userRole, setUserRole] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [age, setAge] = useState("");
+  const [grade, setGrade] = useState("");
   const [location, setLocation] = useState("");
   const navigate = useNavigate();
 
@@ -107,7 +108,7 @@ const CreateProfilePage = () => {
         firstName,
         lastName,
         location,
-        age
+        grade
       );
       navigate("/home");
     } catch (error) {
@@ -120,6 +121,22 @@ const CreateProfilePage = () => {
   if (!isScriptLoaded) {
     return <div>Loading...</div>;
   }
+
+  const gradeOptions = [
+    { value: "K", label: "Kindergarten" },
+    { value: "1", label: "1st Grade" },
+    { value: "2", label: "2nd Grade" },
+    { value: "3", label: "3rd Grade" },
+    { value: "4", label: "4th Grade" },
+    { value: "5", label: "5th Grade" },
+    { value: "6", label: "6th Grade" },
+    { value: "7", label: "7th Grade" },
+    { value: "8", label: "8th Grade" },
+    { value: "9", label: "9th Grade" },
+    { value: "10", label: "10th Grade" },
+    { value: "11", label: "11th Grade" },
+    { value: "12", label: "12th Grade" },
+  ];
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-tr from-purple-500 to-pink-500">
@@ -194,16 +211,13 @@ const CreateProfilePage = () => {
               onChange={(e) => setLastName(e.target.value)}
               labelName="Last Name"
             />
-            <div className="w-2/12 self-start">
-              <CustomInput
-                type="text"
-                placeholder="Age"
-                value={age}
-                onChange={(e) => setAge(e.target.value)}
-                labelName="Age"
-                pattern="\d*"
-              />
-            </div>
+            <CustomSelect
+              id="grade"
+              value={grade}
+              onChange={(e) => setGrade(e.target.value)}
+              labelName="If you are a student, enter your grade"
+              options={gradeOptions}
+            />
             <div className="flex justify-center w-full mt-6">
               <CardsButton
                 text="Next"
