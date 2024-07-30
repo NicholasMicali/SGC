@@ -17,11 +17,9 @@ import SmallSearchBar from "../components/home/smallSearchBar.jsx";
 import Logo from "../assets/logo.svg";
 import WalkthroughModal from "../components/home/walkthroughModal.jsx";
 import { motion } from "framer-motion";
-import {  animateVerticalFadeIn } from "../constants/anim.js";
-import Confetti from 'react-confetti';
+import { animateVerticalFadeIn } from "../constants/anim.js";
+import Confetti from "react-confetti";
 import CongratsCard from "../components/cardsPages/congratsCard.jsx";
-
-
 
 const HomePage = () => {
   const { currentUser } = useAuth();
@@ -32,7 +30,7 @@ const HomePage = () => {
   const [isFirstPost, setIsFirstPost] = useState(false);
   const [showCongrats, setShowCongrats] = useState(false);
   const [confettiPieces, setConfettiPieces] = useState(0);
-  
+
   const [isNarrowScreen, setIsNarrowScreen] = useState(
     window.innerWidth <= 840
   );
@@ -43,7 +41,7 @@ const HomePage = () => {
 
   setTimeout(() => {
     setConfettiPieces(0);
-  }, 2000)
+  }, 2000);
 
   useEffect(() => {
     const handleResize = () => {
@@ -120,163 +118,185 @@ const HomePage = () => {
     setShowWalkthrough(true);
   };
 
+  const onClickChallengeButton = () => {
+    setSubPage("challenge");
+    setShowCongrats(false);
+  };
+
   if (isSigningOut) {
     return <Navigate to={"/"} replace={true} />;
   }
 
   const renderContent = () => {
     return (
-    <>
-      {showWalkthrough && <WalkthroughModal onClose={handleWalkthroughClose} />}
-      {showCongrats && <CongratsCard onClick={() => setShowCongrats(false)} />}
-      <div className="z-20"><Confetti numberOfPieces={confettiPieces} /></div>
-      <div
-        className={
-          (isNarrowScreen
-            ? "flex-grow flex flex-col items-center px-5 py-12 md:hidden"
-            : "flex-grow flex flex-col items-center py-10 max-md:hidden") + (isMediumScreen ? ' px-16' : ' px-24') + (showWalkthrough ? ' blur-sm' : '')}
-      >
-        {subPage === "feed" ? (
-          <>
-            {isNarrowScreen ? (
-              <>
-                <img src={Logo} alt="Spread Goodness logo" className="p-4 z-0" /> 
-                <SmallSearchBar
-                  user={currentUser}
-                  signOut={signOut}
-                  page={subPage}
-                  onSearch={handleSearch}
-                />
-                </>
-            ) : (
-              <SearchBar onSearch={handleSearch} width="full" />
-            )}
-            {isMediumScreen ? (
-              <div className="flex flex-col justify-center my-4 w-full">
-                <div className="flex flex-row justify-center gap-2 my-2 w-full">
-                  <motion.div {...animateVerticalFadeIn(0)}> 
-                    <CardsButton
-                    width="180px"
-                    height="51.75px"
-                    text="All cards"
-                    borderColor="#BEDF3D"
-                    textColor="#8DAB1C"
-                    backgroundColor="#EAF4C0"
-                    icon={AllCardIcon}
-                    onClick={() => setSubPage("all")}
-                  />
-                  </motion.div>
-
-                  <motion.div {...animateVerticalFadeIn(.1)}> 
-                  <CardsButton
-                    width="180px"
-                    height="51.75px"
-                    text="New Card"
-                    borderColor="#48B8E6"
-                    textColor="#1D9FD5"
-                    backgroundColor="#D1EDF9"
-                    icon={NewCardIcon}
-                    onClick={() => setSubPage("new")}
-                  />
-                  </motion.div>
-                </div>
-                <div className="flex flex-row justify-center gap-2 my-2 w-full">
-                <motion.div {...animateVerticalFadeIn(.2)}> 
-                  <CardsButton
-                    width="180px"
-                    height="51.75px"
-                    text="Receive"
-                    borderColor="#F2DD69"
-                    textColor="#EDD134"
-                    backgroundColor="#FCF7DA"
-                    icon={ReceiveIcon}
-                    onClick={() => setSubPage("receive")}
-                  />
-                  </motion.div>
-                  <motion.div {...animateVerticalFadeIn(.3)}>
-                  <CardsButton
-                  {...animateVerticalFadeIn(.3)}
-                    width="180px"
-                    height="51.75px"
-                    text="Challenge"
-                    borderColor="#FD3B8A"
-                    textColor="#FC086B"
-                    backgroundColor="#FFD3E5"
-                    icon={ChallengeIcon}
-                    onClick={() => setSubPage("challenge")}
-                  />
-                  </motion.div>
-                </div>
-              </div>
-            ) : (
-              <div className="flex flex-row justify-between gap-4 my-4 w-full">
-                <motion.div {...animateVerticalFadeIn(0)}> 
-                    <CardsButton
-                    width="180px"
-                    height="51.75px"
-                    text="All cards"
-                    borderColor="#BEDF3D"
-                    textColor="#8DAB1C"
-                    backgroundColor="#EAF4C0"
-                    icon={AllCardIcon}
-                    onClick={() => setSubPage("all")}
-                  />
-                  </motion.div>
-                <motion.div {...animateVerticalFadeIn(.1)}>
-                <CardsButton
-                {...animateVerticalFadeIn(.1)}
-                  width="180px"
-                  height="51.75px"
-                  text="New Card"
-                  borderColor="#48B8E6"
-                  textColor="#1D9FD5"
-                  backgroundColor="#D1EDF9"
-                  icon={NewCardIcon}
-                  onClick={() => setSubPage("new")}
-                />
-                </motion.div>
-                <motion.div {...animateVerticalFadeIn(.2)}>
-                <CardsButton
-                {...animateVerticalFadeIn(.2)}
-                  width="180px"
-                  height="51.75px"
-                  text="Receive"
-                  borderColor="#F2DD69"
-                  textColor="#EDD134"
-                  backgroundColor="#FCF7DA"
-                  icon={ReceiveIcon}
-                  onClick={() => setSubPage("receive")}
-                />
-                </motion.div>
-                <motion.div {...animateVerticalFadeIn(.3)}>
-                <CardsButton
-                {...animateVerticalFadeIn(.3)}
-                  width="180px"
-                  height="51.75px"
-                  text="Challenge"
-                  borderColor="#FD3B8A"
-                  textColor="#FC086B"
-                  backgroundColor="#FFD3E5"
-                  icon={ChallengeIcon}
-                  onClick={() => setSubPage("challenge")}
-                />
-                </motion.div>
-              </div>
-            )}
-            <CardFeed
-              user={currentUser}
-              card={currentCard}
-              setSubPage={setSubPage}
-              firstPost={firstPost}
-              isNarrowScreen={isNarrowScreen}
-              handleOpen={handleWalkthroughOpen}
-            />
-          </>
-        ) : (
-          renderSubPage()
+      <>
+        <div className="fixed z-30 w-screen">
+          <Confetti numberOfPieces={confettiPieces} />
+        </div>
+        {showWalkthrough && (
+          <WalkthroughModal onClose={handleWalkthroughClose} />
         )}
-      </div>
-    </>
+        {showCongrats && (
+          <CongratsCard
+            onClickX={() => setShowCongrats(false)}
+            onClickChallenge={onClickChallengeButton}
+          />
+        )}
+
+        <div
+          className={
+            (isNarrowScreen
+              ? "flex-grow flex flex-col items-center px-5 py-12 md:hidden"
+              : "flex-grow flex flex-col items-center py-10 max-md:hidden") +
+            (isMediumScreen ? " px-16" : " px-24") +
+            (showWalkthrough ? " blur-sm" : "")
+          }
+        >
+          {subPage === "feed" ? (
+            <>
+              {isNarrowScreen ? (
+                <>
+                  <img
+                    src={Logo}
+                    alt="Spread Goodness logo"
+                    className="p-4 z-0"
+                  />
+                  <SmallSearchBar
+                    user={currentUser}
+                    signOut={signOut}
+                    page={subPage}
+                    onSearch={handleSearch}
+                  />
+                </>
+              ) : (
+                <SearchBar onSearch={handleSearch} width="full" />
+              )}
+              {isMediumScreen ? (
+                <div className="flex flex-col justify-center my-4 w-full">
+                  <div className="flex flex-row justify-center gap-2 my-2 w-full">
+                    <motion.div {...animateVerticalFadeIn(0)}>
+                      <CardsButton
+                        width="180px"
+                        height="51.75px"
+                        text="All cards"
+                        borderColor="#BEDF3D"
+                        textColor="#8DAB1C"
+                        backgroundColor="#EAF4C0"
+                        icon={AllCardIcon}
+                        onClick={() => setSubPage("all")}
+                      />
+                    </motion.div>
+
+                    <motion.div {...animateVerticalFadeIn(0.1)}>
+                      <CardsButton
+                        width="180px"
+                        height="51.75px"
+                        text="New Card"
+                        borderColor="#48B8E6"
+                        textColor="#1D9FD5"
+                        backgroundColor="#D1EDF9"
+                        icon={NewCardIcon}
+                        onClick={() => setSubPage("new")}
+                      />
+                    </motion.div>
+                  </div>
+                  <div className="flex flex-row justify-center gap-2 my-2 w-full">
+                    <motion.div {...animateVerticalFadeIn(0.2)}>
+                      <CardsButton
+                        width="180px"
+                        height="51.75px"
+                        text="Receive"
+                        borderColor="#F2DD69"
+                        textColor="#EDD134"
+                        backgroundColor="#FCF7DA"
+                        icon={ReceiveIcon}
+                        onClick={() => setSubPage("receive")}
+                      />
+                    </motion.div>
+                    <motion.div {...animateVerticalFadeIn(0.3)}>
+                      <CardsButton
+                        {...animateVerticalFadeIn(0.3)}
+                        width="180px"
+                        height="51.75px"
+                        text="Challenge"
+                        borderColor="#FD3B8A"
+                        textColor="#FC086B"
+                        backgroundColor="#FFD3E5"
+                        icon={ChallengeIcon}
+                        onClick={() => setSubPage("challenge")}
+                      />
+                    </motion.div>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex flex-row justify-between gap-4 my-4 w-full">
+                  <motion.div {...animateVerticalFadeIn(0)}>
+                    <CardsButton
+                      width="180px"
+                      height="51.75px"
+                      text="All cards"
+                      borderColor="#BEDF3D"
+                      textColor="#8DAB1C"
+                      backgroundColor="#EAF4C0"
+                      icon={AllCardIcon}
+                      onClick={() => setSubPage("all")}
+                    />
+                  </motion.div>
+                  <motion.div {...animateVerticalFadeIn(0.1)}>
+                    <CardsButton
+                      {...animateVerticalFadeIn(0.1)}
+                      width="180px"
+                      height="51.75px"
+                      text="New Card"
+                      borderColor="#48B8E6"
+                      textColor="#1D9FD5"
+                      backgroundColor="#D1EDF9"
+                      icon={NewCardIcon}
+                      onClick={() => setSubPage("new")}
+                    />
+                  </motion.div>
+                  <motion.div {...animateVerticalFadeIn(0.2)}>
+                    <CardsButton
+                      {...animateVerticalFadeIn(0.2)}
+                      width="180px"
+                      height="51.75px"
+                      text="Receive"
+                      borderColor="#F2DD69"
+                      textColor="#EDD134"
+                      backgroundColor="#FCF7DA"
+                      icon={ReceiveIcon}
+                      onClick={() => setSubPage("receive")}
+                    />
+                  </motion.div>
+                  <motion.div {...animateVerticalFadeIn(0.3)}>
+                    <CardsButton
+                      {...animateVerticalFadeIn(0.3)}
+                      width="180px"
+                      height="51.75px"
+                      text="Challenge"
+                      borderColor="#FD3B8A"
+                      textColor="#FC086B"
+                      backgroundColor="#FFD3E5"
+                      icon={ChallengeIcon}
+                      onClick={() => setSubPage("challenge")}
+                    />
+                  </motion.div>
+                </div>
+              )}
+              <CardFeed
+                user={currentUser}
+                card={currentCard}
+                setSubPage={setSubPage}
+                firstPost={firstPost}
+                isNarrowScreen={isNarrowScreen}
+                handleOpen={handleWalkthroughOpen}
+              />
+            </>
+          ) : (
+            renderSubPage()
+          )}
+        </div>
+      </>
     );
   };
 
