@@ -92,7 +92,7 @@ const CreateProfilePage = () => {
 
   const handleBack = () => {
     setStep(step - 1);
-  }
+  };
 
   const handleFileChange = (e) => {
     setProfilePic(URL.createObjectURL(e.target.files[0]));
@@ -153,6 +153,11 @@ const CreateProfilePage = () => {
           <span className="text-sm font-semibold">{`Step ${step} of 3`}</span>
         </div>
         <h2 className="text-xl font-bold self-center">Profile Setup</h2>
+        {step != 1 && (
+        <div className="text-xl self-center">
+          <p>{userRole}</p>
+        </div>
+      )}
 
         {step === 1 && (
           <div className="flex flex-col items-center gap-4">
