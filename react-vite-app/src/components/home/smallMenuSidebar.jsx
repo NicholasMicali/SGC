@@ -64,7 +64,7 @@ const SmallMenuSidebar = ({ user, signOut, page, setPage }) => {
             className="absolute top-0 right-0 w-203 h-151 z-20"
           />
            {unreadCount > 0 && (
-                <div className="absolute top-0 right-0 bg-red-600 text-white rounded-full h-6 w-6 flex items-center justify-center text-xs">
+                <div className="absolute top-7 right-5 bg-red-600 text-white rounded-full h-6 w-6 z-40 flex items-center justify-center text-xs">
                  {unreadCount}
                 </div>
             )}
