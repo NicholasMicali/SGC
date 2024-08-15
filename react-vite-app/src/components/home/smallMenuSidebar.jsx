@@ -9,36 +9,18 @@ import { navItemArr, mediaArr } from "../../constants/pageConstants";
 import { motion } from "framer-motion";
 import { animateVerticalFadeIn, animateSideFadeIn } from "../../constants/anim";
 import { doFetchUserProfile} from "../../firebase/firestore";
+import Notification from "./notification";
 
 const SmallMenuSidebar = ({ user, signOut, page, setPage }) => {
   const [isSmallMenu, setSmallMenu] = useState(false);
-  const [userProfile, setUserProfile] = useState(null);
-  const [unreadCount, setUnreadCount] = useState(1);
 
   const sidebarRef = useRef(null); // Step 1: Create a ref for the sidebar
-
 
   const navigate = useNavigate(); // Hook for navigation
 
   const onClick = (path) => {
     navigate(path); // Navigates to the given path
   };
-
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      try {
-        const profile = await doFetchUserProfile(user.uid);
-        setUserProfile(profile.data());
-        if (profile && profile.data().unreadNotifications) {
-          setUnreadCount(profile.data().unreadNotifications);
-        }
-      } catch (error) {
-        console.error("Failed to fetch user profile:", error);
-      }
-    };
-
-    fetchUserProfile();
-  }, [user.uid]);
 
   //basically allows user to click outside of sidebar to close it
   useEffect(() => {
@@ -63,11 +45,11 @@ const SmallMenuSidebar = ({ user, signOut, page, setPage }) => {
             alt="Menu Background"
             className="absolute top-0 right-0 w-203 h-151 z-20"
           />
-           {unreadCount > 0 && (
-                <div className="absolute top-7 right-5 bg-red-600 text-white rounded-full h-6 w-6 z-40 flex items-center justify-center text-xs">
-                 {unreadCount}
-                </div>
-            )}
+           <div className = "absolute top-6 right-5 z-40">
+                      <Notification
+                        user={user}
+                      />
+                      </div>
           <button
             className="z-30 p-1 absolute top-6 right-8 mt-2 ml-3"
             onClick={() => setSmallMenu(!isSmallMenu)}

@@ -20,6 +20,7 @@ import { motion } from "framer-motion";
 import { animateVerticalFadeIn } from "../constants/anim.js";
 import Confetti from "react-confetti";
 import CongratsCard from "../components/cardsPages/congratsCard.jsx";
+import Notification from "../components/home/notification.jsx";
 
 const HomePage = () => {
   const { currentUser } = useAuth();
@@ -174,7 +175,7 @@ const HomePage = () => {
               {isMediumScreen ? (
                 <div className="flex flex-col justify-center my-4 w-full">
                   <div className="flex flex-row justify-center gap-2 my-2 w-full">
-                    <motion.div {...animateVerticalFadeIn(0)}>
+                    <motion.div className="relative" {...animateVerticalFadeIn(0)}>
                       <CardsButton
                         width="180px"
                         height="51.75px"
@@ -185,6 +186,11 @@ const HomePage = () => {
                         icon={AllCardIcon}
                         onClick={() => setSubPage("all")}
                       />
+                      <div className = "absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4">
+                      <Notification
+                        user={currentUser}
+                      />
+                      </div>
                     </motion.div>
 
                     <motion.div {...animateVerticalFadeIn(0.1)}>
