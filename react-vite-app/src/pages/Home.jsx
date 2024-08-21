@@ -178,24 +178,23 @@ const HomePage = () => {
                       <CardsButton
                         width="180px"
                         height="65px"
-                        text="All cards"
-                        borderColor="#BEDF3D"
-                        textColor="#8DAB1C"
-                        backgroundColor="#EAF4C0"
-                        icon={AllCardIcon}
-                        onClick={() => setSubPage("all")}
+                        text="Accept a challenge"
+                        borderColor="#03B5E5"
+                        textColor="#FFFFFF"
+                        backgroundColor="#03B5E5"
+                        onClick={() => setSubPage("receive")}
                       />
                     </motion.div>
 
                     <motion.div {...animateVerticalFadeIn(0.1)}>
                       <CardsButton
+                        {...animateVerticalFadeIn(0.1)}
                         width="180px"
                         height="65px"
-                        text="New Card"
-                        borderColor="#48B8E6"
-                        textColor="#1D9FD5"
-                        backgroundColor="#D1EDF9"
-                        icon={NewCardIcon}
+                        text="Start a new challenge"
+                        borderColor="#F21C80"
+                        textColor="#FFFFFF"
+                        backgroundColor="#F21C80"
                         onClick={() => setSubPage("new")}
                       />
                     </motion.div>
@@ -203,14 +202,14 @@ const HomePage = () => {
                   <div className="flex flex-row justify-center gap-2 my-2 w-full">
                     <motion.div {...animateVerticalFadeIn(0.2)}>
                       <CardsButton
+                        {...animateVerticalFadeIn(0.2)}
                         width="180px"
                         height="65px"
-                        text="Receive"
-                        borderColor="#F2DD69"
-                        textColor="#EDD134"
-                        backgroundColor="#FCF7DA"
-                        icon={ReceiveIcon}
-                        onClick={() => setSubPage("receive")}
+                        text="Nominate others"
+                        borderColor="#FFBD21"
+                        textColor="#FFFFFF"
+                        backgroundColor="#FFBD21"
+                        onClick={() => setSubPage("challenge")}
                       />
                     </motion.div>
                     <motion.div {...animateVerticalFadeIn(0.3)}>
@@ -218,12 +217,11 @@ const HomePage = () => {
                         {...animateVerticalFadeIn(0.3)}
                         width="180px"
                         height="65px"
-                        text="Challenge"
-                        borderColor="#FD3B8A"
-                        textColor="#FC086B"
-                        backgroundColor="#FFD3E5"
-                        icon={ChallengeIcon}
-                        onClick={() => setSubPage("challenge")}
+                        text="See my posts"
+                        borderColor="#95AD2A"
+                        textColor="#FFFFFF"
+                        backgroundColor="#95AD2A"
+                        onClick={() => setSubPage("all")}
                       />
                     </motion.div>
                   </div>
@@ -238,7 +236,7 @@ const HomePage = () => {
                       borderColor="#03B5E5"
                       textColor="#FFFFFF"
                       backgroundColor="#03B5E5"
-                      onClick={() => setSubPage("recieve")}
+                      onClick={() => setSubPage("receive")}
                     />
                   </motion.div>
                   <motion.div {...animateVerticalFadeIn(0.1)}>
