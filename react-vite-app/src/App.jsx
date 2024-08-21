@@ -12,6 +12,7 @@ import JournalPage from "./pages/Journal";
 import Classroom from "./pages/Classroom";
 import MainLayout from "./MainLayout";
 import TestAuth from "./pages/TestAuth";
+import BloomingHeart from "./pages/BloomingHeart";
 
 function App() {
   return (
@@ -61,7 +62,7 @@ function App() {
                 </MainLayout>
               }
             />
-            <Route path="/test-auth" element={<TestAuth />} />
+            <Route path="/test-auth" element={<BloomingHeart />} />
             <Route path="" element={<NotFoundPage />} />
           </Routes>
         </AuthProvider>

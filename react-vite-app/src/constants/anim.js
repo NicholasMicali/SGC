@@ -1,3 +1,5 @@
+import { easeIn } from "framer-motion";
+
 export const animateVerticalFadeIn = (delay, goDown = true) => ({
   animate: {
     opacity: 1,
@@ -78,15 +80,16 @@ export const animateMegaphoneHeart = (x, y, scale = 1) => ({
     x: -30,
     y: 30,
     opacity: 0,
-    scale: 1
+    scale: 0
   },
   animate: {
     x: x,
     y: y,
-    opacity: [0,0,1],
+    opacity: [0,1],
     scale: scale,
   },
   transition: {
     duration: 1,
+    ease: "backInOut",
   },
 })
