@@ -46,12 +46,11 @@ const Challenge = ({back, user, code, cid, cards}) => {
       <img src={backOfCard} className="w-5/12 mb-4 mt-4"></img>
       <CardsButton
         width="180px"
-        height="51.75px"
-        text="My cards"
-        borderColor="#BEDF3D"
-        textColor="#8DAB1C"
-        backgroundColor="#EAF4C0"
-        icon={AllCardIcon}
+        height="65px"
+        text="See my posts"
+        borderColor="#95AD2A"
+        textColor="#FFFFFF"
+        backgroundColor="#95AD2A"
         onClick={cards}
       />
     </>
