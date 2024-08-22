@@ -11,8 +11,11 @@ import InspirationPage from "./pages/Inspiration";
 import JournalPage from "./pages/Journal";
 import Classroom from "./pages/Classroom";
 import MainLayout from "./MainLayout";
-import TestAuth from "./pages/TestAuth";
+
+// new pages
+import TestAuth from "./new_pages/Megaphone";
 import BloomingHeart from "./pages/BloomingHeart";
+import NewLogin from "./new_pages/Login";
 
 function App() {
   return (
@@ -62,7 +65,8 @@ function App() {
                 </MainLayout>
               }
             />
-            <Route path="/test-auth" element={<BloomingHeart />} />
+            <Route path="/test-auth" element={<TestAuth />} />
+            <Route path="/new-login" element={<NewLogin />} />
             <Route path="" element={<NotFoundPage />} />
           </Routes>
         </AuthProvider>

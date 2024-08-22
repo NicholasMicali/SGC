@@ -1,6 +1,5 @@
 import React from "react";
 import megaphoneIcon from "/auth/megaphone.svg";
-import heartIcon from "/auth/heart.svg";
 import { motion } from "framer-motion";
 import { animateMegaphoneHeart } from "../constants/anim";
 import heart_1 from "/auth/heart_1.svg";
@@ -24,10 +23,11 @@ const hearts = [
   { x: 100, y: 50, scale: 1.5 },
 ];
 
-const TestAuth = () => {
+// memoizing the megaphone component to prevent unnecessary re-renders
+const Megaphone = React.memo(({className}) => {
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <div className="relative">
+    <div className={`flex flex-col items-center justify-center ${className}`}>
+      <div className="relative mr-10">
         <motion.img
           src={megaphoneIcon}
           alt="megaphone"
@@ -44,6 +44,6 @@ const TestAuth = () => {
       </div>
     </div>
   );
-};
+});
 
-export default TestAuth;
+export default Megaphone;

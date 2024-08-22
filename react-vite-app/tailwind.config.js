@@ -21,7 +21,14 @@ export default {
         'idle-pink': "#feb3d1",
         'idle-blue': "#d1edf9",
         'allCards-green' : "#E0F0A4",
-        'light-pink': "#fff8f8"
+        'light-pink': "#fff8f8",
+        "bold-pink": "#F21C80",
+        "bold-blue": "#03B5E5",
+        "bold-yellow": "#FFBD21",
+        "bold-green": "#95AD2A",
+        "teal-posts": "#5DB7AE",
+        "fill-pink": "#FFEBF4"
+        
       }
     },
   },
