@@ -7,15 +7,20 @@ import CardsButton from "../components/cardsPages/cardsButton.jsx";
 import { ArrowLeft } from "lucide-react";
 import GoogleAutocompleteInput from "../components/location/googleAutocompleteInput.jsx";
 import { src as googleMapsAPISrc } from "../firebase/googleMapsAPIKey";
-
+import Button from "../new componenets/Button.jsx";
+import { createProfileRoleButton } from "../constants/pageConstants.js";
+import Step1 from "../components/createProfile/Step1.jsx";
 const useLoadScript = (src) => {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     const existingScript = document.querySelector(`script[src="${src}"]`);
-    
+
     if (existingScript) {
-      if (existingScript.readyState === 'complete' || existingScript.hasAttribute("data-loaded")) {
+      if (
+        existingScript.readyState === "complete" ||
+        existingScript.hasAttribute("data-loaded")
+      ) {
         setLoaded(true);
       } else {
         // If the script is present but not loaded, attach onload handler
@@ -52,7 +57,6 @@ const CreateProfilePage = () => {
 
   const isScriptLoaded = useLoadScript(googleMapsAPISrc);
 
-
   useEffect(() => {
     const fetchUserProfile = async () => {
       if (currentUser) {
@@ -64,7 +68,7 @@ const CreateProfilePage = () => {
         } catch (error) {
           console.error("First Time User: " + error);
         }
-     }
+      }
     };
 
     fetchUserProfile();
@@ -72,16 +76,16 @@ const CreateProfilePage = () => {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (event.key === 'Enter') {
+      if (event.key === "Enter") {
         event.preventDefault();
         handleNext();
       }
     };
 
-    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, [step]);
 
@@ -91,7 +95,7 @@ const CreateProfilePage = () => {
 
   const handleBack = () => {
     setStep(step - 1);
-  }
+  };
 
   const handleFileChange = (e) => {
     setProfilePic(URL.createObjectURL(e.target.files[0]));
@@ -115,67 +119,36 @@ const CreateProfilePage = () => {
       alert("Failed to create profile: " + error.message);
     }
   };
-  console.log("isScriptLoaded: ", isScriptLoaded)
+  // console.log("isScriptLoaded: ", isScriptLoaded);
 
   if (!isScriptLoaded) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-tr from-purple-500 to-pink-500">
+    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-b from-bold-blue to-[#c0e8f7]">
       <form
         onSubmit={onSubmit}
-        className={"w-3/4 lg:w-1/2 max-sm:min-w-[320px] p-5 bg-white shadow rounded-lg flex flex-col gap-5" + ((step == 1) ? " xl:w-1/2" : " xl:w-1/3")}
+        className={
+          "min-w-fit p-6 bg-white shadow rounded-lg flex flex-col gap-5 md:rounded-3xl"
+          // (step == 1 ? " " : " xl:w-1/3")
+        }
       >
         <div className="flex justify-between">
-          {(step > 1) &&
+          {step > 1 && (
             <button onClick={handleBack} className="flex items-center">
-              <ArrowLeft /> Go Back
+              <ArrowLeft />
             </button>
-          }
-          <span className="text-sm font-semibold">{`Step ${step} of 3`}</span>
+          )}
+          <span className="text-sm font-semibold text-end w-full">{`${step} of 3`}</span>
         </div>
-        <h2 className="text-xl font-bold self-center">Profile Setup</h2>
+        <h2 className="text-xl font-bold self-center md:text-4xl mt-5">PROFILE SET UP</h2>
 
         {step === 1 && (
-          <div className="flex flex-col items-center gap-4">
-            <h3 className="text-lg font-semibold">Who are you?</h3>
-            <div className="flex max-sm:flex-col justify-center gap-4">
-              <CardsButton
-                text="Teacher"
-                backgroundColor="#D1EDF9"
-                textColor="#1D9FD5"
-                borderColor="#48B8E6"
-                onClick={() => {
-                  setUserRole("Teacher");
-                  handleNext();
-                }}
-                staticStyle={true}
-              />
-              <CardsButton
-                text="Student"
-                backgroundColor="#EAF4C0"
-                textColor="#8DAB1C"
-                borderColor="#BEDF3D"
-                onClick={() => {
-                  setUserRole("Student");
-                  handleNext();
-                }}
-                staticStyle={true}
-              />
-              <CardsButton
-                text="Visitor"
-                backgroundColor="#FFD3E5"
-                textColor="#FC086B"
-                borderColor="#FD3B8A"
-                onClick={() => {
-                  setUserRole("Visitor");
-                  handleNext();
-                }}
-                staticStyle={true}
-              />
-            </div>
-          </div>
+          <Step1 onClick={(role) => {
+            setUserRole(role);
+            handleNext();
+          }} />
         )}
 
         {step === 2 && (

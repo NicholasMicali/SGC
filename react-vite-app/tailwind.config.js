@@ -30,6 +30,7 @@ export default {
         "fill-pink": "#FFEBF4",
         "bold-blue-hover": "#4DC5ED",
         "bold-pink-hover": "#F54E9D",
+        "bold-green-hover": "#B8CC5E",
         
       }
     },
