@@ -45,14 +45,14 @@ const Login = () => {
 
         <Button
           buttonText="Continue"
-          className={`p-2 rounded-full text-white text-lg font-semibold ${isLogin ? "bg-bold-pink" : "bg-bold-blue"}`}
+          className={`p-2 rounded-full text-white text-lg font-semibold ${isLogin ? "bg-bold-pink hover:bg-pink-500" : "bg-bold-blue hover:bg-bold-blue-hover"}`}
           onClick={handleSubmit}
         />
         <hr className="w-3/4 border-[1px] border-black mt-5" />
         <span className="text-lg font-bold">or</span>
         <Button
           buttonText={isLogin ? "Sign Up" : "Login"}
-          className={`p-2 rounded-full text-white text-lg font-semibold ${isLogin ? "bg-bold-blue" : "bg-bold-pink"}`}
+          className={`p-2 rounded-full text-white text-lg font-semibold ${isLogin ? "bg-bold-blue hover:bg-bold-blue-hover" : "bg-bold-pink hover:bg-pink-500"}`}
           onClick={() => setIsLogin(!isLogin)}
         />
       </div>

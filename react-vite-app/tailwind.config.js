@@ -27,7 +27,9 @@ export default {
         "bold-yellow": "#FFBD21",
         "bold-green": "#95AD2A",
         "teal-posts": "#5DB7AE",
-        "fill-pink": "#FFEBF4"
+        "fill-pink": "#FFEBF4",
+        "bold-blue-hover": "#4DC5ED",
+        "bold-pink-hover": "#F54E9D",
         
       }
     },
