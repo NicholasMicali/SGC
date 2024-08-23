@@ -65,7 +65,7 @@ function App() {
                 </MainLayout>
               }
             />
-            <Route path="/test-auth" element={<TestAuth />} />
+            <Route path="/test-auth" element={<BloomingHeart />} />
             <Route path="/new-login" element={<NewLogin />} />
             <Route path="" element={<NotFoundPage />} />
           </Routes>
