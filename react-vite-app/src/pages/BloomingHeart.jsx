@@ -1,30 +1,6 @@
-// import React from "react";
-// import heart from "/auth/blooming_heart.svg";
-// import logo from "/SGC_LOGO.svg";
-// import { motion } from "framer-motion";
-
-// const BloomingHeart = () => {
-//   const num_of_lines = 10;
-
-//   return (
-//     <div className="flex flex-col items-center justify-center h-screen">
-//       <div className="relative z-10">
-//         <img src={heart} alt="blooming heart" />
-//         <img
-//           src={logo}
-//           alt="logo"
-//           className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 "
-//         />
-
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default BloomingHeart;
 import React, { useState, useEffect } from "react";
 import heart from "/auth/blooming_heart.svg";
-import logo from "/SGC_LOGO.svg";
+import logo from "/SGC_LOGO_WHITE.svg";
 import { motion } from "framer-motion";
 
 const BloomingHeart = () => {
@@ -82,8 +58,8 @@ const BloomingHeart = () => {
               initial={{ pathLength: 0, strokeWidth: 2 }}
               animate={{
                 pathLength: 1,
-                x2: `${50 + 100 * Math.cos((line.angle * Math.PI) / 180)}%`,
-                y2: `${50 + 100 * Math.sin((line.angle * Math.PI) / 180)}%`,
+                x2: `${50 + 200 * Math.cos((line.angle * Math.PI) / 180)}%`,
+                y2: `${50 + 200 * Math.sin((line.angle * Math.PI) / 180)}%`,
                 strokeWidth: 5,
               }}
               transition={{
