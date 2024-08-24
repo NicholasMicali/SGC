@@ -67,7 +67,7 @@ const GoogleAutocompleteInput = ({ value, onChange, className, placeholder, requ
       placeholder={placeholder || "Enter your city"}
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className={className || "border p-2 rounded w-full"}
+      className={className || "p-2 rounded w-full outline-none border-bold-blue-hover border-2 placeholder:text-center"}
       required={required}
     />
   );

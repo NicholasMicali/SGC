@@ -1,6 +1,15 @@
 import React from "react";
 
-const Input = ({ placeholder, className, value, onChange, type }) => {
+const Input = ({
+  placeholder,
+  className,
+  value,
+  onChange,
+  type,
+  required = true,
+  minLength = 1,
+  maxLength = 100,
+}) => {
   return (
     <input
       placeholder={placeholder}
@@ -8,6 +17,9 @@ const Input = ({ placeholder, className, value, onChange, type }) => {
       type={type}
       value={value}
       onChange={onChange}
+      required={required}
+      minLength={minLength}
+      maxLength={maxLength}
     />
   );
 };

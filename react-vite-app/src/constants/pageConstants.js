@@ -394,7 +394,7 @@ export const positiveMessages = [
   "Outstanding! Your kindness is truly making a difference. Keep it up and continue to spread goodness wherever you go!"
 ];
 
-
+//create profile step 1
 export const createProfileRoleButton = [
   {
     text: "TEACHER",
@@ -416,6 +416,3 @@ export const createProfileRoleButton = [
   }
 ]
 
-export const createProfileStep2 = [
-  
-]

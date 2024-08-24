@@ -7,9 +7,11 @@ import CardsButton from "../components/cardsPages/cardsButton.jsx";
 import { ArrowLeft } from "lucide-react";
 import GoogleAutocompleteInput from "../components/location/googleAutocompleteInput.jsx";
 import { src as googleMapsAPISrc } from "../firebase/googleMapsAPIKey";
-import Button from "../new componenets/Button.jsx";
-import { createProfileRoleButton } from "../constants/pageConstants.js";
+
+
 import Step1 from "../components/createProfile/Step1.jsx";
+import Step2 from "../components/createProfile/Step2.jsx";
+import Step3 from "../components/createProfile/Step3.jsx";
 const useLoadScript = (src) => {
   const [loaded, setLoaded] = useState(false);
 
@@ -51,7 +53,7 @@ const CreateProfilePage = () => {
   const [userRole, setUserRole] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [age, setAge] = useState("");
+  const [grade, setGrade] = useState("");
   const [location, setLocation] = useState("");
   const navigate = useNavigate();
 
@@ -130,7 +132,7 @@ const CreateProfilePage = () => {
       <form
         onSubmit={onSubmit}
         className={
-          "min-w-fit p-6 bg-white shadow rounded-lg flex flex-col gap-5 md:rounded-3xl"
+          "min-w-fit p-6 bg-white shadow rounded-lg flex flex-col gap-5 md:rounded-3xl max-md:h-[514px] max-sm:w-3/4"
           // (step == 1 ? " " : " xl:w-1/3")
         }
       >
@@ -152,63 +154,22 @@ const CreateProfilePage = () => {
         )}
 
         {step === 2 && (
-          <div className="flex flex-col items-center gap-4">
-            <CustomInput
-              type="text"
-              placeholder="First Name"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              labelName="First Name"
-            />
-            <CustomInput
-              type="text"
-              placeholder="Last Name"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              labelName="Last Name"
-            />
-            <div className="w-2/12 self-start">
-              <CustomInput
-                type="text"
-                placeholder="Age"
-                value={age}
-                onChange={(e) => setAge(e.target.value)}
-                labelName="Age"
-                pattern="\d*"
-              />
-            </div>
-            <div className="flex justify-center w-full mt-6">
-              <CardsButton
-                text="Next"
-                borderColor="#BEDF3D"
-                textColor="#8DAB1C"
-                backgroundColor="#EAF4C0"
-                onClick={handleNext}
-                staticStyle={true}
-              />
-            </div>
-          </div>
+          <Step2 
+            firstName={firstName}
+            lastName={lastName}
+            grade={grade}
+            setGrade={setGrade}
+            setFirstName={setFirstName}
+            setLastName={setLastName}
+            handleNext={handleNext}
+          />
         )}
 
         {step === 3 && (
-          <div className="flex flex-col items-center gap-4">
-            <h3 className="text-lg font-semibold">Please Provide a Location</h3>
-            <GoogleAutocompleteInput
-              value={location}
-              onChange={setLocation}
-              placeholder="Enter your city"
-            />
-            <div className="flex justify-center w-full mt-6">
-              <CardsButton
-                type="submit"
-                text="Submit"
-                borderColor="#FD3B8A"
-                textColor="#FC086B"
-                backgroundColor="#FFD3E5"
-                staticStyle={true}
-              />
-            </div>
-          </div>
+          <Step3
+            location={location}
+            setLocation={setLocation}
+          />
         )}
       </form>
     </div>
