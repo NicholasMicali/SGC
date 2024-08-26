@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../auth/index";
 import { Navigate } from "react-router-dom";
-import { doFetchCardByCode } from "../firebase/firestore.js";
+import { doFetchCardByCode, resetUnreadCount } from "../firebase/firestore.js";
 import SearchBar from "../components/home/searchbar.jsx";
 import AllCards from "../components/cardsPages/allCards.jsx";
 import CardFeed from "../components/cardsPages/cardFeed.jsx";
@@ -39,6 +39,11 @@ const HomePage = () => {
     window.innerWidth <= 1050
   );
   const [showWalkthrough, setShowWalkthrough] = useState(false);
+
+  const handleAllCardsClick = async () => {
+    await resetUnreadCount(currentUser.uid);
+    setSubPage("all");
+  };
 
   setTimeout(() => {
     setConfettiPieces(0);
@@ -184,7 +189,7 @@ const HomePage = () => {
                         textColor="#8DAB1C"
                         backgroundColor="#EAF4C0"
                         icon={AllCardIcon}
-                        onClick={() => setSubPage("all")}
+                        onClick={handleAllCardsClick}
                       />
                       <div className = "absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4">
                       <Notification
@@ -245,7 +250,7 @@ const HomePage = () => {
                       textColor="#8DAB1C"
                       backgroundColor="#EAF4C0"
                       icon={AllCardIcon}
-                      onClick={() => setSubPage("all")}
+                      onClick={handleAllCardsClick}
                     />
                   </motion.div>
                   <motion.div {...animateVerticalFadeIn(0.1)}>

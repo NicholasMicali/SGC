@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { doFetchUserProfile } from "../../firebase/firestore";
 
 const Notification = ({user}) => {
-  const [unreadCount, setUnreadCount] = useState(1);
+  const [unreadCount, setUnreadCount] = useState(0);
   const [userProfile, setUserProfile] = useState(null);
 
   useEffect(() => {
@@ -10,8 +10,8 @@ const Notification = ({user}) => {
       try {
         const profile = await doFetchUserProfile(user.uid);
         setUserProfile(profile.data());
-        if (profile && profile.data().unreadNotifications) {
-          setUnreadCount(profile.data().unreadNotifications);
+        if (profile && profile.data().unread) {
+          setUnreadCount(profile.data().unread);
         }
       } catch (error) {
         console.error("Failed to fetch user profile:", error);
