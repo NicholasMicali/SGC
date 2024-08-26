@@ -105,12 +105,14 @@ export const doCreatePost = async (cid, uid, uName, desc, location, postDate, po
 
   const querySnapshot = await getDocs(q);
 
-  // Increment unread count for each user
+  // Increment unread count for each user except the one who created the post
   querySnapshot.forEach(async (userDoc) => {
     const userId = userDoc.id;
-    await updateDoc(doc(db, "user_profiles", userId), {
-      unread: increment(1)
-    });
+    if (userId !== uid) { // Skip the post creator
+      await updateDoc(doc(db, "user_profiles", userId), {
+        unread: increment(1)
+      });
+    }
   });
 
   return postDocRef;
