@@ -95,8 +95,8 @@ const HomePage = () => {
     setSubPage("all");
   };
 
-  const toChallenge = () => {
-    setSubPage("challenge");
+  const toReceive = () => {
+    setSubPage("receive");
   };
 
   const selectCard = (card, cid) => {
@@ -139,7 +139,7 @@ const HomePage = () => {
           <Confetti numberOfPieces={confettiPieces} />
         </div>
         {showWalkthrough && (
-          <InitUserFlow onClose={handleWalkthroughClose} toChallenge={toChallenge} toNewCard={toNewCard}/>
+          <InitUserFlow onClose={handleWalkthroughClose} toReceive={toReceive} toNewCard={toNewCard}/>
         )}
         {showCongrats && (
           <CongratsCard

@@ -13,6 +13,7 @@ import JournalIcon from "../../assets/JournalIcon.svg";
 import classroomIcon from "../../assets/classroom.svg";
 import { doFetchUserProfile } from '../../firebase/firestore.js';
 import { useAuth } from '../../auth/index.jsx';
+import { useNavigate } from "react-router-dom";
 
 
 /*** 
@@ -21,10 +22,11 @@ import { useAuth } from '../../auth/index.jsx';
  * customize the buttons to make them fit the style of the app
  * ***/
 
-const InitUserFlow = ({onClose, toChallenge, toNewCard}) => {
+const InitUserFlow = ({onClose, toReceive, toNewCard}) => {
   const [userData, setUserData] = useState(null);
   const { currentUser:user } = useAuth();
   const [currentScreen, setCurrentScreen] = useState("init");
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -100,7 +102,7 @@ const InitUserFlow = ({onClose, toChallenge, toNewCard}) => {
                     <br></br>
                     <br></br>
                     Not sure what to do?<br></br>
-                        <button className = "underline text-[#03B5E5]" onClick={challengeScreen}>
+                        <button className = "underline text-[#03B5E5]" onClick={() => navigate('/inspiration')}>
                         Click here for some ideas
                         </button>
                     </div>
@@ -120,7 +122,7 @@ const InitUserFlow = ({onClose, toChallenge, toNewCard}) => {
                         staticStyle={true}
                         onClick={() => {
                             setCurrentScreen('end');
-                            toChallenge()}}
+                            toReceive()}}
                         className="hover:color-gray-400 flex justify-center"
                     />
 
@@ -132,7 +134,9 @@ const InitUserFlow = ({onClose, toChallenge, toNewCard}) => {
                         textColor="#FFFFFF"
                         backgroundColor="#03B5E5"
                         staticStyle={true}
-                        onClick={() => toNewCard()}
+                        onClick={() => {
+                            setCurrentScreen('end');
+                            toNewCard()}}
                         className="hover:color-gray-400 flex self-center"
                     />   
                 </div>
