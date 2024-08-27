@@ -16,6 +16,7 @@ import ChallengeIcon from "../assets/ChallengeIcon.svg";
 import SmallSearchBar from "../components/home/smallSearchBar.jsx";
 import Logo from "../assets/logo.svg";
 import WalkthroughModal from "../components/home/walkthroughModal.jsx";
+import InitUserFlow from "../components/home/initUserFlow.jsx";
 import { motion } from "framer-motion";
 import { animateVerticalFadeIn } from "../constants/anim.js";
 import Confetti from "react-confetti";
@@ -94,6 +95,10 @@ const HomePage = () => {
     setSubPage("all");
   };
 
+  const toChallenge = () => {
+    setSubPage("challenge");
+  };
+
   const selectCard = (card, cid) => {
     setCurrentCard(card);
     setCurrentCid(cid);
@@ -134,7 +139,7 @@ const HomePage = () => {
           <Confetti numberOfPieces={confettiPieces} />
         </div>
         {showWalkthrough && (
-          <WalkthroughModal onClose={handleWalkthroughClose} />
+          <InitUserFlow onClose={handleWalkthroughClose} toChallenge={toChallenge} toNewCard={toNewCard}/>
         )}
         {showCongrats && (
           <CongratsCard
