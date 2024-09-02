@@ -14,9 +14,7 @@ const Login = ({setErrMsg}) => {
     if (!isSigningIn) {
       //setIsSigningIn(true);
       try {
-        console.log("Attempting to sign in");
         const user = await doSignInWithEmailAndPassword(email, password);
-        console.log("User signed in: " + user);
       } catch (error) {
         // Handle errors here, such as displaying a message to the user
         // console.error("Login failed:", error);

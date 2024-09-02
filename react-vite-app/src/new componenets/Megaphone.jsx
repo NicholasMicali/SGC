@@ -27,8 +27,8 @@ const hearts = [
 const Megaphone = React.memo(({className}) => {
   return (
     <div className={`flex flex-col items-center justify-center ${className}`}>
-      <div className="relative mr-10">
-        <motion.img
+      <div className="relative w-full h-full">
+        <img
           src={megaphoneIcon}
           alt="megaphone"
         />

@@ -2,12 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../auth/index";
 import { useNavigate } from "react-router-dom";
 import { doCreateUserProfile, doFetchUserProfile } from "../firebase/firestore";
-import CustomInput from "../components/auth/customInput.jsx";
-import CardsButton from "../components/cardsPages/cardsButton.jsx";
 import { ArrowLeft } from "lucide-react";
-import GoogleAutocompleteInput from "../components/location/googleAutocompleteInput.jsx";
-import { src as googleMapsAPISrc } from "../firebase/googleMapsAPIKey";
 
+import { src as googleMapsAPISrc } from "../firebase/googleMapsAPIKey";
 
 import Step1 from "../components/createProfile/Step1.jsx";
 import Step2 from "../components/createProfile/Step2.jsx";
@@ -121,7 +118,7 @@ const CreateProfilePage = () => {
       alert("Failed to create profile: " + error.message);
     }
   };
-  // console.log("isScriptLoaded: ", isScriptLoaded);
+  console.log("script loaded: ", isScriptLoaded);
 
   if (!isScriptLoaded) {
     return <div>Loading...</div>;
@@ -133,7 +130,6 @@ const CreateProfilePage = () => {
         onSubmit={onSubmit}
         className={
           "min-w-fit p-6 bg-white shadow rounded-lg flex flex-col gap-5 md:rounded-3xl max-md:h-[514px] max-sm:w-3/4"
-          // (step == 1 ? " " : " xl:w-1/3")
         }
       >
         <div className="flex justify-between">
@@ -144,17 +140,21 @@ const CreateProfilePage = () => {
           )}
           <span className="text-sm font-semibold text-end w-full">{`${step} of 3`}</span>
         </div>
-        <h2 className="text-xl font-bold self-center md:text-4xl mt-5">PROFILE SET UP</h2>
+        <h2 className="text-xl font-bold self-center md:text-4xl mt-5">
+          PROFILE SET UP
+        </h2>
 
         {step === 1 && (
-          <Step1 onClick={(role) => {
-            setUserRole(role);
-            handleNext();
-          }} />
+          <Step1
+            onClick={(role) => {
+              setUserRole(role);
+              handleNext();
+            }}
+          />
         )}
 
         {step === 2 && (
-          <Step2 
+          <Step2
             firstName={firstName}
             lastName={lastName}
             grade={grade}
@@ -165,12 +165,7 @@ const CreateProfilePage = () => {
           />
         )}
 
-        {step === 3 && (
-          <Step3
-            location={location}
-            setLocation={setLocation}
-          />
-        )}
+        {step === 3 && <Step3 location={location} setLocation={setLocation} />}
       </form>
     </div>
   );

@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 
 const BloomingHeart = () => {
   const [lines, setLines] = useState([]);
-
   useEffect(() => {
     const numLines = 200; // Adjust as needed
     const newLines = [];
@@ -17,30 +16,27 @@ const BloomingHeart = () => {
       });
     }
     setLines(newLines);
+
   }, []);
 
   const getRandomColor = () => {
-    const colors = [
-        "#F21C80",
-        "#03B5E5",
-        "#FFBD21",
-        "#95AD2A",
-    ];
+    const colors = ["#F21C80", "#03B5E5", "#FFBD21", "#95AD2A"];
     return colors[Math.floor(Math.random() * colors.length)];
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen w-full">
+    <div className="flex flex-col items-center justify-center h-screen w-full bg-white">
       <div className="relative z-10 w-full h-full">
         <img
           src={heart}
           alt="blooming heart"
           className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
         />
-        <img
+        <motion.img
           src={logo}
           alt="logo"
           className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72"
+          layoutId="logo"
         />
         <svg
           className="absolute top-0 left-0 w-full h-full -z-10"
@@ -63,8 +59,8 @@ const BloomingHeart = () => {
                 strokeWidth: 5,
               }}
               transition={{
-                duration: 1,
-                delay: line.delay,
+                duration: 0.4,
+                // delay: line.delay,
                 ease: "easeOut",
               }}
             />
