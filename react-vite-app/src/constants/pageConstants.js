@@ -393,3 +393,26 @@ export const positiveMessages = [
   "Fantastic! Your good deeds are changing lives. Keep up the amazing work and continue spreading kindness!",
   "Outstanding! Your kindness is truly making a difference. Keep it up and continue to spread goodness wherever you go!"
 ];
+
+//create profile step 1
+export const createProfileRoleButton = [
+  {
+    text: "TEACHER",
+    role: "Teacher",
+    bg_color: "bg-bold-blue",
+    hover: "bg-bold-blue-hover"
+  },
+  {
+    text: "STUDENT",
+    role: "Student",
+    bg_color: "bg-bold-green",
+    hover: "bg-bold-green-hover"
+  },
+  {
+    text: "VISITOR",
+    role: "Visitor",
+    bg_color: "bg-bold-pink",
+    hover: "bg-bold-pink-hover"
+  }
+]
+

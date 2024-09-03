@@ -12,13 +12,22 @@ import JournalPage from "./pages/Journal";
 import Classroom from "./pages/Classroom";
 import MainLayout from "./MainLayout";
 
+
+// new pages
+// import TestAuth from "./new_pages/Megaphone";
+import BloomingHeart from "./new componenets/BloomingHeart";
+import NewLogin from "./new_pages/Login";
+
+import Landing from "./new_pages/Landing";
+
 function App() {
   return (
     <Router>
       <div>
         <AuthProvider>
           <Routes>
-            <Route path="/" element={<LoginPage />} />
+          <Route path="/" element={<Landing />} />
+            <Route path="/auth" element={<NewLogin />} />
             <Route
               path="/home"
               element={
