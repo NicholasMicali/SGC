@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { doCreatePost, doPostToCard, doFetchUserProfile, doFetchCardByCode, doCardToUserProfile, doIncrementUserPosts, doIncrementPost } from "../../firebase/firestore";
 import { doUploadFile } from "../../firebase/storage.js"
-import ThankYou from  "./thankYou.jsx"
 import StickerDrop from "./stickerDrop.jsx";
 import { ArrowLeft } from "lucide-react";
 import GoogleAutocompleteInput from "../location/googleAutocompleteInput.jsx";
@@ -120,8 +119,6 @@ const Recieve = ({back, user, initCode, first, select, isNarrowScreen, selectCha
     e.preventDefault();
     if (!isCreatingPost) {
       try {
-        //console.log(cid);
-        //const url = await upload();
         const userLocation = manualLocation ? manualLocation : location;
         const postLocation = userLocation ? userLocation : userProfile?.location;
         const distance = await calculateDistance(currentCard.lastLocation, postLocation);
