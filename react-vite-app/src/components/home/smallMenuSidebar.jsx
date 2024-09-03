@@ -8,11 +8,12 @@ import MenuBackgroundPNG from "../../assets/MenuBackground.png";
 import { navItemArr, mediaArr } from "../../constants/pageConstants";
 import { motion } from "framer-motion";
 import { animateVerticalFadeIn, animateSideFadeIn } from "../../constants/anim";
+import { doFetchUserProfile} from "../../firebase/firestore";
 
 const SmallMenuSidebar = ({ user, signOut, page, setPage }) => {
   const [isSmallMenu, setSmallMenu] = useState(false);
-  const sidebarRef = useRef(null); // Step 1: Create a ref for the sidebar
 
+  const sidebarRef = useRef(null); // Step 1: Create a ref for the sidebar
 
   const navigate = useNavigate(); // Hook for navigation
 

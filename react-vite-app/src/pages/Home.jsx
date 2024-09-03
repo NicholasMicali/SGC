@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../auth/index";
 import { Navigate } from "react-router-dom";
-import { doFetchCardByCode } from "../firebase/firestore.js";
+import { doFetchCardByCode, resetUnreadCount } from "../firebase/firestore.js";
 import SearchBar from "../components/home/searchbar.jsx";
 import AllCards from "../components/cardsPages/allCards.jsx";
 import CardFeed from "../components/cardsPages/cardFeed.jsx";
@@ -20,6 +20,7 @@ import { motion } from "framer-motion";
 import { animateVerticalFadeIn } from "../constants/anim.js";
 import Confetti from "react-confetti";
 import CongratsCard from "../components/cardsPages/congratsCard.jsx";
+import Notification from "../components/home/notification.jsx";
 
 const HomePage = () => {
   const { currentUser } = useAuth();
@@ -38,6 +39,11 @@ const HomePage = () => {
     window.innerWidth <= 1050
   );
   const [showWalkthrough, setShowWalkthrough] = useState(false);
+
+  const handleAllCardsClick = async () => {
+    await resetUnreadCount(currentUser.uid);
+    setSubPage("all");
+  };
 
   setTimeout(() => {
     setConfettiPieces(0);
@@ -174,7 +180,7 @@ const HomePage = () => {
               {isMediumScreen ? (
                 <div className="flex flex-col justify-center my-4 w-full">
                   <div className="flex flex-row justify-center gap-2 my-2 w-full">
-                    <motion.div {...animateVerticalFadeIn(0)}>
+                    <motion.div className="relative" {...animateVerticalFadeIn(0)}>
                       <CardsButton
                         width="180px"
                         height="51.75px"
@@ -183,8 +189,13 @@ const HomePage = () => {
                         textColor="#8DAB1C"
                         backgroundColor="#EAF4C0"
                         icon={AllCardIcon}
-                        onClick={() => setSubPage("all")}
+                        onClick={handleAllCardsClick}
                       />
+                      <div className = "absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4">
+                      <Notification
+                        user={currentUser}
+                      />
+                      </div>
                     </motion.div>
 
                     <motion.div {...animateVerticalFadeIn(0.1)}>
@@ -239,7 +250,7 @@ const HomePage = () => {
                       textColor="#8DAB1C"
                       backgroundColor="#EAF4C0"
                       icon={AllCardIcon}
-                      onClick={() => setSubPage("all")}
+                      onClick={handleAllCardsClick}
                     />
                   </motion.div>
                   <motion.div {...animateVerticalFadeIn(0.1)}>

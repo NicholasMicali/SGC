@@ -14,6 +14,7 @@ export const doCreateUserProfile = async (uid, email, userType, firstName, lastN
     grade,
     card: 0,
     post: 0,
+    unread: 0,
   }, { merge: true });  // Use setDoc to merge data
 };
 
@@ -86,8 +87,7 @@ export const doRemoveCardFromUserProfile = async (uid, cardId) => {
 
 export const doCreatePost = async (cid, uid, uName, desc, location, postDate, postType, image, stickers) => {
   const postsCollectionRef = collection(db, "posts");
-  console.log(image);
-  return addDoc(postsCollectionRef, {
+  const postDocRef = await addDoc(postsCollectionRef, {
     cid,
     uid,
     uName,
@@ -98,7 +98,33 @@ export const doCreatePost = async (cid, uid, uName, desc, location, postDate, po
     image,
     stickers,
   });
+
+  // Fetch users who have this card in their profile
+  const userProfilesRef = collection(db, "user_profiles");
+  const q = query(userProfilesRef, where("cards", "array-contains", cid));
+
+  const querySnapshot = await getDocs(q);
+
+  // Increment unread count for each user except the one who created the post
+  querySnapshot.forEach(async (userDoc) => {
+    const userId = userDoc.id;
+    if (userId !== uid) { // Skip the post creator
+      await updateDoc(doc(db, "user_profiles", userId), {
+        unread: increment(1)
+      });
+    }
+  });
+
+  return postDocRef;
 };
+
+export const resetUnreadCount = async (uid) => {
+  const userDocRef = doc(db, "user_profiles", uid);
+  await updateDoc(userDocRef, {
+    unread: 0
+  });
+};
+
 
 export const doPostToCard = async (cid, postId, cityId, distance) => {
   if (isNaN(distance)) {
