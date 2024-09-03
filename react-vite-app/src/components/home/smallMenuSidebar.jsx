@@ -9,7 +9,6 @@ import { navItemArr, mediaArr } from "../../constants/pageConstants";
 import { motion } from "framer-motion";
 import { animateVerticalFadeIn, animateSideFadeIn } from "../../constants/anim";
 import { doFetchUserProfile} from "../../firebase/firestore";
-import Notification from "./notification";
 
 const SmallMenuSidebar = ({ user, signOut, page, setPage }) => {
   const [isSmallMenu, setSmallMenu] = useState(false);
@@ -45,11 +44,6 @@ const SmallMenuSidebar = ({ user, signOut, page, setPage }) => {
             alt="Menu Background"
             className="absolute top-0 right-0 w-203 h-151 z-20"
           />
-           <div className = "absolute top-6 right-5 z-40">
-                      <Notification
-                        user={user}
-                      />
-                      </div>
           <button
             className="z-30 p-1 absolute top-6 right-8 mt-2 ml-3"
             onClick={() => setSmallMenu(!isSmallMenu)}
