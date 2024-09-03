@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { doFetchUserProfile } from "../../firebase/firestore";
 
 const Notification = ({user}) => {
-  const [unreadCount, setUnreadCount] = useState(1);
+  const [unreadCount, setUnreadCount] = useState(0);
   const [userProfile, setUserProfile] = useState(null);
 
   useEffect(() => {
