@@ -32,20 +32,21 @@ const CardFeed = ({user, card, setSubPage, firstPost, isNarrowScreen, handleOpen
 
 
 
-  if (!cardExists) {
-    return(
-      <div>
-        <GetStarted 
-              sizeHeader='32px'
-              handleOpen={handleOpen}>
-        </GetStarted>
-      </div>
+  // if (!cardExists) {
+  //   return(
+  //     <div>
+  //       <GetStarted 
+  //             sizeHeader='32px'
+  //             handleOpen={handleOpen}>
+  //       </GetStarted>
+  //     </div>
       
-    );
-  }
+  //   );
+  // }
 
 
   return (
+    cardExists && 
     <div className="flex flex-col justify-center items-center w-full">
       <div className="self-start">
           Card Info:
@@ -79,6 +80,7 @@ const CardFeed = ({user, card, setSubPage, firstPost, isNarrowScreen, handleOpen
       }
     </div>
   );
+
 };
 
 export default CardFeed;

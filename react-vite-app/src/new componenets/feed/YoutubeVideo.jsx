@@ -13,13 +13,12 @@ const YouTubeVideo = ({ videoId }) => {
     // YouTube video state: 0 = ended, 1 = playing, 2 = paused, 3 = buffering, 5 = video cued
     if (event.data === 0) {
       setVideoCompleted(true);
-      console.log('Video has ended!');
     }
   };
-
+  //max width and height allowed by current screen
   const opts = {
-    height: '390',
-    width: '640',
+    // height: '360px',
+    // width: '640px',
     playerVars: {
       autoplay: 0,
     },

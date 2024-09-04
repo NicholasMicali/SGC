@@ -172,12 +172,23 @@ const HomePage = () => {
           {subPage === "feed" ? (
             <>
 
-              <div className="w-full font-semibold text-bold-pink text-3xl">
+              <div className="w-full font-semibold text-bold-pink text-5xl">
                 Hi <span className="font-bold">{userData ? userData.firstName : ""}</span>
-                <br />
-                How will you spread goodness today?
+                {/* <br />
+                How will you spread goodness today? */}
+              </div>
+              <div className=" w-full flex justify-center items-center mb-20 mt-14 max-md:flex-col">
+                  <p className=" mr-20 text-xl font-semibold">
+                    Click the video to receive you mission:
+                  </p>
+                  <div className="border-4 border-bold-pink shadow-xl rounded-md">
+                    <YouTubeVideo videoId="dQw4w9WgXcQ" />
+                  </div>
               </div>
 
+              <p className="w-full text-2xl font-semibold mb-10">
+                How will you spread goodness today?
+              </p>
 
               {isMediumScreen ? (
                 <div className="flex flex-col justify-center my-4 w-full">
@@ -240,7 +251,7 @@ const HomePage = () => {
                       buttonText={"Accept a challenge"}
                       onClick={() => setSubPage("receive")}
                       className={
-                        "!w-[240px] h-20 bg-bold-blue hover:bg-bold-blue-hover text-white rounded-md !justify-start !items-end p-2"
+                        " max-w-[300px] h-20 bg-bold-blue hover:bg-bold-blue-hover text-white rounded-md !justify-start !items-end p-2"
                       }
                       buttonTextClassName="text-left w-1/2 leading-tight"
                     />
@@ -253,7 +264,7 @@ const HomePage = () => {
                       buttonText={"Start a new challenge"}
                       onClick={() => setSubPage("new")}
                       className={
-                        "!w-[240px] h-20 bg-bold-pink hover:bg-bold-pink-hover text-white rounded-md !justify-start !items-end p-2"
+                        "max-w-[300px] h-20 bg-bold-pink hover:bg-bold-pink-hover text-white rounded-md !justify-start !items-end p-2"
                       }
                       buttonTextClassName="text-left leading-tight w-1/2"
                     />
@@ -266,7 +277,7 @@ const HomePage = () => {
                       buttonText={"Nominate others"}
                       onClick={() => setSubPage("challenge")}
                       className={
-                        "!w-[240px] h-20 bg-bold-yellow hover:bg-bold-yellow-hover text-white rounded-md !justify-start !items-end p-2"
+                        " max-w-[300px] h-20 bg-bold-yellow hover:bg-bold-yellow-hover text-white rounded-md !justify-start !items-end p-2"
                       }
                       buttonTextClassName="text-left w-1/2 leading-tight"
                     />
@@ -279,13 +290,13 @@ const HomePage = () => {
                       buttonText={"See my posts"}
                       onClick={handleAllCardsClick}
                       className={
-                        "!w-[240px] h-20 bg-bold-green hover:bg-bold-green-hover text-white rounded-md !justify-start !items-end p-2"
+                        " max-w-[300px] h-20 bg-bold-green hover:bg-bold-green-hover text-white rounded-md !justify-start !items-end p-2"
                       }
                     />
                   </motion.div>
                 </div>
               )}
-              <YouTubeVideo videoId="dQw4w9WgXcQ" />
+              
               <CardFeed
                 user={currentUser}
                 card={currentCard}
