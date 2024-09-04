@@ -25,9 +25,6 @@ const LeftSidebar = ({ user, signOut, back, setPage }) => {
     fetchUserProfile();
   }, [user]);
 
-  // if (userData == null) {
-  //   return <>Not Signed In...</>;
-  // }
 
   return (
     userData && (

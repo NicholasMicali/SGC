@@ -8,21 +8,16 @@ import CardFeed from "../components/cardsPages/cardFeed.jsx";
 import NewCard from "../components/cardsPages/newCard.jsx";
 import Challenge from "../components/cardsPages/challenge.jsx";
 import Recieve from "../components/cardsPages/recieve.jsx";
-import CardsButton from "../components/cardsPages/cardsButton.jsx";
-import AllCardIcon from "../assets/AllCardIcon.svg";
-import NewCardIcon from "../assets/NewCardIcon.svg";
-import ReceiveIcon from "../assets/ReceiveIcon.svg";
-import ChallengeIcon from "../assets/ChallengeIcon.svg";
-import SmallSearchBar from "../components/home/smallSearchBar.jsx";
-import Logo from "../assets/logo.svg";
+import Button from "../new componenets/Button.jsx";
 import WalkthroughModal from "../components/home/walkthroughModal.jsx";
 import { motion } from "framer-motion";
 import { animateVerticalFadeIn } from "../constants/anim.js";
 import Confetti from "react-confetti";
 import CongratsCard from "../components/cardsPages/congratsCard.jsx";
 import Notification from "../components/home/notification.jsx";
+import { doFetchUserProfile } from "../firebase/firestore";
 
-const HomePage = () => {
+const HomePage = ({ user }) => {
   const { currentUser } = useAuth();
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [subPage, setSubPage] = useState("feed");
@@ -31,6 +26,7 @@ const HomePage = () => {
   const [isFirstPost, setIsFirstPost] = useState(false);
   const [showCongrats, setShowCongrats] = useState(false);
   const [confettiPieces, setConfettiPieces] = useState(0);
+  const [userData, setUserData] = useState(null);
 
   const [isNarrowScreen, setIsNarrowScreen] = useState(
     window.innerWidth <= 840
@@ -60,6 +56,20 @@ const HomePage = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const profile = await doFetchUserProfile(user.uid);
+        setUserData(profile.data());
+      } catch (error) {
+        console.error("Failed to fetch user profile:", error);
+      }
+    };
+
+    fetchUserProfile();
+    console.log("user data: ", userData);
+  }, [user]);
 
   const signOut = async (e) => {
     e.preventDefault();
@@ -120,6 +130,7 @@ const HomePage = () => {
   const handleWalkthroughClose = () => {
     setShowWalkthrough(false);
   };
+
   const handleWalkthroughOpen = () => {
     setShowWalkthrough(true);
   };
@@ -160,136 +171,114 @@ const HomePage = () => {
         >
           {subPage === "feed" ? (
             <>
-              {isNarrowScreen ? (
-                <>
-                  <img
-                    src={Logo}
-                    alt="Spread Goodness logo"
-                    className="p-4 z-0"
-                  />
-                  <SmallSearchBar
-                    user={currentUser}
-                    signOut={signOut}
-                    page={subPage}
-                    onSearch={handleSearch}
-                  />
-                </>
-              ) : (
-                <SearchBar onSearch={handleSearch} width="full" />
-              )}
+              <div className="w-full font-semibold text-bold-pink text-3xl">
+                Hi <span className="font-bold">Zhenjie</span>
+                <br />
+                How will you spread goodness today?
+              </div>
+
               {isMediumScreen ? (
                 <div className="flex flex-col justify-center my-4 w-full">
                   <div className="flex flex-row justify-center gap-2 my-2 w-full">
-                    <motion.div className="relative" {...animateVerticalFadeIn(0)}>
-                      <CardsButton
-                        width="180px"
-                        height="51.75px"
-                        text="All cards"
-                        borderColor="#BEDF3D"
-                        textColor="#8DAB1C"
-                        backgroundColor="#EAF4C0"
-                        icon={AllCardIcon}
-                        onClick={handleAllCardsClick}
+                    <motion.div
+                      className="relative"
+                      {...animateVerticalFadeIn(0)}
+                    >
+                      <Button
+                        buttonText={"Accept a challenge"}
+                        onClick={() => setSubPage("receive")}
+                        className={
+                          "!w-44 h-16 bg-bold-blue hover:bg-bold-blue-hover text-white rounded-md !justify-start !items-end p-2"
+                        }
+                        buttonTextClassName="text-left w-3/4 leading-tight"
                       />
-                      <div className = "absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4">
-                      <Notification
-                        user={currentUser}
-                      />
+
+                      <div className="absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4">
+                        <Notification user={currentUser} />
                       </div>
                     </motion.div>
 
                     <motion.div {...animateVerticalFadeIn(0.1)}>
-                      <CardsButton
-                        width="180px"
-                        height="51.75px"
-                        text="New Card"
-                        borderColor="#48B8E6"
-                        textColor="#1D9FD5"
-                        backgroundColor="#D1EDF9"
-                        icon={NewCardIcon}
+                      <Button
+                        buttonText={"Start a new challenge"}
                         onClick={() => setSubPage("new")}
+                        className={
+                          "!w-44 h-16 bg-bold-pink hover:bg-bold-pink-hover text-white rounded-md !justify-start !items-end p-2"
+                        }
+                        buttonTextClassName="text-left leading-tight"
                       />
                     </motion.div>
                   </div>
                   <div className="flex flex-row justify-center gap-2 my-2 w-full">
                     <motion.div {...animateVerticalFadeIn(0.2)}>
-                      <CardsButton
-                        width="180px"
-                        height="51.75px"
-                        text="Receive"
-                        borderColor="#F2DD69"
-                        textColor="#EDD134"
-                        backgroundColor="#FCF7DA"
-                        icon={ReceiveIcon}
-                        onClick={() => setSubPage("receive")}
+                      <Button
+                        buttonText={"Nominate others"}
+                        onClick={() => setSubPage("challenge")}
+                        className={
+                          "!w-44 h-16 bg-bold-yellow hover:bg-bold-yellow-hover text-white rounded-md !justify-start !items-end p-2"
+                        }
+                        buttonTextClassName="text-left w-3/4 leading-tight"
                       />
                     </motion.div>
                     <motion.div {...animateVerticalFadeIn(0.3)}>
-                      <CardsButton
-                        {...animateVerticalFadeIn(0.3)}
-                        width="180px"
-                        height="51.75px"
-                        text="Challenge"
-                        borderColor="#FD3B8A"
-                        textColor="#FC086B"
-                        backgroundColor="#FFD3E5"
-                        icon={ChallengeIcon}
-                        onClick={() => setSubPage("challenge")}
+                      <Button
+                        buttonText={"See my posts"}
+                        onClick={handleAllCardsClick}
+                        className={
+                          "!w-44 h-16 bg-bold-green hover:bg-bold-green-hover text-white rounded-md !justify-start !items-end p-2"
+                        }
                       />
                     </motion.div>
                   </div>
                 </div>
               ) : (
                 <div className="flex flex-row justify-between gap-4 my-4 w-full">
-                  <motion.div {...animateVerticalFadeIn(0)}>
-                    <CardsButton
-                      width="180px"
-                      height="51.75px"
-                      text="All cards"
-                      borderColor="#BEDF3D"
-                      textColor="#8DAB1C"
-                      backgroundColor="#EAF4C0"
-                      icon={AllCardIcon}
-                      onClick={handleAllCardsClick}
-                    />
-                  </motion.div>
-                  <motion.div {...animateVerticalFadeIn(0.1)}>
-                    <CardsButton
-                      {...animateVerticalFadeIn(0.1)}
-                      width="180px"
-                      height="51.75px"
-                      text="New Card"
-                      borderColor="#48B8E6"
-                      textColor="#1D9FD5"
-                      backgroundColor="#D1EDF9"
-                      icon={NewCardIcon}
-                      onClick={() => setSubPage("new")}
-                    />
-                  </motion.div>
-                  <motion.div {...animateVerticalFadeIn(0.2)}>
-                    <CardsButton
-                      {...animateVerticalFadeIn(0.2)}
-                      width="180px"
-                      height="51.75px"
-                      text="Receive"
-                      borderColor="#F2DD69"
-                      textColor="#EDD134"
-                      backgroundColor="#FCF7DA"
-                      icon={ReceiveIcon}
+                  <motion.div className="w-full" {...animateVerticalFadeIn(0)}>
+                    <Button
+                      buttonText={"Accept a challenge"}
                       onClick={() => setSubPage("receive")}
+                      className={
+                        "!w-[240px] h-20 bg-bold-blue hover:bg-bold-blue-hover text-white rounded-md !justify-start !items-end p-2"
+                      }
+                      buttonTextClassName="text-left w-1/2 leading-tight"
                     />
                   </motion.div>
-                  <motion.div {...animateVerticalFadeIn(0.3)}>
-                    <CardsButton
-                      {...animateVerticalFadeIn(0.3)}
-                      width="180px"
-                      height="51.75px"
-                      text="Challenge"
-                      borderColor="#FD3B8A"
-                      textColor="#FC086B"
-                      backgroundColor="#FFD3E5"
-                      icon={ChallengeIcon}
+                  <motion.div
+                    className="w-full"
+                    {...animateVerticalFadeIn(0.1)}
+                  >
+                    <Button
+                      buttonText={"Start a new challenge"}
+                      onClick={() => setSubPage("new")}
+                      className={
+                        "!w-[240px] h-20 bg-bold-pink hover:bg-bold-pink-hover text-white rounded-md !justify-start !items-end p-2"
+                      }
+                      buttonTextClassName="text-left leading-tight w-1/2"
+                    />
+                  </motion.div>
+                  <motion.div
+                    className="w-full"
+                    {...animateVerticalFadeIn(0.2)}
+                  >
+                    <Button
+                      buttonText={"Nominate others"}
                       onClick={() => setSubPage("challenge")}
+                      className={
+                        "!w-[240px] h-20 bg-bold-yellow hover:bg-bold-yellow-hover text-white rounded-md !justify-start !items-end p-2"
+                      }
+                      buttonTextClassName="text-left w-1/2 leading-tight"
+                    />
+                  </motion.div>
+                  <motion.div
+                    className="w-full"
+                    {...animateVerticalFadeIn(0.3)}
+                  >
+                    <Button
+                      buttonText={"See my posts"}
+                      onClick={handleAllCardsClick}
+                      className={
+                        "!w-[240px] h-20 bg-bold-green hover:bg-bold-green-hover text-white rounded-md !justify-start !items-end p-2"
+                      }
                     />
                   </motion.div>
                 </div>
