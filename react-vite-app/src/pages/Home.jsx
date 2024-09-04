@@ -16,8 +16,8 @@ import Confetti from "react-confetti";
 import CongratsCard from "../components/cardsPages/congratsCard.jsx";
 import Notification from "../components/home/notification.jsx";
 import { doFetchUserProfile } from "../firebase/firestore";
-
-const HomePage = ({ user }) => {
+import YouTubeVideo from "../new componenets/feed/YoutubeVideo.jsx";
+const HomePage = () => {
   const { currentUser } = useAuth();
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [subPage, setSubPage] = useState("feed");
@@ -60,7 +60,7 @@ const HomePage = ({ user }) => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const profile = await doFetchUserProfile(user.uid);
+        const profile = await doFetchUserProfile(currentUser.uid);
         setUserData(profile.data());
       } catch (error) {
         console.error("Failed to fetch user profile:", error);
@@ -69,7 +69,7 @@ const HomePage = ({ user }) => {
 
     fetchUserProfile();
     console.log("user data: ", userData);
-  }, [user]);
+  }, [currentUser]);
 
   const signOut = async (e) => {
     e.preventDefault();
@@ -171,11 +171,13 @@ const HomePage = ({ user }) => {
         >
           {subPage === "feed" ? (
             <>
+
               <div className="w-full font-semibold text-bold-pink text-3xl">
-                Hi <span className="font-bold">Zhenjie</span>
+                Hi <span className="font-bold">{userData ? userData.firstName : ""}</span>
                 <br />
                 How will you spread goodness today?
               </div>
+
 
               {isMediumScreen ? (
                 <div className="flex flex-col justify-center my-4 w-full">
@@ -283,6 +285,7 @@ const HomePage = ({ user }) => {
                   </motion.div>
                 </div>
               )}
+              <YouTubeVideo videoId="dQw4w9WgXcQ" />
               <CardFeed
                 user={currentUser}
                 card={currentCard}
