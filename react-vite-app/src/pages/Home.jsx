@@ -28,6 +28,7 @@ const HomePage = () => {
   const [confettiPieces, setConfettiPieces] = useState(0);
   const [userData, setUserData] = useState(null);
   const [firstTime, setFirstTime] = useState(true);
+  const [firstTimeWalkThru, setFirstTimeWalkThru] = useState(true);
 
   const [isNarrowScreen, setIsNarrowScreen] = useState(
     window.innerWidth <= 840
@@ -37,7 +38,7 @@ const HomePage = () => {
   );
   const [showWalkthrough, setShowWalkthrough] = useState(false);
 
-  const y =  360;
+  const y =  isNarrowScreen ? 280  : isMediumScreen ? 300 : 340;
 
   const handleAllCardsClick = async () => {
     await resetUnreadCount(currentUser.uid);
@@ -173,20 +174,19 @@ const HomePage = () => {
           }
         >
           {subPage === "feed" ? (
-            <>
+            <div className="w-full flex flex-col gap-10 h-full">
               <div className="w-full font-semibold text-bold-pink text-5xl max-md:text-3xl max-sm:text-2xl">
                 Hi {isNarrowScreen ? <br /> : ""}{" "}
                 <span className="font-bold">
                   {userData ? userData.firstName : ""}!
                 </span>
-                {/* <br />
-                How will you spread goodness today? */}
               </div>
+
               {/* {firstTime ? ( */}
               <motion.div
                 initial={{ y: 0 }}
                 animate={{ y: firstTime ? 0 : y }}
-                className=" w-full flex justify-center items-center mt-14 max-md:flex-col"
+                className=" w-full flex justify-center items-center max-md:flex-col"
               >
                 <p className=" mr-20 text-xl font-semibold">
                   Click the video to receive your mission:
@@ -200,7 +200,7 @@ const HomePage = () => {
                 </div>
               </motion.div>
               {/* ) : null} */}
-              <motion.div className="w-full mt-20"
+              <motion.div className="w-full"
               initial={{y: firstTime ? 0 : -y}}
               animate={{y: firstTime ? 0 : -y}}
               >
@@ -208,7 +208,7 @@ const HomePage = () => {
                   How will you spread goodness today?
                 </p>
 
-                {isMediumScreen ? (
+                {isNarrowScreen ? (
                   <div className="flex flex-col justify-center my-4 w-full">
                     <div className="flex flex-row justify-center gap-2 my-2 w-full">
                       <motion.div
@@ -330,7 +330,7 @@ const HomePage = () => {
                   handleOpen={handleWalkthroughOpen}
                 />
               </motion.div>
-            </>
+            </div>
           ) : (
             renderSubPage()
           )}

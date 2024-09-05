@@ -38,7 +38,7 @@ const SmallMenuSidebar = ({ user, signOut, page, setPage }) => {
   return (
     <>
       {!isSmallMenu && (
-        <div className="md:hidden">
+        <div className="lg:hidden">
           <img
             src={MenuBackgroundPNG}
             alt="Menu Background"
