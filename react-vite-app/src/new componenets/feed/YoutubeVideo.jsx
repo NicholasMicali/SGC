@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import YouTube from 'react-youtube';
 
-const YouTubeVideo = ({ videoId }) => {
+const YouTubeVideo = ({ videoId, isNarrowScreen, isMediumScreen }) => {
   const [videoCompleted, setVideoCompleted] = useState(false);
-
+  const width = isNarrowScreen ? '320px' : isMediumScreen ? '480px' : '640px';
+  const height = isNarrowScreen ? '180px' : isMediumScreen ? '270px' : '360px';
   const onReady = (event) => {
     // Store the player instance
     const player = event.target;
@@ -17,8 +18,8 @@ const YouTubeVideo = ({ videoId }) => {
   };
   //max width and height allowed by current screen
   const opts = {
-    // height: '360px',
-    // width: '640px',
+    height: height,
+    width: width,
     playerVars: {
       autoplay: 0,
     },

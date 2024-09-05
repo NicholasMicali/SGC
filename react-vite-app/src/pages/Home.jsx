@@ -27,6 +27,7 @@ const HomePage = () => {
   const [showCongrats, setShowCongrats] = useState(false);
   const [confettiPieces, setConfettiPieces] = useState(0);
   const [userData, setUserData] = useState(null);
+  const [firstTime, setFirstTime] = useState(true);
 
   const [isNarrowScreen, setIsNarrowScreen] = useState(
     window.innerWidth <= 840
@@ -171,20 +172,31 @@ const HomePage = () => {
         >
           {subPage === "feed" ? (
             <>
-
-              <div className="w-full font-semibold text-bold-pink text-5xl">
-                Hi <span className="font-bold">{userData ? userData.firstName : ""}</span>
+              <div className="w-full font-semibold text-bold-pink text-5xl max-md:text-3xl max-sm:text-2xl">
+                Hi {isNarrowScreen ? <br /> : ""}{" "}
+                <span className="font-bold">
+                  {userData ? userData.firstName : ""}!
+                </span>
                 {/* <br />
                 How will you spread goodness today? */}
               </div>
-              <div className=" w-full flex justify-center items-center mb-20 mt-14 max-md:flex-col">
+              {firstTime ? (
+                <motion.div
+                  layoutId="video"
+                  className=" w-full flex justify-center items-center mb-20 mt-14 max-md:flex-col"
+                >
                   <p className=" mr-20 text-xl font-semibold">
-                    Click the video to receive you mission:
+                    Click the video to receive your mission:
                   </p>
                   <div className="border-4 border-bold-pink shadow-xl rounded-md">
-                    <YouTubeVideo videoId="dQw4w9WgXcQ" />
+                    <YouTubeVideo
+                      videoId="dQw4w9WgXcQ"
+                      isNarrowScreen={isNarrowScreen}
+                      isMediumScreen={isMediumScreen}
+                    />
                   </div>
-              </div>
+                </motion.div>
+              ) : null}
 
               <p className="w-full text-2xl font-semibold mb-10">
                 How will you spread goodness today?
@@ -296,7 +308,27 @@ const HomePage = () => {
                   </motion.div>
                 </div>
               )}
-              
+              <Button
+                buttonText="Negate firstTime"
+                onClick={() => setFirstTime(!firstTime)}
+              />
+              {!firstTime ? (
+                <motion.div
+                  layoutId="video"
+                  className=" w-full flex justify-center items-center mb-20 mt-14 max-md:flex-col"
+                >
+                  <p className=" mr-20 text-xl font-semibold">
+                    Click the video to receive your mission:
+                  </p>
+                  <div className="border-4 border-bold-pink shadow-xl rounded-md">
+                    <YouTubeVideo
+                      videoId="dQw4w9WgXcQ"
+                      isNarrowScreen={isNarrowScreen}
+                      isMediumScreen={isMediumScreen}
+                    />
+                  </div>
+                </motion.div>
+              ) : null}
               <CardFeed
                 user={currentUser}
                 card={currentCard}
