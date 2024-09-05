@@ -37,6 +37,8 @@ const HomePage = () => {
   );
   const [showWalkthrough, setShowWalkthrough] = useState(false);
 
+  const y =  360;
+
   const handleAllCardsClick = async () => {
     await resetUnreadCount(currentUser.uid);
     setSubPage("all");
@@ -180,163 +182,154 @@ const HomePage = () => {
                 {/* <br />
                 How will you spread goodness today? */}
               </div>
-              {firstTime ? (
-                <motion.div
-                  layoutId="video"
-                  className=" w-full flex justify-center items-center mb-20 mt-14 max-md:flex-col"
-                >
-                  <p className=" mr-20 text-xl font-semibold">
-                    Click the video to receive your mission:
-                  </p>
-                  <div className="border-4 border-bold-pink shadow-xl rounded-md">
-                    <YouTubeVideo
-                      videoId="dQw4w9WgXcQ"
-                      isNarrowScreen={isNarrowScreen}
-                      isMediumScreen={isMediumScreen}
-                    />
+              {/* {firstTime ? ( */}
+              <motion.div
+                initial={{ y: 0 }}
+                animate={{ y: firstTime ? 0 : y }}
+                className=" w-full flex justify-center items-center mt-14 max-md:flex-col"
+              >
+                <p className=" mr-20 text-xl font-semibold">
+                  Click the video to receive your mission:
+                </p>
+                <div className="border-4 border-bold-pink shadow-xl rounded-md">
+                  <YouTubeVideo
+                    videoId="dQw4w9WgXcQ"
+                    isNarrowScreen={isNarrowScreen}
+                    isMediumScreen={isMediumScreen}
+                  />
+                </div>
+              </motion.div>
+              {/* ) : null} */}
+              <motion.div className="w-full mt-20"
+              initial={{y: firstTime ? 0 : -y}}
+              animate={{y: firstTime ? 0 : -y}}
+              >
+                <p className="w-full text-2xl font-semibold mb-10">
+                  How will you spread goodness today?
+                </p>
+
+                {isMediumScreen ? (
+                  <div className="flex flex-col justify-center my-4 w-full">
+                    <div className="flex flex-row justify-center gap-2 my-2 w-full">
+                      <motion.div
+                        className="relative"
+                        {...animateVerticalFadeIn(0)}
+                      >
+                        <Button
+                          buttonText={"Accept a challenge"}
+                          onClick={() => setSubPage("receive")}
+                          className={
+                            "!w-44 h-16 bg-bold-blue hover:bg-bold-blue-hover text-white rounded-md !justify-start !items-end p-2"
+                          }
+                          buttonTextClassName="text-left w-3/4 leading-tight"
+                        />
+
+                        <div className="absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4">
+                          <Notification user={currentUser} />
+                        </div>
+                      </motion.div>
+
+                      <motion.div {...animateVerticalFadeIn(0.1)}>
+                        <Button
+                          buttonText={"Start a new challenge"}
+                          onClick={() => setSubPage("new")}
+                          className={
+                            "!w-44 h-16 bg-bold-pink hover:bg-bold-pink-hover text-white rounded-md !justify-start !items-end p-2"
+                          }
+                          buttonTextClassName="text-left leading-tight"
+                        />
+                      </motion.div>
+                    </div>
+                    <div className="flex flex-row justify-center gap-2 my-2 w-full">
+                      <motion.div {...animateVerticalFadeIn(0.2)}>
+                        <Button
+                          buttonText={"Nominate others"}
+                          onClick={() => setSubPage("challenge")}
+                          className={
+                            "!w-44 h-16 bg-bold-yellow hover:bg-bold-yellow-hover text-white rounded-md !justify-start !items-end p-2"
+                          }
+                          buttonTextClassName="text-left w-3/4 leading-tight"
+                        />
+                      </motion.div>
+                      <motion.div {...animateVerticalFadeIn(0.3)}>
+                        <Button
+                          buttonText={"See my posts"}
+                          onClick={handleAllCardsClick}
+                          className={
+                            "!w-44 h-16 bg-bold-green hover:bg-bold-green-hover text-white rounded-md !justify-start !items-end p-2"
+                          }
+                        />
+                      </motion.div>
+                    </div>
                   </div>
-                </motion.div>
-              ) : null}
-
-              <p className="w-full text-2xl font-semibold mb-10">
-                How will you spread goodness today?
-              </p>
-
-              {isMediumScreen ? (
-                <div className="flex flex-col justify-center my-4 w-full">
-                  <div className="flex flex-row justify-center gap-2 my-2 w-full">
+                ) : (
+                  <div className="flex flex-row justify-between gap-4 my-4 w-full">
                     <motion.div
-                      className="relative"
+                      className="w-full"
                       {...animateVerticalFadeIn(0)}
                     >
                       <Button
                         buttonText={"Accept a challenge"}
                         onClick={() => setSubPage("receive")}
                         className={
-                          "!w-44 h-16 bg-bold-blue hover:bg-bold-blue-hover text-white rounded-md !justify-start !items-end p-2"
+                          " max-w-[300px] h-20 bg-bold-blue hover:bg-bold-blue-hover text-white rounded-md !justify-start !items-end p-2"
                         }
-                        buttonTextClassName="text-left w-3/4 leading-tight"
+                        buttonTextClassName="text-left w-1/2 leading-tight"
                       />
-
-                      <div className="absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4">
-                        <Notification user={currentUser} />
-                      </div>
                     </motion.div>
-
-                    <motion.div {...animateVerticalFadeIn(0.1)}>
+                    <motion.div
+                      className="w-full"
+                      {...animateVerticalFadeIn(0.1)}
+                    >
                       <Button
                         buttonText={"Start a new challenge"}
                         onClick={() => setSubPage("new")}
                         className={
-                          "!w-44 h-16 bg-bold-pink hover:bg-bold-pink-hover text-white rounded-md !justify-start !items-end p-2"
+                          "max-w-[300px] h-20 bg-bold-pink hover:bg-bold-pink-hover text-white rounded-md !justify-start !items-end p-2"
                         }
-                        buttonTextClassName="text-left leading-tight"
+                        buttonTextClassName="text-left leading-tight w-1/2"
                       />
                     </motion.div>
-                  </div>
-                  <div className="flex flex-row justify-center gap-2 my-2 w-full">
-                    <motion.div {...animateVerticalFadeIn(0.2)}>
+                    <motion.div
+                      className="w-full"
+                      {...animateVerticalFadeIn(0.2)}
+                    >
                       <Button
                         buttonText={"Nominate others"}
                         onClick={() => setSubPage("challenge")}
                         className={
-                          "!w-44 h-16 bg-bold-yellow hover:bg-bold-yellow-hover text-white rounded-md !justify-start !items-end p-2"
+                          " max-w-[300px] h-20 bg-bold-yellow hover:bg-bold-yellow-hover text-white rounded-md !justify-start !items-end p-2"
                         }
-                        buttonTextClassName="text-left w-3/4 leading-tight"
+                        buttonTextClassName="text-left w-1/2 leading-tight"
                       />
                     </motion.div>
-                    <motion.div {...animateVerticalFadeIn(0.3)}>
+                    <motion.div
+                      className="w-full"
+                      {...animateVerticalFadeIn(0.3)}
+                    >
                       <Button
                         buttonText={"See my posts"}
                         onClick={handleAllCardsClick}
                         className={
-                          "!w-44 h-16 bg-bold-green hover:bg-bold-green-hover text-white rounded-md !justify-start !items-end p-2"
+                          " max-w-[300px] h-20 bg-bold-green hover:bg-bold-green-hover text-white rounded-md !justify-start !items-end p-2"
                         }
                       />
                     </motion.div>
                   </div>
-                </div>
-              ) : (
-                <div className="flex flex-row justify-between gap-4 my-4 w-full">
-                  <motion.div className="w-full" {...animateVerticalFadeIn(0)}>
-                    <Button
-                      buttonText={"Accept a challenge"}
-                      onClick={() => setSubPage("receive")}
-                      className={
-                        " max-w-[300px] h-20 bg-bold-blue hover:bg-bold-blue-hover text-white rounded-md !justify-start !items-end p-2"
-                      }
-                      buttonTextClassName="text-left w-1/2 leading-tight"
-                    />
-                  </motion.div>
-                  <motion.div
-                    className="w-full"
-                    {...animateVerticalFadeIn(0.1)}
-                  >
-                    <Button
-                      buttonText={"Start a new challenge"}
-                      onClick={() => setSubPage("new")}
-                      className={
-                        "max-w-[300px] h-20 bg-bold-pink hover:bg-bold-pink-hover text-white rounded-md !justify-start !items-end p-2"
-                      }
-                      buttonTextClassName="text-left leading-tight w-1/2"
-                    />
-                  </motion.div>
-                  <motion.div
-                    className="w-full"
-                    {...animateVerticalFadeIn(0.2)}
-                  >
-                    <Button
-                      buttonText={"Nominate others"}
-                      onClick={() => setSubPage("challenge")}
-                      className={
-                        " max-w-[300px] h-20 bg-bold-yellow hover:bg-bold-yellow-hover text-white rounded-md !justify-start !items-end p-2"
-                      }
-                      buttonTextClassName="text-left w-1/2 leading-tight"
-                    />
-                  </motion.div>
-                  <motion.div
-                    className="w-full"
-                    {...animateVerticalFadeIn(0.3)}
-                  >
-                    <Button
-                      buttonText={"See my posts"}
-                      onClick={handleAllCardsClick}
-                      className={
-                        " max-w-[300px] h-20 bg-bold-green hover:bg-bold-green-hover text-white rounded-md !justify-start !items-end p-2"
-                      }
-                    />
-                  </motion.div>
-                </div>
-              )}
-              <Button
-                buttonText="Negate firstTime"
-                onClick={() => setFirstTime(!firstTime)}
-              />
-              {!firstTime ? (
-                <motion.div
-                  layoutId="video"
-                  className=" w-full flex justify-center items-center mb-20 mt-14 max-md:flex-col"
-                >
-                  <p className=" mr-20 text-xl font-semibold">
-                    Click the video to receive your mission:
-                  </p>
-                  <div className="border-4 border-bold-pink shadow-xl rounded-md">
-                    <YouTubeVideo
-                      videoId="dQw4w9WgXcQ"
-                      isNarrowScreen={isNarrowScreen}
-                      isMediumScreen={isMediumScreen}
-                    />
-                  </div>
-                </motion.div>
-              ) : null}
-              <CardFeed
-                user={currentUser}
-                card={currentCard}
-                setSubPage={setSubPage}
-                firstPost={firstPost}
-                isNarrowScreen={isNarrowScreen}
-                handleOpen={handleWalkthroughOpen}
-              />
+                )}
+                <Button
+                  buttonText="Negate firstTime"
+                  onClick={() => setFirstTime(!firstTime)}
+                />
+                <CardFeed
+                  user={currentUser}
+                  card={currentCard}
+                  setSubPage={setSubPage}
+                  firstPost={firstPost}
+                  isNarrowScreen={isNarrowScreen}
+                  handleOpen={handleWalkthroughOpen}
+                />
+              </motion.div>
             </>
           ) : (
             renderSubPage()
