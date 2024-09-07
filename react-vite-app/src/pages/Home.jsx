@@ -17,6 +17,8 @@ import CongratsCard from "../components/cardsPages/congratsCard.jsx";
 import Notification from "../components/home/notification.jsx";
 import { doFetchUserProfile } from "../firebase/firestore";
 import YouTubeVideo from "../new componenets/feed/YoutubeVideo.jsx";
+import GetStarted from "../new componenets/feed/GetStarted.jsx";
+
 const HomePage = () => {
   const { currentUser } = useAuth();
   const [isSigningOut, setIsSigningOut] = useState(false);
@@ -27,8 +29,10 @@ const HomePage = () => {
   const [showCongrats, setShowCongrats] = useState(false);
   const [confettiPieces, setConfettiPieces] = useState(0);
   const [userData, setUserData] = useState(null);
+
+  //first time user flow states
   const [firstTime, setFirstTime] = useState(true);
-  const [firstTimeWalkThru, setFirstTimeWalkThru] = useState(true);
+  const [getStarted, setGetStarted] = useState(false);
 
   const [isNarrowScreen, setIsNarrowScreen] = useState(
     window.innerWidth <= 840
@@ -38,7 +42,7 @@ const HomePage = () => {
   );
   const [showWalkthrough, setShowWalkthrough] = useState(false);
 
-  const y =  isNarrowScreen ? 280  : isMediumScreen ? 300 : 340;
+  const y = isNarrowScreen ? 280 : isMediumScreen ? 300 : 340;
 
   const handleAllCardsClick = async () => {
     await resetUnreadCount(currentUser.uid);
@@ -157,6 +161,9 @@ const HomePage = () => {
         {showWalkthrough && (
           <WalkthroughModal onClose={handleWalkthroughClose} />
         )}
+        {!firstTime && !getStarted ? (
+          <GetStarted setGetStarted={() => setGetStarted(true)} />
+        ) : null}
         {showCongrats && (
           <CongratsCard
             onClickX={() => setShowCongrats(false)}
@@ -170,7 +177,7 @@ const HomePage = () => {
               ? "flex-grow flex flex-col items-center px-5 py-12 md:hidden"
               : "flex-grow flex flex-col items-center py-10 max-md:hidden") +
             (isMediumScreen ? " px-16" : " px-24") +
-            (showWalkthrough ? " blur-sm" : "")
+            (showWalkthrough || (!firstTime && !getStarted) ? " blur-sm" : "")
           }
         >
           {subPage === "feed" ? (
@@ -200,9 +207,10 @@ const HomePage = () => {
                 </div>
               </motion.div>
               {/* ) : null} */}
-              <motion.div className="w-full"
-              initial={{y: firstTime ? 0 : -y}}
-              animate={{y: firstTime ? 0 : -y}}
+              <motion.div
+                className="w-full"
+                initial={{ y: firstTime ? 0 : -y }}
+                animate={{ y: firstTime ? 0 : -y }}
               >
                 <p className="w-full text-2xl font-semibold mb-10">
                   How will you spread goodness today?

@@ -4,9 +4,6 @@ import {animateQuickDownToUpWithDelay} from "../../constants/anim";
 import {motion} from "framer-motion";
 
 const GetStarted = ({sizeHeader, handleOpen}) => {
-    const handleNo = () => {
-        console.log("hello world");
-    }
     return(
         <motion.div
             {...animateQuickDownToUpWithDelay(.25)}
