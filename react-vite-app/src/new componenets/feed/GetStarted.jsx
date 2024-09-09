@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import Button from "../../new componenets/Button";
+import { useNavigate } from "react-router-dom";
 const text = [
   "Did you already complete your first step of the mission and do something kind and unexpected for someone you don’t know?",
   "Go out and brighten someone’s day! Then come back here to tell us all about it! We can’t wait!",
 ];
 
-const GetStarted = ({ setGetStarted }) => {
+const GetStarted = ({ setGetStarted, toRecieve, toNewCard }) => {
   const [step, setStep] = useState(1);
+  const navigate = useNavigate();
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -25,9 +27,13 @@ const GetStarted = ({ setGetStarted }) => {
               <p className="text-2xl font-semibold">{text[1]}</p>
               <div className="flex flex-col gap-1 justify-center items-center text-lg font-medium">
                 <p>Not sure what to do?</p>
-                <a href="" className=" underline text-bold-blue">
+                {/* <a href="" className=" underline text-bold-blue">
                   Click here for some ideas!
-                </a>
+                </a> */}
+
+                <button className=" underline text-bold-blue" onClick={() => navigate('/inspiration')}>
+                  Click here for some ideas!
+                </button>
               </div>
             </>
           )}
@@ -59,12 +65,18 @@ const GetStarted = ({ setGetStarted }) => {
               <div className="flex gap-5">
                 <Button
                   buttonText="Accept a Challenge"
-                  onClick={() => setStep(2)}
+                  onClick={() => {
+                    setGetStarted();
+                    toRecieve();
+                  }}
                   className="bg-bold-blue hover:bg-bold-blue-hover text-white p-5 rounded-md"
                 />
                 <Button
                   buttonText="Start a New Challenge"
-                  onClick={() => setStep(0)}
+                  onClick={() => {
+                    setGetStarted();
+                    toNewCard();
+                  }}
                   className="bg-bold-pink hover:bg-bold-pink-hover  text-white p-5 rounded-md"
                 />
               </div>

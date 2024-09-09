@@ -118,6 +118,10 @@ const HomePage = () => {
     setSubPage("all");
   };
 
+  const toReceive = () => {
+    setSubPage("receive");
+  };
+
   const selectCard = (card, cid) => {
     setCurrentCard(card);
     setCurrentCid(cid);
@@ -162,7 +166,7 @@ const HomePage = () => {
           <WalkthroughModal onClose={handleWalkthroughClose} />
         )}
         {!firstTime && !getStarted ? (
-          <GetStarted setGetStarted={() => setGetStarted(true)} />
+          <GetStarted setGetStarted={() => setGetStarted(true)} toRecieve={toReceive} toNewCard={toNewCard}/>
         ) : null}
         {showCongrats && (
           <CongratsCard
