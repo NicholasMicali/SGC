@@ -18,6 +18,7 @@ import Notification from "../components/home/notification.jsx";
 import { doFetchUserProfile } from "../firebase/firestore";
 import YouTubeVideo from "../new componenets/feed/YoutubeVideo.jsx";
 import GetStarted from "../new componenets/feed/GetStarted.jsx";
+import NominateOthers from "../new componenets/feed/nominatedOthers.jsx";
 
 const HomePage = () => {
   const { currentUser } = useAuth();
@@ -33,6 +34,7 @@ const HomePage = () => {
   //first time user flow states
   const [firstTime, setFirstTime] = useState(true);
   const [getStarted, setGetStarted] = useState(false);
+  const [nominateOthers, setNominateOthers] = useState(false);
 
   const [isNarrowScreen, setIsNarrowScreen] = useState(
     window.innerWidth <= 840
@@ -110,6 +112,11 @@ const HomePage = () => {
     setSubPage("feed");
   };
 
+  const returnToFeedAndNominate = () => {
+    setSubPage("feed");
+    setNominateOthers(true);
+  };
+
   const toNewCard = () => {
     setSubPage("new");
   };
@@ -173,6 +180,12 @@ const HomePage = () => {
             onClickX={() => setShowCongrats(false)}
             onClickChallenge={onClickChallengeButton}
           />
+        )}
+        {nominateOthers && (
+          <NominateOthers
+          setNominateOthers={() => setNominateOthers(false)} toAllCards={toAllCards}
+          />
+         
         )}
 
         <div
@@ -396,6 +409,7 @@ const HomePage = () => {
             code={currentCard ? currentCard.code : null}
             cid={currentCid}
             cards={toAllCards}
+            nominate={returnToFeedAndNominate}
           />
         )}
       </>
