@@ -64,6 +64,7 @@ const SmallMenuSidebar = ({ user, signOut, page, setPage }) => {
           <div className="relative flex flex-col w-full items-start p-2 mxy-8 gap-2 z-10">
             {navItemArr.map((item, index) => {
               if (user.userType === "Visitor" && index === 4) return;
+              const isExternal = item[4] === true;
               return (
                 <NavItem
                   path={item[0]}
@@ -71,7 +72,13 @@ const SmallMenuSidebar = ({ user, signOut, page, setPage }) => {
                   unselectedIcon={item[3]}
                   selectedIcon={item[2]}
                   text={item[1]}
-                  onClick={() => onClick(item[0])}
+                  onClick={() => {
+                    if (isExternal) {
+                      window.open(item[0], "_blank");
+                    } else {
+                      onClick(item[0]);
+                    }
+                  }}
                   index={index}
                 />
               );
