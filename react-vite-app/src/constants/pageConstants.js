@@ -19,6 +19,8 @@ import AccountSettingsIcon from "../assets/AccountSettingsIcon.svg";
 import accountPink from "../assets/accountPink.svg";
 import classroomIcon from "../assets/classroom.svg";
 import classroomPink from "../assets/classroomPink.svg";
+import videoIcon from "../assets/videoIcon.svg";
+import videoPink from "../assets/videoPink.svg";
 
 //for mediaArr
 import TwitterIcon from "../assets/TwitterIcon.svg";
@@ -333,6 +335,7 @@ export const navItemArr = [
   ["/journal", "Journal", journalPink, JournalIcon],
   ["/account", "Account Settings", accountPink, AccountSettingsIcon],
   ["/classroom", "Classroom", classroomPink, classroomIcon],
+  ["https://music.youtube.com/watch?v=dQw4w9WgXcQ", "Mission Video", videoPink, videoIcon, true],
 ];
 
 export const colors = {
