@@ -19,6 +19,7 @@ import { doFetchUserProfile } from "../firebase/firestore";
 import YouTubeVideo from "../new componenets/feed/YoutubeVideo.jsx";
 import GetStarted from "../new componenets/feed/GetStarted.jsx";
 import NominateOthers from "../new componenets/feed/nominatedOthers.jsx";
+import NewPost from "../new componenets/feed/NewPost.jsx";
 
 const HomePage = () => {
   const { currentUser } = useAuth();
