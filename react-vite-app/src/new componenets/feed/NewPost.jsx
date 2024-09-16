@@ -386,7 +386,7 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
               <div className="absolute bottom-1 right-4">
                   <Button
                     buttonText="Submit"
-                    onClick={() => {setStep(4), 
+                    onClick={() => {setStep(4)
                     }
                   }
                   className="bg-bold-pink hover:bg-bold-pink-hover text-white text-sm p-3 rounded-3xl w-[106px] h-[26px]"
