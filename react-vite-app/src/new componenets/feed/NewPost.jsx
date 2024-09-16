@@ -80,7 +80,8 @@ const placeHolderText = "Where were you?\nWhose day did you brighten?\nHow did t
 
 const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setConfettiPieces }) => {
   const [step, setStep] = useState(0);
-  const [isCreatingCard, setIsCreatingCard] = useState(false);
+  const [textError, setTextError] = useState(false);
+  const [isCreatingCard, setIsCreatingCard] = useState('');
   const [title, setTitle] = useState("");
   const [code, setCode] = useState("");
   const [text, setText] = useState("");
@@ -261,6 +262,61 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
     }
   };
 
+  const handleNextStep = () => {
+    console.log(`Current Step: ${step}`);
+    if (validateCurrentStep()){
+      setStep(prevStep => {
+        const newStep = prevStep + 1;
+        console.log(`Advancing to Step: ${newStep}`);
+        return newStep;
+      });
+    } else {
+      console.log(`Validation failed at Step: ${step}`);
+    }
+  };
+
+  const validateCurrentStep = () => {
+    switch(step){
+      case 0:
+        if (text.trim() === ''){
+          setTextError("Please Fill out the Text Section");
+          console.log("Step 0: Text not filled")
+          return false;
+        } else if((!codeValid || !codeUnique) && codeTouched){
+          setTextError('Code is either invalid or non-unique');
+          console.log("Step 0: Code wrong")
+          return false;
+        } else {
+          setTextError('');
+          console.log("Step 0 is good")
+          return true;
+        }
+      case 1:
+        if (title.trim() === ''){
+          setTextError("Please Fill out the Title Section");
+          return false;
+        } else{
+          setTextError('');
+          return true;
+        }
+
+      case 2:
+          setTextError('');
+          return true;
+
+      case 3:
+        setTextError('');
+        return true;
+    
+    }
+  }
+
+  const handleBack = () => {
+    if(step<=0){
+      return;
+    }
+    setStep(prevStep => prevStep -1)
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -268,14 +324,15 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
         className={`bg-white rounded-lg shadow-lg max-sm:w-[85%] w-[400px] h-[435px] p-4 relative flex flex-col justify-start border-4 border-bold-pink`}
       >
         <X className="absolute top-4 right-4 hover:cursor-pointer" onClick={setNewPost} />
+        <ArrowLeft className="absolute top-2 left-2 hover:cursor-pointer" onClick={handleBack} />
         <form 
         onSubmit={onSubmit}
         className="flex flex-col w-full h-full overflow-auto">
           {step === 0 && (
             <>
               <div className="flex flex-col w-full">
-                <div className="w-3/4 flex items-start justify-start">
-                  <p className="text-2xl font-medium">{headers[0]}</p>
+                <div className="w-3/4 flex items-start justify-start py-4">
+                  <p className="text-2xl font-medium leading-none">{headers[0]}</p>
                 </div>
                 <textarea 
                   className={`rounded-lg shadow-lg max-sm:w-[85%] w-[301px] h-[176px] p-4 relative flex flex-col justify-between items-center text-sm
@@ -288,47 +345,47 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
                   onChange={(e) => setText(e.target.value)}
                   required
                 />
-                <label htmlFor={"code"} className="self-start">
-            Code (You can change this if you want!)
-          </label>
-            <input
-              className="rounded-3xl border-[1px] p-2 md:p-3 border-gray-400"
-              placeholder="Enter code (e.g., 12abc345)"
-              pattern="^\d{2}[A-Za-z]{3}\d{3}$"
-              title="Code must be in the format: 12abc345 (2 digits, 3 letters, 3 digits)"
-              type="text"
-              id="code"
-              value={code}
-              onChange={handleCodeChange}
-              required
-            />
-            {codeTouched && (
-              <div>
-                {!codeValid && (
-                  <div style={{ color: 'red' }}>
-                    Invalid code format. Code must be in the format 12abc345.
+                <label htmlFor={"code"} className="text-center font-thin text-sm">
+                  <p className="items-center">Your Unique Code</p>
+                  <p>(You can change this if you want!)</p>
+                </label>
+                <input
+                  className="rounded-3xl border-[1px] p-2 md:p-3 border-bold-pink text-center"
+                  placeholder="Enter code (e.g., 12abc345)"
+                  pattern="^\d{2}[A-Za-z]{3}\d{3}$"
+                  title="Code must be in the format: 12abc345 (2 digits, 3 letters, 3 digits)"
+                  type="text"
+                  id="code"
+                  value={code}
+                  onChange={handleCodeChange}
+                  required
+                />
+                {codeTouched && (
+                  <div>
+                    {!codeValid && (
+                      <div style={{ color: 'red' }}>
+                        Invalid code format. Code must be in the format 12abc345.
+                      </div>
+                    )}
+                    {codeValid && !codeUnique && (
+                      <div style={{ color: 'red' }}>
+                        Code is already taken. Please choose another one.
+                      </div>
+                    )}
+                    {codeValid && codeUnique && (
+                      <div style={{ color: 'green' }}>
+                        Code is valid and unique.
+                      </div>
+                    )}
                   </div>
                 )}
-                {codeValid && !codeUnique && (
-                  <div style={{ color: 'red' }}>
-                    Code is already taken. Please choose another one.
-                  </div>
-                )}
-                {codeValid && codeUnique && (
-                  <div style={{ color: 'green' }}>
-                    Code is valid and unique.
-                  </div>
-                )}
-              </div>
-            )}
                    
-              </div>
+            </div>
               <div className="flex flex-col gap-1 justify-center items-center text-lg font-medium">
                 <div className="absolute bottom-1 right-4">
                   <Button
                     buttonText="Next"
-                    onClick={() => {setStep(1)}
-                  }
+                    onClick={() => handleNextStep()}
                     className="bg-bold-pink hover:bg-bold-pink-hover text-white text-sm p-3 rounded-3xl w-[106px] h-[26px]"
                   />
                 </div>
@@ -356,7 +413,7 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
               <div className="absolute bottom-1 right-4">
                   <Button
                     buttonText="Next"
-                    onClick={() => {setStep(2)}
+                    onClick={() => {handleNextStep()}
                   }
                   className="bg-bold-pink hover:bg-bold-pink-hover text-white text-sm p-3 rounded-3xl w-[106px] h-[26px]"
                   />
@@ -416,7 +473,7 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
                   <p className="text-xs font-normal self-start">Choose up to 3 stickers to describe how you spread goodness</p>
                 </div>
               </div>
-              <Stickers {...animateQuickDownToUpWithDelay(0.5)} select={selectSticker} />
+              <Stickers select={selectSticker} />
           
               <div className="absolute bottom-1 right-4">
                   <Button
