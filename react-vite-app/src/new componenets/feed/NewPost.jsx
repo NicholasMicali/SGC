@@ -257,10 +257,9 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div
-        className={`bg-white rounded-lg shadow-lg max-sm:w-[85%] w-[400px] h-[435px] p-4 relative flex flex-col justify-between items-center border-4 border-bold-pink
-        }`}
+        className={`bg-white rounded-lg shadow-lg max-sm:w-[85%] w-[400px] h-[435px] p-4 relative flex flex-col justify-between items-center border-4 border-bold-pink`}
       >
-        <X className="self-end hover:cursor-pointer" onClick={setNewPost} />
+        <X className="absolute top-4 right-4 hover:cursor-pointer" onClick={setNewPost} />
 
         <div className="h-full w-full flex flex-col justify-evenly">
           {step === 0 && (
@@ -334,16 +333,55 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
                   <p className="text-2xl font-medium self-start">{headers[2]}</p>
                 </div>
               </div>
+              <div>
+                <label htmlFor={"location"} className="self-start py-0 font-medium">
+                  Current Location
+                </label>
+                <CustomInput
+                  {...animateQuickDownToUpWithDelay(0.1)}
+                  initial={{ opacity: 0, y: 250 }}
+                  type="text"
+                  placeholder="Fetching your location..."
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  id="location"
+                  className="text-xs text-[#97A2A7] p-0 w-full h-[28px]"
+                  readOnly
+                />
+                <p className="font-medium">or</p>
                 <CustomInput
                   {...animateQuickDownToUpWithDelay(0.1)}
                   initial={{ opacity: 0, y: 250 }}
                   type="title"
-                  placeholder="Title"
+                  placeholder="Type a Location"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   id="title"
                   className="text-xs text-[#97A2A7] p-0 w-full h-[28px]"
                 />
+              </div>
+              
+          
+              <div className="absolute bottom-1 right-4">
+                  <Button
+                    buttonText="Next"
+                    onClick={() => {setStep(3)}
+                  }
+                  className="bg-bold-pink hover:bg-bold-pink-hover text-white text-sm p-3 rounded-3xl w-[106px] h-[26px]"
+                  />
+                
+              </div>
+            </>
+          )}
+          {step === 3 && (
+            <>
+              <div className="flex flex-col w-full">
+                <div className="w-3/4 flex flex-col items-start justify-start">
+                  <p className="text-2xl font-medium self-start">{headers[3]}</p>
+                  <p className="text-xs font-normal self-start">Choose up to 3 stickers to describe how you spread goodness</p>
+                </div>
+              </div>
+              
           
               <div className="absolute bottom-1 right-4">
                   <Button
