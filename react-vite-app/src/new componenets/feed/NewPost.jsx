@@ -304,36 +304,51 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
                 <div className="w-3/4 flex items-start justify-start">
                   <p className="text-2xl font-medium">{headers[1]}</p>
                 </div>
-              </div>
-              
-              <div
-                className={`rounded-lg shadow-lg max-sm:w-[85%] w-[316px] h-[48px] p-4 relative flex flex-col justify-between items-start self-start
-                }`}
-                style={{ backgroundColor: '#E9E5E7' }}
-                 >
-                   <div className = "text-sm"
-                   style={{ color: '#97A2A7' }}
-                   >
-                    <input
-                      className="rounded-3xl border-[1px] p-2 md:p-3 border-gray-400"
-                      placeholder="Enter code from the card (e.g., 12abc345)"
-                      pattern="^\d{2}[A-Za-z]{3}\d{3}$"
-                      title="Code should be in the format: 12abc345 (2 digits, 3 letters, 3 digits)"
-                      type='text'
-                      id='code'
-                      value={code}
-                      onChange={(e) => setCode(e.target.value ? e.target.value.toLowerCase() : '')}
-                      required
-                    />
-                   </div>
-                   
-                </div>
-
+              </div>       
+              <CustomInput
+                {...animateQuickDownToUpWithDelay(0.1)}
+                initial={{ opacity: 0, y: 250 }}
+                type="title"
+                placeholder="Title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                id="title"
+                className="text-sm text-[#97A2A7] w-full h-full"
+              />
 
               <div className="absolute bottom-1 right-4">
                   <Button
                     buttonText="Next"
-                    onClick={() => {setStep(1)}
+                    onClick={() => {setStep(2)}
+                  }
+                  className="bg-bold-pink hover:bg-bold-pink-hover text-white text-sm p-3 rounded-3xl w-[106px] h-[26px]"
+                  />
+                
+              </div>
+            </>
+          )}
+          {step === 2 && (
+            <>
+              <div className="flex flex-col w-full">
+                <div className="w-3/4 flex items-start justify-start">
+                  <p className="text-2xl font-medium self-start">{headers[2]}</p>
+                </div>
+              </div>
+                <CustomInput
+                  {...animateQuickDownToUpWithDelay(0.1)}
+                  initial={{ opacity: 0, y: 250 }}
+                  type="title"
+                  placeholder="Title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  id="title"
+                  className="text-xs text-[#97A2A7] p-0 w-full h-[28px]"
+                />
+          
+              <div className="absolute bottom-1 right-4">
+                  <Button
+                    buttonText="Next"
+                    onClick={() => {setStep(2)}
                   }
                   className="bg-bold-pink hover:bg-bold-pink-hover text-white text-sm p-3 rounded-3xl w-[106px] h-[26px]"
                   />
