@@ -283,6 +283,39 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
                   onChange={(e) => setText(e.target.value)}
                   required
                 />
+                <label htmlFor={"code"} className="self-start">
+            Code (You can change this if you want!)
+          </label>
+            <input
+              className="rounded-3xl border-[1px] p-2 md:p-3 border-gray-400"
+              placeholder="Enter code (e.g., 12abc345)"
+              pattern="^\d{2}[A-Za-z]{3}\d{3}$"
+              title="Code must be in the format: 12abc345 (2 digits, 3 letters, 3 digits)"
+              type="text"
+              id="code"
+              value={code}
+              onChange={handleCodeChange}
+              required
+            />
+            {codeTouched && (
+              <div>
+                {!codeValid && (
+                  <div style={{ color: 'red' }}>
+                    Invalid code format. Code must be in the format 12abc345.
+                  </div>
+                )}
+                {codeValid && !codeUnique && (
+                  <div style={{ color: 'red' }}>
+                    Code is already taken. Please choose another one.
+                  </div>
+                )}
+                {codeValid && codeUnique && (
+                  <div style={{ color: 'green' }}>
+                    Code is valid and unique.
+                  </div>
+                )}
+              </div>
+            )}
                    
               </div>
               <div className="flex flex-col gap-1 justify-center items-center text-lg font-medium">
@@ -382,6 +415,7 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
           
               <div className="absolute bottom-1 right-4">
                   <Button
+                    type="submit"
                     buttonText="Submit"
                     onClick={() => {setStep(4)
                     }
@@ -416,7 +450,6 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
                 </p>
               
               <Button
-                type="submit"
                 buttonText="Nominate Others"
                 onClick={() => {
                   setNewPost();
