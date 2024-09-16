@@ -36,6 +36,7 @@ const HomePage = () => {
   const [firstTime, setFirstTime] = useState(true);
   const [getStarted, setGetStarted] = useState(false);
   const [nominateOthers, setNominateOthers] = useState(false);
+  const [newPost, setNewPost] = useState(false);
 
   const [isNarrowScreen, setIsNarrowScreen] = useState(
     window.innerWidth <= 840
@@ -379,9 +380,9 @@ const HomePage = () => {
             setCurrentCard={setCurrentCard}
           />
         )}
-        {subPage === "new" && (
-          <NewCard
-            back={returnToFeed}
+        {(subPage === "new" && !newPost) && (
+          <NewPost
+            setNewPost={setNewPost}
             user={currentUser}
             setShowCongrats={setShowCongrats}
             setConfettiPieces={setConfettiPieces}
