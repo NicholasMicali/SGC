@@ -277,10 +277,15 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
                    <div className = "text-sm"
                    style={{ color: '#97A2A7' }}
                    >
-                    <p className="py-2">Where were you?</p>
-                    <p className="py-2">Whose day did you brighten?</p>
-                    <p className="py-2">How did they feel?</p>
-                    <p className="py-2">How did it make you feel?</p>
+                    <CustomInput
+                      initial={{ opacity: 0, y: 250 }}
+                      type="title"
+                      placeholder="Title"
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                      id="title"
+                      className="text-sm text-[#97A2A7] w-full h-full"
+                    />
                    </div>
                    
                 </div>
@@ -390,9 +395,46 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
                     }
                   }
                   className="bg-bold-pink hover:bg-bold-pink-hover text-white text-sm p-3 rounded-3xl w-[106px] h-[26px]"
-                  />
-                
+                  />  
               </div>
+
+              <div className="absolute bottom-1 left-4">
+                <p className="text-lg font-medium">Add a photo!</p>
+                  <input
+                    type="file"
+                    id="file"
+                    onChange={(e) => {
+                      setFile(e.target.files[0]);
+                    }}
+                    className="hidden text-xs"
+                  />
+                  <label htmlFor="file" className="text-xs cursor-pointed border-[1px] p-.5 md:p-3 border-gray-400 bg-gray-200">
+                    {file ? file.name : "Choose a file"}
+                  </label>
+              </div>
+            </>
+          )}
+          {step === 4 && (
+            <>
+              <div className="flex flex-col w-full">
+                <div className="w-3/4 flex flex-col items-start justify-start">
+                  <p className="text-3xl font-medium self-start text-bg-bold-pink">{headers[4]}</p>
+                  <p className="text-sm font-normal self-start">
+                  Now it’s time to <span className="text-yellow-500">nominate</span> others to join the challenge!
+                </p>
+              
+              <Button
+                buttonText="Nominate Others"
+                onClick={() => {
+                  setNewPost();
+                  toNominate();
+                }}
+                className="bg-bold-yellow hover:bg-bold-yellow-hover text-white p-5 rounded-md"
+              />
+
+                </div>
+              </div>
+          
             </>
           )}
 
