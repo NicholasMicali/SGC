@@ -263,8 +263,9 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
         className={`bg-white rounded-lg shadow-lg max-sm:w-[85%] w-[400px] h-[435px] p-4 relative flex flex-col justify-start border-4 border-bold-pink`}
       >
         <X className="absolute top-4 right-4 hover:cursor-pointer" onClick={setNewPost} />
-
-        <div className="flex flex-col w-full h-full overflow-auto">
+        <form 
+        onSubmit={onSubmit}
+        className="flex flex-col w-full h-full overflow-auto">
           {step === 0 && (
             <>
               <div className="flex flex-col w-full">
@@ -348,15 +349,12 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
                   readOnly
                 />
                 <p className="font-medium">or</p>
-                <CustomInput
-                  {...animateQuickDownToUpWithDelay(0.1)}
-                  initial={{ opacity: 0, y: 250 }}
-                  type="title"
-                  placeholder="Type a Location"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  id="title"
-                  className="text-xs text-[#97A2A7] p-0 w-full h-[28px]"
+                <GoogleAutocompleteInput
+                  value={manualLocation}
+                  onChange={setManualLocation}
+                  className="text-xs text-[#97A2A7] p-0 w-full h-[28px] rounded shadow-lg max-sm:w-[85%] bg-[#E9E5E7] border-none focus:outline-none"
+                  placeholder="Enter a location"
+                  required
                 />
               </div>
               
@@ -418,6 +416,7 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
                 </p>
               
               <Button
+                type="submit"
                 buttonText="Nominate Others"
                 onClick={() => {
                   setNewPost();
@@ -432,7 +431,7 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
             </>
           )}
 
-        </div>
+        </form>
       </div>
     </div>
   );
