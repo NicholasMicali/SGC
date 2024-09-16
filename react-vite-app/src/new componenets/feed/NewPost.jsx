@@ -72,7 +72,7 @@ const generateUniqueCode = async (attempts = 5) => {
 };
 
 const headers = [
-  "Tell us what you did to Spread Goodness!", 
+  "Tell us what you did to Spread Goodness!", "Title your Post!", "Would you like to edit your location?", "Accessorize your post!", "You're Amazing!"
 ];
 
 
@@ -262,12 +262,28 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
       >
         <X className="self-end hover:cursor-pointer" onClick={setNewPost} />
 
-        <div className="h-full w-full flex flex-row justify-evenly">
+        <div className="h-full w-full flex flex-col justify-evenly">
           {step === 0 && (
             <>
-              <div className="flex w-full">
+              <div className="flex flex-col w-full">
                 <div className="w-3/4 flex items-start justify-start">
-                  <p className="text-2xl font-semibold">{headers[0]}</p>
+                  <p className="text-2xl font-medium">{headers[0]}</p>
+                </div>
+              
+                <div
+                className={`rounded-lg shadow-lg max-sm:w-[85%] w-[301px] h-[176px] p-4 relative flex flex-col justify-between items-center
+                }`}
+                style={{ backgroundColor: '#E9E5E7' }}
+                 >
+                   <div className = "text-sm"
+                   style={{ color: '#97A2A7' }}
+                   >
+                    <p className="py-2">Where were you?</p>
+                    <p className="py-2">Whose day did you brighten?</p>
+                    <p className="py-2">How did they feel?</p>
+                    <p className="py-2">How did it make you feel?</p>
+                   </div>
+                   
                 </div>
               </div>
               <div className="flex flex-col gap-1 justify-center items-center text-lg font-medium">
@@ -284,13 +300,36 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
           )}
             {step === 1 && (
             <>
-              <p className="text-2xl font-semibold ">
-                Are you ready to <br />
-                <span className="text-bold-blue">Accept</span> a challenge or{" "}
-                <br />
-                <span className="text-bold-pink">Start</span> a new challenge?
-              </p>
-              <div className="flex gap-5">
+              <div className="flex flex-col w-full">
+                <div className="w-3/4 flex items-start justify-start">
+                  <p className="text-2xl font-medium">{headers[1]}</p>
+                </div>
+              </div>
+              
+              <div
+                className={`rounded-lg shadow-lg max-sm:w-[85%] w-[316px] h-[48px] p-4 relative flex flex-col justify-between items-start self-start
+                }`}
+                style={{ backgroundColor: '#E9E5E7' }}
+                 >
+                   <div className = "text-sm"
+                   style={{ color: '#97A2A7' }}
+                   >
+                    <input
+                      className="rounded-3xl border-[1px] p-2 md:p-3 border-gray-400"
+                      placeholder="Enter code from the card (e.g., 12abc345)"
+                      pattern="^\d{2}[A-Za-z]{3}\d{3}$"
+                      title="Code should be in the format: 12abc345 (2 digits, 3 letters, 3 digits)"
+                      type='text'
+                      id='code'
+                      value={code}
+                      onChange={(e) => setCode(e.target.value ? e.target.value.toLowerCase() : '')}
+                      required
+                    />
+                   </div>
+                   
+                </div>
+
+
               <div className="absolute bottom-1 right-4">
                   <Button
                     buttonText="Next"
@@ -298,7 +337,7 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
                   }
                   className="bg-bold-pink hover:bg-bold-pink-hover text-white text-sm p-3 rounded-3xl w-[106px] h-[26px]"
                   />
-                </div>
+                
               </div>
             </>
           )}
