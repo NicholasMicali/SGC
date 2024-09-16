@@ -257,18 +257,28 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div
-        className={`bg-white rounded-lg shadow-lg max-sm:w-[85%] w-[400px] h-[435px] p-4 relative flex flex-col justify-between items-center border-4 border-bold-green
+        className={`bg-white rounded-lg shadow-lg max-sm:w-[85%] w-[400px] h-[435px] p-4 relative flex flex-col justify-between items-center border-4 border-bold-pink
         }`}
       >
         <X className="self-end hover:cursor-pointer" onClick={setNewPost} />
 
-        <div className="h-full flex flex-col justify-evenly">
+        <div className="h-full w-full flex flex-row justify-evenly">
           {step === 0 && (
             <>
-              <p className="text-2xl font-semibold">{headers[0]}</p>
-              <p className="text-2lg font-medium">hi</p>
+              <div className="flex w-full">
+                <div className="w-3/4 flex items-start justify-start">
+                  <p className="text-2xl font-semibold">{headers[0]}</p>
+                </div>
+              </div>
               <div className="flex flex-col gap-1 justify-center items-center text-lg font-medium">
-                  
+                <div className="absolute bottom-1 right-4">
+                  <Button
+                    buttonText="Next"
+                    onClick={() => {setStep(1)}
+                  }
+                    className="bg-bold-pink hover:bg-bold-pink-hover text-white text-sm p-3 rounded-3xl w-[106px] h-[26px]"
+                  />
+                </div>
               </div>
             </>
           )}
@@ -281,7 +291,14 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
                 <span className="text-bold-pink">Start</span> a new challenge?
               </p>
               <div className="flex gap-5">
-
+              <div className="absolute bottom-1 right-4">
+                  <Button
+                    buttonText="Next"
+                    onClick={() => {setStep(1)}
+                  }
+                  className="bg-bold-pink hover:bg-bold-pink-hover text-white text-sm p-3 rounded-3xl w-[106px] h-[26px]"
+                  />
+                </div>
               </div>
             </>
           )}

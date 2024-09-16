@@ -120,7 +120,9 @@ const HomePage = () => {
   };
 
   const toNewCard = () => {
-    setSubPage("new");
+    // setSubPage("new");
+    setNewPost(true);
+    console.log("new Post set to true")
   };
 
   const toAllCards = () => {
@@ -187,7 +189,17 @@ const HomePage = () => {
           <NominateOthers
           setNominateOthers={() => setNominateOthers(false)} toAllCards={toAllCards}
           />
-         
+        )}
+        {newPost && (
+           <NewPost
+           setNewPost={() => setNewPost(false)}
+           toNominate={selectCardToChallenge}
+           user={currentUser}
+           setShowCongrats={setShowCongrats}
+           setConfettiPieces={setConfettiPieces}
+           select={selectCard}
+           selectChallenge={selectCardToChallenge}
+         />
         )}
 
         <div
@@ -259,7 +271,7 @@ const HomePage = () => {
                       <motion.div {...animateVerticalFadeIn(0.1)}>
                         <Button
                           buttonText={"Start a new challenge"}
-                          onClick={() => setSubPage("new")}
+                          onClick={() => toNewCard()}
                           className={
                             "!w-44 h-16 bg-bold-pink hover:bg-bold-pink-hover text-white rounded-md !justify-start !items-end p-2"
                           }
@@ -310,7 +322,7 @@ const HomePage = () => {
                     >
                       <Button
                         buttonText={"Start a new challenge"}
-                        onClick={() => setSubPage("new")}
+                        onClick={() => toNewCard()}
                         className={
                           "max-w-[300px] h-20 bg-bold-pink hover:bg-bold-pink-hover text-white rounded-md !justify-start !items-end p-2"
                         }
