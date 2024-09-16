@@ -75,6 +75,8 @@ const headers = [
   "Tell us what you did to Spread Goodness!", "Title your Post!", "Would you like to edit your location?", "Accessorize your post!", "You're Amazing!"
 ];
 
+const placeHolderText = "Where were you?\nWhose day did you brighten?\nHow did they feel?\nHow did it make you feel?";
+
 
 const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setConfettiPieces }) => {
   const [step, setStep] = useState(0);
@@ -254,6 +256,7 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
     setConfettiPieces(200);
     select(createdCard, cid)
   }
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div
@@ -268,27 +271,18 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
                 <div className="w-3/4 flex items-start justify-start">
                   <p className="text-2xl font-medium">{headers[0]}</p>
                 </div>
-              
-                <div
-                className={`rounded-lg shadow-lg max-sm:w-[85%] w-[301px] h-[176px] p-4 relative flex flex-col justify-between items-center
-                }`}
-                style={{ backgroundColor: '#E9E5E7' }}
-                 >
-                   <div className = "text-sm"
-                   style={{ color: '#97A2A7' }}
-                   >
-                    <CustomInput
-                      initial={{ opacity: 0, y: 250 }}
-                      type="title"
-                      placeholder="Title"
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
-                      id="title"
-                      className="text-sm text-[#97A2A7] w-full h-full"
-                    />
-                   </div>
+                <textarea 
+                  className={`rounded-lg shadow-lg max-sm:w-[85%] w-[301px] h-[176px] p-4 relative flex flex-col justify-between items-center text-sm
+                  }`}
+                  style={{ backgroundColor: '#E9E5E7', lineHeight: '2.5'}}
+                  placeholder={placeHolderText}
+                  type="text"
+                  id="text"
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  required
+                />
                    
-                </div>
               </div>
               <div className="flex flex-col gap-1 justify-center items-center text-lg font-medium">
                 <div className="absolute bottom-1 right-4">
