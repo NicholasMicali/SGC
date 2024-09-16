@@ -164,6 +164,15 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
     setInitialCode();
   }, []);
 
+  useEffect(() => {
+    if (isCreatingCard && createdCard) {
+      setShowCongrats(true);
+      setConfettiPieces(200);
+      select(createdCard, cid);
+    }
+  }, [isCreatingCard, createdCard, select, cid, setShowCongrats, setConfettiPieces]);
+  
+
 
   const validateCodeFormat = (code) => {
     return /^\d{2}[A-Za-z]{3}\d{3}$/.test(code);
@@ -235,11 +244,12 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
           await Promise.all(classPromises);
         }
         await doIncrementUserCards(user.uid);
-
+        setStep(4);
         // return post;
       } catch (error) {
         console.error("Create card failed:", error);
         alert("Failed to create card: " + error.message);
+        setIsCreatingCard(false); // Reset the creating state
         return;
       }
     }
@@ -251,11 +261,6 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
     }
   };
 
-  if (isCreatingCard && createdCard) {
-    setShowCongrats(true);
-    setConfettiPieces(200);
-    select(createdCard, cid)
-  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -417,9 +422,9 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
                   <Button
                     type="submit"
                     buttonText="Submit"
-                    onClick={() => {setStep(4)
-                    }
-                  }
+                  //   onClick={() => {setStep(4)
+                  //   }
+                  // }
                   className="bg-bold-pink hover:bg-bold-pink-hover text-white text-sm p-3 rounded-3xl w-[106px] h-[26px]"
                   />  
               </div>
@@ -434,9 +439,10 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
                     }}
                     className="hidden text-xs"
                   />
-                  <label htmlFor="file" className="text-xs cursor-pointed border-[1px] p-.5 md:p-3 border-gray-400 bg-gray-200">
+                  <label htmlFor="file" className="text-xs cursor-pointer border-[1px] p-0.5 md:p-3 border-gray-400 bg-gray-200">
                     {file ? file.name : "Choose a file"}
                   </label>
+
               </div>
             </>
           )}
