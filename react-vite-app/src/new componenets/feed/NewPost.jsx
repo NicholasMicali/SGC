@@ -14,7 +14,7 @@ import {
   doFetchCardByCode,
 } from "../../firebase/firestore";
 import { doUploadFile } from "../../firebase/storage.js";
-import StickerDrop from "../../components/cardsPages/stickerDrop.jsx";
+import Stickers from "./Stickers.jsx";
 import { ArrowLeft } from "lucide-react";
 import GoogleAutocompleteInput from "../../components/location/googleAutocompleteInput.jsx";
 import { animateQuickDownToUpWithDelay } from "../../constants/anim";
@@ -257,11 +257,11 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div
-        className={`bg-white rounded-lg shadow-lg max-sm:w-[85%] w-[400px] h-[435px] p-4 relative flex flex-col justify-between items-center border-4 border-bold-pink`}
+        className={`bg-white rounded-lg shadow-lg max-sm:w-[85%] w-[400px] h-[435px] p-4 relative flex flex-col justify-start border-4 border-bold-pink`}
       >
         <X className="absolute top-4 right-4 hover:cursor-pointer" onClick={setNewPost} />
 
-        <div className="h-full w-full flex flex-col justify-evenly">
+        <div className="flex flex-col w-full h-full overflow-auto">
           {step === 0 && (
             <>
               <div className="flex flex-col w-full">
@@ -381,12 +381,13 @@ const NewCard = ({ setNewPost, toNominate, user, select, setShowCongrats, setCon
                   <p className="text-xs font-normal self-start">Choose up to 3 stickers to describe how you spread goodness</p>
                 </div>
               </div>
-              
+              <Stickers {...animateQuickDownToUpWithDelay(0.5)} select={selectSticker} />
           
               <div className="absolute bottom-1 right-4">
                   <Button
-                    buttonText="Next"
-                    onClick={() => {setStep(2)}
+                    buttonText="Submit"
+                    onClick={() => {setStep(4), 
+                    }
                   }
                   className="bg-bold-pink hover:bg-bold-pink-hover text-white text-sm p-3 rounded-3xl w-[106px] h-[26px]"
                   />
