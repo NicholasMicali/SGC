@@ -29,7 +29,7 @@ const MainLayout = ({ children }) => {
   return (
     <div className="flex h-screen">
       <LeftSidebar user={currentUser} signOut={signOut}/>
-      <div className="w-full h-full md:ml-64">
+      <div className="w-full h-full lg:ml-64">
         {children}
       </div>
       

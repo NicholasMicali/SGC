@@ -17,6 +17,10 @@ import CongratsCard from "../components/cardsPages/congratsCard.jsx";
 import Notification from "../components/home/notification.jsx";
 import { doFetchUserProfile } from "../firebase/firestore";
 import YouTubeVideo from "../new componenets/feed/YoutubeVideo.jsx";
+import GetStarted from "../new componenets/feed/GetStarted.jsx";
+import NominateOthers from "../new componenets/feed/nominatedOthers.jsx";
+import NewPost from "../new componenets/feed/NewPost.jsx";
+
 const HomePage = () => {
   const { currentUser } = useAuth();
   const [isSigningOut, setIsSigningOut] = useState(false);
@@ -27,7 +31,12 @@ const HomePage = () => {
   const [showCongrats, setShowCongrats] = useState(false);
   const [confettiPieces, setConfettiPieces] = useState(0);
   const [userData, setUserData] = useState(null);
+
+  //first time user flow states
   const [firstTime, setFirstTime] = useState(true);
+  const [getStarted, setGetStarted] = useState(false);
+  const [nominateOthers, setNominateOthers] = useState(false);
+  const [newPost, setNewPost] = useState(false);
 
   const [isNarrowScreen, setIsNarrowScreen] = useState(
     window.innerWidth <= 840
@@ -37,7 +46,7 @@ const HomePage = () => {
   );
   const [showWalkthrough, setShowWalkthrough] = useState(false);
 
-  const y =  360;
+  const y = isNarrowScreen ? 280 : isMediumScreen ? 300 : 340;
 
   const handleAllCardsClick = async () => {
     await resetUnreadCount(currentUser.uid);
@@ -105,12 +114,23 @@ const HomePage = () => {
     setSubPage("feed");
   };
 
+  const returnToFeedAndNominate = () => {
+    setSubPage("feed");
+    setNominateOthers(true);
+  };
+
   const toNewCard = () => {
-    setSubPage("new");
+    // setSubPage("new");
+    setNewPost(true);
+    console.log("new Post set to true")
   };
 
   const toAllCards = () => {
     setSubPage("all");
+  };
+
+  const toReceive = () => {
+    setSubPage("receive");
   };
 
   const selectCard = (card, cid) => {
@@ -156,11 +176,30 @@ const HomePage = () => {
         {showWalkthrough && (
           <WalkthroughModal onClose={handleWalkthroughClose} />
         )}
+        {!firstTime && !getStarted ? (
+          <GetStarted setGetStarted={() => setGetStarted(true)} toRecieve={toReceive} toNewCard={toNewCard}/>
+        ) : null}
         {showCongrats && (
           <CongratsCard
             onClickX={() => setShowCongrats(false)}
             onClickChallenge={onClickChallengeButton}
           />
+        )}
+        {nominateOthers && (
+          <NominateOthers
+          setNominateOthers={() => setNominateOthers(false)} toAllCards={toAllCards}
+          />
+        )}
+        {newPost && (
+           <NewPost
+           setNewPost={() => setNewPost(false)}
+           toNominate={selectCardToChallenge}
+           user={currentUser}
+           setShowCongrats={setShowCongrats}
+           setConfettiPieces={setConfettiPieces}
+           select={selectCard}
+           selectChallenge={selectCardToChallenge}
+         />
         )}
 
         <div
@@ -169,24 +208,23 @@ const HomePage = () => {
               ? "flex-grow flex flex-col items-center px-5 py-12 md:hidden"
               : "flex-grow flex flex-col items-center py-10 max-md:hidden") +
             (isMediumScreen ? " px-16" : " px-24") +
-            (showWalkthrough ? " blur-sm" : "")
+            (showWalkthrough || (!firstTime && !getStarted) ? " blur-sm" : "")
           }
         >
           {subPage === "feed" ? (
-            <>
+            <div className="w-full flex flex-col gap-10 h-full">
               <div className="w-full font-semibold text-bold-pink text-5xl max-md:text-3xl max-sm:text-2xl">
                 Hi {isNarrowScreen ? <br /> : ""}{" "}
                 <span className="font-bold">
                   {userData ? userData.firstName : ""}!
                 </span>
-                {/* <br />
-                How will you spread goodness today? */}
               </div>
+
               {/* {firstTime ? ( */}
               <motion.div
                 initial={{ y: 0 }}
                 animate={{ y: firstTime ? 0 : y }}
-                className=" w-full flex justify-center items-center mt-14 max-md:flex-col"
+                className=" w-full flex justify-center items-center max-md:flex-col"
               >
                 <p className=" mr-20 text-xl font-semibold">
                   Click the video to receive your mission:
@@ -200,15 +238,16 @@ const HomePage = () => {
                 </div>
               </motion.div>
               {/* ) : null} */}
-              <motion.div className="w-full mt-20"
-              initial={{y: firstTime ? 0 : -y}}
-              animate={{y: firstTime ? 0 : -y}}
+              <motion.div
+                className="w-full"
+                initial={{ y: firstTime ? 0 : -y }}
+                animate={{ y: firstTime ? 0 : -y }}
               >
                 <p className="w-full text-2xl font-semibold mb-10">
                   How will you spread goodness today?
                 </p>
 
-                {isMediumScreen ? (
+                {isNarrowScreen ? (
                   <div className="flex flex-col justify-center my-4 w-full">
                     <div className="flex flex-row justify-center gap-2 my-2 w-full">
                       <motion.div
@@ -232,7 +271,7 @@ const HomePage = () => {
                       <motion.div {...animateVerticalFadeIn(0.1)}>
                         <Button
                           buttonText={"Start a new challenge"}
-                          onClick={() => setSubPage("new")}
+                          onClick={() => toNewCard()}
                           className={
                             "!w-44 h-16 bg-bold-pink hover:bg-bold-pink-hover text-white rounded-md !justify-start !items-end p-2"
                           }
@@ -283,7 +322,7 @@ const HomePage = () => {
                     >
                       <Button
                         buttonText={"Start a new challenge"}
-                        onClick={() => setSubPage("new")}
+                        onClick={() => toNewCard()}
                         className={
                           "max-w-[300px] h-20 bg-bold-pink hover:bg-bold-pink-hover text-white rounded-md !justify-start !items-end p-2"
                         }
@@ -330,7 +369,7 @@ const HomePage = () => {
                   handleOpen={handleWalkthroughOpen}
                 />
               </motion.div>
-            </>
+            </div>
           ) : (
             renderSubPage()
           )}
@@ -353,9 +392,9 @@ const HomePage = () => {
             setCurrentCard={setCurrentCard}
           />
         )}
-        {subPage === "new" && (
-          <NewCard
-            back={returnToFeed}
+        {(subPage === "new" && !newPost) && (
+          <NewPost
+            setNewPost={setNewPost}
             user={currentUser}
             setShowCongrats={setShowCongrats}
             setConfettiPieces={setConfettiPieces}
@@ -384,6 +423,7 @@ const HomePage = () => {
             code={currentCard ? currentCard.code : null}
             cid={currentCid}
             cards={toAllCards}
+            nominate={returnToFeedAndNominate}
           />
         )}
       </>

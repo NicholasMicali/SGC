@@ -5,7 +5,7 @@ import CardsButton from './cardsButton';
 import { ArrowLeft } from "lucide-react";
 import { doFetchUserProfile } from '../../firebase/firestore';
 
-const Challenge = ({back, user, code, cid, cards}) => {
+const Challenge = ({back, user, code, cid, cards, nominate}) => {
 
   const [email, setEmail] = useState('');
   const [text, setText] = useState('');
@@ -92,7 +92,11 @@ const Challenge = ({back, user, code, cid, cards}) => {
             className="h-64 resize-none rounded-3xl border-[1px] p-2 md:p-3 border-gray-400"
           />
         </div>
-        <button onClick={handleShare} className="share-button w-full flex items-center justify-center bg-gradient-to-tr from-gradient-start via-gradient-mid to-gradient-end rounded-3xl p-3 mt-6 bg-opacity-60 text-white font-sans text-xl">Share via Email</button>
+        <button onClick={() => {
+          handleShare();
+          nominate();
+        }}
+        className="share-button w-full flex items-center justify-center bg-gradient-to-tr from-gradient-start via-gradient-mid to-gradient-end rounded-3xl p-3 mt-6 bg-opacity-60 text-white font-sans text-xl">Share via Email</button>
       </div>
     </div>
   );
